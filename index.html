@@ -1,153 +1,206 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!-- Standard Meta -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <head>
+        <!-- Standard Meta -->
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <!-- Site Properties -->
-  <title>Fixed Menu Example - Semantic</title>
+        <!-- Site Properties -->
+        <title>Simulador</title>
 
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/reset.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/site.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/reset.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/site.css">
 
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/container.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/grid.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/header.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/image.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/menu.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/container.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/grid.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/header.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/image.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/menu.css">
 
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/divider.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/list.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/segment.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.css">
-  <link rel="stylesheet" type="text/css" href="semantic/dist/components/icon.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/divider.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/list.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/segment.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.css">
+        <link rel="stylesheet" type="text/css" href="semantic/dist/components/icon.css">
 
+        <link rel="stylesheet" href="semantic/dist/semantic.min.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="third-party/ion.calendar-2.0.2/css/ion.calendar.css" media="screen" title="no title" charset="utf-8">
 
-  <link rel="stylesheet" href="semantic/dist/semantic.min.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="third-party/semantic-ui-range-master/range.css" media="screen" title="no title" charset="utf-8">
 
-  <style type="text/css">
-  body {
-    background-color: #FFFFFF;
-  }
-  .ui.menu .item img.logo {
-    margin-right: 1.5em;
-  }
-  .main.container {
-    margin-top: 7em;
-  }
-  .wireframe {
-    margin-top: 2em;
-  }
-  .ui.footer.segment {
-    margin: 5em 0em 0em;
-    padding: 5em 0em;
-  }
-  </style>
+        <style type="text/css">
+            body {
+                background-color: #FFFFFF;
+            }
+            .ui.menu .item img.logo {
+                margin-right: 1.5em;
+            }
+            .main.container {
+                margin-top: 7em;
+            }
+            .wireframe {
+                margin-top: 2em;
+            }
+            .ui.footer.segment {
+                margin: 5em 0 0;
+                padding: 5em 0;
+            }
 
-</head>
-<body>
+        </style>
 
-  <div class="ui fixed inverted menu">
-    <div class="ui container">
-      <a href="#" class="header item">
-        <img class="logo" src="assets/images/logo.png">
-        Project Name
-      </a>
-      <a href="#" class="item">Home</a>
-      <div class="ui simple dropdown item">
-        Dropdown <i class="dropdown icon"></i>
-        <div class="menu">
-          <a class="item" href="#">Link Item</a>
-          <a class="item" href="#">Link Item</a>
-          <div class="divider"></div>
-          <div class="header">Header Item</div>
-          <div class="item">
-            <i class="dropdown icon"></i>
-            Sub Menu
-            <div class="menu">
-              <a class="item" href="#">Link Item</a>
-              <a class="item" href="#">Link Item</a>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <div class="ui fixed inverted menu">
+            <div class="ui container">
+                <a href="#" class="header item">
+                    <img class="logo" src="semantic/examples/assets/images/logo.png">
+                </a>
+                <a href="#" class="item">Simulaciones Guardadas</a>
             </div>
-          </div>
-          <a class="item" href="#">Link Item</a>
         </div>
-      </div>
-    </div>
-  </div>
+        <!-- END HEADER -->
 
-  <div class="ui main text container">
-    <h1 class="ui header">Semantic UI Fixed Template</h1>
-    <form class="ui form">
-      <div class="field">
-        <label>First Name</label>
-        <input type="text" name="first-name" placeholder="First Name">
-      </div>
-      <div class="field">
-        <label>Last Name</label>
-        <input type="text" name="last-name" placeholder="Last Name">
-      </div>
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" tabindex="0" class="hidden">
-          <label>I agree to the Terms and Conditions</label>
+        <!-- BODY -->
+        <div class="ui main text container">
+            <h1 class="ui header">Simulador AFP</h1>
+            <form class="ui form">
+                <h4 class="ui dividing header">Datos Personales</h4>
+                <div class="three fields">
+                    <div class="field">
+                        <label>Nombre</label>
+                        <input type="text" placeholder="opcional">
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="text" placeholder="opcional">
+                    </div>
+                    <div class="field">
+                        <label>Fecha de Nacimiento</label>
+                        <input id="myDatePicker-1" data-lang="es" data-years="1995-2013" data-sundayfirst="false" placeholder="Requerido"/>
+                    </div>
+                </div>
+                <h4 class="ui dividing header">Datos Laborales</h4>
+                <div class="field">
+                    <button type="button" class="ui button">Remuneracion Constante</button>
+                    <button type="button" class="ui button">Remuneracion Intermitente</button>
+                    <div class="ui hidden divider"></div>
+                    <div class="">
+                        <div class="ui segment">
+                            <p>
+                                Edad de Jubilacion:
+                                <span id="display-3"></span>
+                            </p>
+                            <div class="ui range" id="range-3"></div>
+
+                            <div class="two fields">
+                                <div class="field">
+                                    <label>Sueldo Mensual</label>
+                                    <input type="text" name="shipping[first-name]" placeholder="First Name">
+                                </div>
+                                <div class="field">
+                                    <label>Sueldos al año</label>
+                                    <select class="ui fluid dropdown">
+                                        <option value="">Seleccionar</option>
+                                        <option value="AL">12</option>
+                                        <option value="AK">14</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="ui dividing header">Fondo AFP</h4>
+                <div class="field">
+                    <label>Send Receipt To:</label>
+                    <div class="ui fluid multiple search selection dropdown">
+                        <input type="hidden" name="receipt">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Saved Contacts</div>
+                        <div class="menu">
+                            <div class="item" data-value="jenny" data-text="Jenny">
+                                <img class="ui mini avatar image" src="/images/avatar/small/jenny.jpg">
+                                Jenny Hess
+                            </div>
+                            <div class="item" data-value="elliot" data-text="Elliot">
+                                <img class="ui mini avatar image" src="/images/avatar/small/elliot.jpg">
+                                Elliot Fu
+                            </div>
+                            <div class="item" data-value="stevie" data-text="Stevie">
+                                <img class="ui mini avatar image" src="/images/avatar/small/stevie.jpg">
+                                Stevie Feliciano
+                            </div>
+                            <div class="item" data-value="christian" data-text="Christian">
+                                <img class="ui mini avatar image" src="/images/avatar/small/christian.jpg">
+                                Christian
+                            </div>
+                            <div class="item" data-value="matt" data-text="Matt">
+                                <img class="ui mini avatar image" src="/images/avatar/small/matt.jpg">
+                                Matt
+                            </div>
+                            <div class="item" data-value="justen" data-text="Justen">
+                                <img class="ui mini avatar image" src="/images/avatar/small/justen.jpg">
+                                Justen Kitsune
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui segment">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="gift" tabindex="0" class="hidden">
+                            <label>Do not include a receipt in the package</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui button" tabindex="0">Submit Order</div>
+            </form>
         </div>
-      </div>
-      <button class="ui button" type="submit">Submit</button>
-    </form>
-  </div>
+        <!-- END BODY -->
 
-  <div class="ui inverted vertical footer segment">
-    <div class="ui center aligned container">
-      <div class="ui stackable inverted divided grid">
-        <div class="three wide column">
-          <h4 class="ui inverted header">Group 1</h4>
-          <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
-            <a href="#" class="item">Link Two</a>
-            <a href="#" class="item">Link Three</a>
-            <a href="#" class="item">Link Four</a>
-          </div>
+        <!-- FOOTER -->
+        <div class="ui inverted vertical footer segment">
+            <div class="ui center aligned container">
+                <img src="semantic/examples/assets/images/logo.png" class="ui centered mini image">
+                <div class="ui horizontal inverted small divided link list">
+                    <a class="item" href="#">Site Map</a>
+                    <a class="item" href="#">Contact Us</a>
+                    <a class="item" href="#">Terms and Conditions</a>
+                    <a class="item" href="#">Privacy Policy</a>
+                </div>
+            </div>
         </div>
-        <div class="three wide column">
-          <h4 class="ui inverted header">Group 2</h4>
-          <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
-            <a href="#" class="item">Link Two</a>
-            <a href="#" class="item">Link Three</a>
-            <a href="#" class="item">Link Four</a>
-          </div>
-        </div>
-        <div class="three wide column">
-          <h4 class="ui inverted header">Group 3</h4>
-          <div class="ui inverted link list">
-            <a href="#" class="item">Link One</a>
-            <a href="#" class="item">Link Two</a>
-            <a href="#" class="item">Link Three</a>
-            <a href="#" class="item">Link Four</a>
-          </div>
-        </div>
-        <div class="seven wide column">
-          <h4 class="ui inverted header">Footer Header</h4>
-          <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
-        </div>
-      </div>
-      <div class="ui inverted section divider"></div>
-      <img src="assets/images/logo.png" class="ui centered mini image">
-      <div class="ui horizontal inverted small divided link list">
-        <a class="item" href="#">Site Map</a>
-        <a class="item" href="#">Contact Us</a>
-        <a class="item" href="#">Terms and Conditions</a>
-        <a class="item" href="#">Privacy Policy</a>
-      </div>
-    </div>
-  </div>
+        <!-- END FOOTER -->
 
+        <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="semantic/dist/semantic.min.js"></script>
+        <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+        <script type="text/javascript" src="third-party/ion.calendar-2.0.2/js/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="third-party/ion.calendar-2.0.2/js/ion.calendar.js"></script>
+        <script type="text/javascript" src="third-party/semantic-ui-range-master/range.js"></script>
 
+        <script type="text/javascript">
+            //$("#myDatePicker-1").ionDatePicker();
+            $("#myDatePicker-1").ionDatePicker({
+                lang: "es", // language
+                sundayFirst: false, // first week day
+                years: "80", // years diapason
+                format: "DD-MM-YYYY", // date format
+                onClick: function(date) { // click on day returns date
+                    console.log(date);
+                }
+            });
 
-
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="semantic/dist/semantic.min.js"></script>
-</body>
+            // Semantic UI Range
+            $('#range-3').range({
+                min: 20,
+                max: 75,
+                start: 65,
+                onChange: function(value) {
+                    $('#display-3').html(value);
+                }
+            });
+        </script>
+    </body>
 </html>
