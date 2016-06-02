@@ -102,37 +102,37 @@
                 <div class="field">
                     <div class="ui grid">
                         <div class="right aligned eight wide column">
-                            <button type="button" class="ui button">Remuneracion Constante</button>
+                            <button ng-click="typeRemuneration = 1" type="button" class="ui button">Remuneracion Constante</button>
                         </div>
                         <div class="left aligned eight wide column">
-                            <button type="button" class="ui button">Remuneracion Intermitente</button>
+                            <button ng-click="typeRemuneration = 2" type="button" class="ui button">Remuneracion Intermitente</button>
                         </div>
                     </div>
                     <div class="ui hidden divider"></div>
                     <div class="">
-                        <div class="ui segment">
+                        <div ng-hide="typeRemuneration == null" class="ui segment">
                             <p>
                                 Edad de Jubilacion:
                                 <span id="display-3"></span>
                             </p>
                             <div class="ui range" id="range-3"></div>
 
-                            <div class="two fields">
+                            <div ng-show="typeRemuneration == 1" class="two fields">
                                 <div class="field">
                                     <label>Sueldo Mensual</label>
-                                    <input type="text" name="shipping[first-name]" placeholder="">
+                                    <input ng-model="mothEarnIt" type="number" pattern="[0-9]*" placeholder="">
                                 </div>
                                 <div class="field">
                                     <label>Sueldos al año</label>
-                                    <select class="ui fluid dropdown">
-                                        <option value="">Seleccionar</option>
-                                        <option value="AL">12</option>
-                                        <option value="AK">14</option>
+                                    <select ng-model="cantPaymentPerYear" class="ui fluid dropdown">
+                                        <option selected value="">Seleccionar</option>
+                                        <option value="12">12</option>
+                                        <option value="14">14</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="ui grid">
+                            <div ng-show="typeRemuneration == 2" class="ui grid">
 
                                 <div class="four wide column">
                                     <label>Remuneracion</label>
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
 
-                            <div class="ui grid">
+                            <div ng-show="typeRemuneration == 2" class="ui grid">
                                 <div class="sixteen wide column">
                                   <div class="time-line-divider">
                                     Fondo 1 <span class="close-time-divider">x</span>
@@ -173,7 +173,7 @@
                                   <i class="time-line-mark begin-time-line">|</i>
                                 </div>
                             </div>
-                            <div class="ui grid">
+                            <div ng-show="typeRemuneration == 2" class="ui grid">
                               <div class="sixteen wide column">
                                 <div class="begin-time-label">19/07/1992</div>
                                 <div class="end-time-label">19/02/1992</div>
@@ -372,15 +372,7 @@
                 }
             });
 
-            // Semantic UI Range
-            $('#range-3').range({
-                min: 20,
-                max: 75,
-                start: 65,
-                onChange: function(value) {
-                    $('#display-3').html(value);
-                }
-            });
+
         </script>
     </body>
 </html>
