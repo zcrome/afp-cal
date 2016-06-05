@@ -50,3 +50,9 @@ display: inline-block;
 top: -9px;
 color: white;
 }
+.label-jubilation{
+  font-size: 20px;
+  display: -moz-inline-box;
+  margin-left: 30px;
+
+}
