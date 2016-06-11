@@ -11,15 +11,13 @@
 
 					/*******web variables*******/
 
-					/********Personal DATA*****/
+					/*****************************************************************Personal DATA*****/
 					self.userName = null
 					self.userEmail = null;
-					self.userBornDate = null;
+					self.userBornDate = null;					
+					/***************************************************************END Personal DATA*****/
 
-
-					/********END Personal DATA*****/
-
-					/**********REMUNERATION VARIABLES**********/
+					/*************************************************************REMUNERATION VARIABLES**********/
 					//self.dateRetirement = null;
 					self.typeRemuneration = 2;
 					/********type 1 Remuneracion constante*****/
@@ -29,8 +27,8 @@
 
 					/******* type 2 remuneracion intermitente *****/
 					self.dateAtInitWork = null;
-					self.dateAtFinishtWork = null;
-					self.arrRemunerations = [];
+					self.dateAtFinishtWork = null; //--not in use!!
+					self.arrRemunerations = [];  //--not in use!!
 					self.objRemuneration = {
 						remunerationCant: 1500,
 						dateBegin: null,
@@ -39,6 +37,8 @@
 
 
 					self.validDateInitWork = function(){
+						//Se activa al cambiar "Inicio de vida laboral"
+						//Verifica que la fecha de inicio de vida laboral sea mayor a la de nacimiento
 						if(self.dateAtInitWork && self.userBornDate){
 							if(moment(new Date(self.dateAtInitWork)).isSameOrBefore(moment(new Date(self.userBornDate)))){
 								console.log("fecha laboral debe ser mayor a la de nacimiento");
@@ -52,6 +52,8 @@
 					};
 
 					self.agregateNewRemuneration = function(){
+						
+						//Check if objRemuneration is valid
 						if(!objRemunerationIsValid(self.objRemuneration)){
 							return;
 						}
@@ -84,11 +86,15 @@
 
 					var checkObjRemunerationDateConflictInArray = function(){
 
+
+
+
+
 					};
 
 
 					/******* END type 2 remuneracion intermitente *****/
-					/********** END REMUNERATION VARIABLES**********/
+					/************************************************************************* END REMUNERATION VARIABLES**********/
 
 
 
