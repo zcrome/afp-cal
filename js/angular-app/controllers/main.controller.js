@@ -30,7 +30,7 @@
 					self.dateAtFinishtWork = null; //--not in use!!
 					self.arrRemunerations = [];  //--not in use!!
 					self.objRemuneration = {
-						remunerationCant: 1500,
+						remunerationCant: null,
 						dateBegin: null,
 						dateEnd: null
 					};
@@ -86,7 +86,9 @@
 
 					var checkObjRemunerationDateConflictInArray = function(){
 
+						self.arrRemunerations.foreach(function(item){
 
+						});
 
 
 

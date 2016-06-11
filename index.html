@@ -178,7 +178,7 @@
                                   </div>
                                 </div>
                                 <div class="four wide column">
-                                  <button ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
+                                  <button  ng-disabled="dateAtInitWork == null ||objRemuneration.dateBegin == null || objRemuneration.dateEnd == null || objRemuneration.remunerationCant == null" ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
