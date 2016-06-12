@@ -31,15 +31,15 @@
 					self.arrRemunerations = [{
 						dateBegin: "19 June 2016",
 						dateEnd: "25 June 2016",
-						remunerationCant:"1500"
+						remunerationCant:"1000"
 					},{
 						dateBegin: "19 June 2016",
 						dateEnd: "25 June 2016",
-						remunerationCant:"1500"
+						remunerationCant:"1200"
 					},{
 						dateBegin: "19 June 2016",
 						dateEnd: "25 June 2016",
-						remunerationCant:"1500"
+						remunerationCant:"1900"
 					}];
 					self.remusTags = {
 					    "width" : "0px"
@@ -110,9 +110,7 @@
 						self.arrRemunerations.forEach(function(arrayItem){
 							
 						});
-					};
-
-					
+					};					
 
 					var updateTimeLineTagsView = function(){
 						//var totalWidth = 
@@ -128,6 +126,13 @@
 						    "width" : String(tagWidth)+"%"
 						};
 
+					};
+
+					self.deleteRemu = function(index){
+						if (index > -1) {
+						    self.arrRemunerations.splice(index, 1);
+						    updateTimeLineTagsView();
+						}
 					};
 
 

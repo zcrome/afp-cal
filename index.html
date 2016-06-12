@@ -190,7 +190,7 @@
 
                                 <ng-repeat ng-repeat="remu in arrRemunerations">
                                     <div ng-style="remusTags" class="time-line-divider">
-                                        1K <span class="close-time-divider">x</span>
+                                        {{remu.remunerationCant}}<span ng-click="deleteRemu($index)" class="close-time-divider">x</span>
                                     </div>
                                 </ng-repeat>
 
