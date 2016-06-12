@@ -28,7 +28,22 @@
 					/******* type 2 remuneracion intermitente *****/
 					self.dateAtInitWork = null;
 					self.dateAtFinishtWork = null; //--not in use!!
-					self.arrRemunerations = [];  //--not in use!!
+					self.arrRemunerations = [{
+						dateBegin: "19 June 2016",
+						dateEnd: "25 June 2016",
+						remunerationCant:"1500"
+					},{
+						dateBegin: "19 June 2016",
+						dateEnd: "25 June 2016",
+						remunerationCant:"1500"
+					},{
+						dateBegin: "19 June 2016",
+						dateEnd: "25 June 2016",
+						remunerationCant:"1500"
+					}];
+					self.remusTags = {
+					    "width" : "0px"
+					};
 					self.objRemuneration = {
 						remunerationCant: null,
 						dateBegin: null,
@@ -54,9 +69,16 @@
 					self.agregateNewRemuneration = function(){
 						
 						//Check if objRemuneration is valid
-						if(!objRemunerationIsValid(self.objRemuneration)){
-							return;
-						}
+						//if(!objRemunerationIsValid(self.objRemuneration)){
+						//	return;
+						//}
+						//checkObjRemunerationDateConflictInArray();
+						//console.log(self.objRemuneration);
+
+
+						updateTimeLineTagsView();
+
+
 					};
 
 					var objRemunerationIsValid = function(objParam){
@@ -78,19 +100,33 @@
 							return false;
 						}
 						if(moment(new Date(objParam.dateEnd)).isAfter(moment(new Date($('#remu-end')[0].innerHTML)))){
-							console.log("fecha de inicio debe ser posterior a la fecha inicio trabajo");
+							console.log("La fecha de termino debe ser anterior a " +  $('#remu-end')[0].innerHTML);
 							return false;
 						}
 						return true;
 					};
 
 					var checkObjRemunerationDateConflictInArray = function(){
-
-						self.arrRemunerations.foreach(function(item){
-
+						self.arrRemunerations.forEach(function(arrayItem){
+							
 						});
+					};
 
+					
 
+					var updateTimeLineTagsView = function(){
+						//var totalWidth = 
+						console.log($("#remu-tline").width());
+
+						var totalWidth = parseInt($("#remu-tline").width());
+						var cantTags = self.arrRemunerations.length;
+						var tagWidth = (100*(totalWidth/cantTags))/(totalWidth) - 2;
+
+						//$("#remus").width(String(tagWidth)+"%");
+
+						self.remusTags = {
+						    "width" : String(tagWidth)+"%"
+						};
 
 					};
 

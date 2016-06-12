@@ -178,23 +178,23 @@
                                   </div>
                                 </div>
                                 <div class="four wide column">
-                                  <button  ng-disabled="dateAtInitWork == null ||objRemuneration.dateBegin == null || objRemuneration.dateEnd == null || objRemuneration.remunerationCant == null" ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
+                                  <button ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
                             </div>
 
                             <div ng-show="typeRemuneration == 2" class="ui grid">
-                                <div class="sixteen wide column">
-                                  <div class="time-line-divider">
-                                    Fondo 1 <span class="close-time-divider">x</span>
-                                  </div>
-                                  <div class="time-line-divider">
-                                    Fondo 2
-                                  </div>
-                                  <div class="time-line-divider">
-                                    Fondo 3
-                                  </div>
+                                <div id="remu-tline" class="sixteen wide column">
+
+
+                                <ng-repeat ng-repeat="remu in arrRemunerations">
+                                    <div ng-style="remusTags" class="time-line-divider">
+                                        1K <span class="close-time-divider">x</span>
+                                    </div>
+                                </ng-repeat>
+
+
                                   <hr class="time-line">
                                   <i class="time-line-mark end-time-line">|</i>
                                   <i class="time-line-mark begin-time-line">|</i>
