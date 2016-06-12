@@ -30,15 +30,15 @@
 					self.dateAtFinishtWork = null; //--not in use!!
 					self.arrRemunerations = [{
 						dateBegin: "19 June 2016",
-						dateEnd: "25 June 2016",
+						dateEnd: "25 June 2032",
 						remunerationCant:"1000"
 					},{
-						dateBegin: "19 June 2016",
-						dateEnd: "25 June 2016",
+						dateBegin: "19 June 2000",
+						dateEnd: "25 June 2010",
 						remunerationCant:"1200"
 					},{
-						dateBegin: "19 June 2016",
-						dateEnd: "25 June 2016",
+						dateBegin: "19 June 1990",
+						dateEnd: "25 June 2000",
 						remunerationCant:"1900"
 					}];
 					self.remusTags = {
@@ -75,6 +75,8 @@
 						//checkObjRemunerationDateConflictInArray();
 						//console.log(self.objRemuneration);
 
+            self.arrRemunerations
+
 
 						updateTimeLineTagsView();
 
@@ -108,8 +110,14 @@
 
 					var checkObjRemunerationDateConflictInArray = function(){
 						self.arrRemunerations.forEach(function(arrayItem){
-							
+							if(moment(new Date(self.objRemuneration.dateBegin)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
+								moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
+								moment(new Date(arrayItem.dateBegin)).isBetween(self.objRemuneration.dateBegin, self.objRemuneration.dateEnd)||
+								moment(new Date(arrayItem.dateEnd)).isBetween(self.objRemuneration.dateBegin, self.objRemuneration.dateEnd)) {
+								return false;
+							}						
 						});
+            return true;
 					};					
 
 					var updateTimeLineTagsView = function(){
