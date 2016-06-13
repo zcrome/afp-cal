@@ -14,7 +14,8 @@
 					/*****************************************************************Personal DATA*****/
 					self.userName = null
 					self.userEmail = null;
-					self.userBornDate = null;					
+					self.userBornDate = new Date();
+
 					/***************************************************************END Personal DATA*****/
 
 					/*************************************************************REMUNERATION VARIABLES**********/
@@ -28,19 +29,7 @@
 					/******* type 2 remuneracion intermitente *****/
 					self.dateAtInitWork = null;
 					self.dateAtFinishtWork = null; //--not in use!!
-					self.arrRemunerations = [{
-						dateBegin: "19 June 2016",
-						dateEnd: "25 June 2032",
-						remunerationCant:"1000"
-					},{
-						dateBegin: "19 June 2000",
-						dateEnd: "25 June 2010",
-						remunerationCant:"1200"
-					},{
-						dateBegin: "19 June 1990",
-						dateEnd: "25 June 2000",
-						remunerationCant:"1900"
-					}];
+					self.arrRemunerations = [];
 					self.remusTags = {
 					    "width" : "0px"
 					};
@@ -69,18 +58,34 @@
 					self.agregateNewRemuneration = function(){
 						
 						//Check if objRemuneration is valid
-						//if(!objRemunerationIsValid(self.objRemuneration)){
-						//	return;
-						//}
-						//checkObjRemunerationDateConflictInArray();
-						//console.log(self.objRemuneration);
+						if(!objRemunerationIsValid(self.objRemuneration)){              
+							return;
+						}
+						if(!checkObjRemunerationDateConflictInArray()) {
+              return;
+            }
+            //Pasados los filtros agrego al array
+            self.arrRemunerations.push({
+              remunerationCant: self.objRemuneration.remunerationCant,
+              dateBegin: new Date(self.objRemuneration.dateBegin),
+              dateEnd: self.objRemuneration.dateEnd
+            });
 
-            self.arrRemunerations
+
+						//Sort segun las fechas de inicio
+            console.log("before");
+            console.log(self.arrRemunerations);
+            self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
+            console.log("after");
+            console.log(self.arrRemunerations);
 
 
-						updateTimeLineTagsView();
-
-
+            //actualizacion del tamaño de cada periodo CSS!!
+						updateTimeLineTagsView();            
+            //Reset
+            self.objRemuneration.remunerationCant = null;
+            self.objRemuneration.dateBegin = null;
+            self.objRemuneration.dateEnd = null;
 					};
 
 					var objRemunerationIsValid = function(objParam){
@@ -93,7 +98,7 @@
 							console.log("invalid params!");
 							return false;
 						}
-						if(moment(new Date(objParam.dateBegin)).isAfter(moment(new Date(objParam.dateEnd)))){
+						if(moment(new Date(objParam.dateBegin)).isSameOrAfter(moment(new Date(objParam.dateEnd)))){
 							console.log("fecha de inicio debe ser anterior a la de fin");
 							return false;
 						}
@@ -112,8 +117,9 @@
 						self.arrRemunerations.forEach(function(arrayItem){
 							if(moment(new Date(self.objRemuneration.dateBegin)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
 								moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
-								moment(new Date(arrayItem.dateBegin)).isBetween(self.objRemuneration.dateBegin, self.objRemuneration.dateEnd)||
-								moment(new Date(arrayItem.dateEnd)).isBetween(self.objRemuneration.dateBegin, self.objRemuneration.dateEnd)) {
+								moment(new Date(arrayItem.dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))||
+								moment(new Date(arrayItem.dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))) {
+                console.log("conflicto con los periodos existentes");
 								return false;
 							}						
 						});
@@ -135,6 +141,13 @@
 						};
 
 					};
+
+          /*PENDIENTE*/
+          var fixEmptySpacesObjRemunerationDateInArray = function(){
+            var tempArray = angular.copy(self.arrRemunerations);
+            tempArray.forEach(function(arrayItem, index){              
+            });
+          };
 
 					self.deleteRemu = function(index){
 						if (index > -1) {
