@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-      .module('app',['ngRoute','ngCookies','720kb.datepicker','ngMaterial', 'ngMessages'])
+      .module('app',['ngRoute','ngCookies','720kb.datepicker','jkuri.datepicker'])
       .config(function($routeProvider){
 
         $routeProvider

@@ -14,7 +14,7 @@
 					/*****************************************************************Personal DATA*****/
 					self.userName = null
 					self.userEmail = null;
-					self.userBornDate = new Date();
+					self.userBornDate = new Date(1990,00,01);
 
 					/***************************************************************END Personal DATA*****/
 
@@ -27,7 +27,8 @@
 					/******** END type 1 Remuneracion constante*****/
 
 					/******* type 2 remuneracion intermitente *****/
-					self.dateAtInitWork = null;
+					self.dateAtInitWork;
+					self.dateViewDisplayInitWork = null;
 					self.dateAtFinishtWork = null; //--not in use!!
 					self.arrRemunerations = [];
 					self.remusTags = {
@@ -46,46 +47,69 @@
 						if(self.dateAtInitWork && self.userBornDate){
 							if(moment(new Date(self.dateAtInitWork)).isSameOrBefore(moment(new Date(self.userBornDate)))){
 								console.log("fecha laboral debe ser mayor a la de nacimiento");
+								swal({
+								  title: "Cuidado",
+								  text: "El inicio de vida laboral no puede ser anterior a la de nacimiento",
+								  type: "warning",
+								  confirmButtonText: "ok"
+								});
 								self.dateAtInitWork = null;
 							}
 						}else{
 							console.log("Es necesario la fecha de nacimiento");
+							swal({
+							  title: "Primero",
+							  text: "Debes ingresar tu fecha de nacimiento",
+							  type: "warning",
+							  confirmButtonText: "ok"
+							});
 							self.dateAtInitWork = null;
 						}
-						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('D MMM YYYY'));
+						self.deleteObjRemunerationDateInArray();
+						self.dateViewDisplayInitWork = moment(self.dateAtInitWork).format('Do MMMM YYYY');
+						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 					};
 
 					self.agregateNewRemuneration = function(){
 						
+						/*
 						//Check if objRemuneration is valid
-						if(!objRemunerationIsValid(self.objRemuneration)){              
+						console.log("Check if objRemuneration is valid");
+						console.log(!objRemunerationIsValid(self.objRemuneration))
+						if(!objRemunerationIsValid(self.objRemuneration)){
 							return;
-						}
+						}						
+						//check with other dates conflict
+						console.log("check with other dates conflict");
+						console.log(!checkObjRemunerationDateConflictInArray());
 						if(!checkObjRemunerationDateConflictInArray()) {
               return;
             }
-            //Pasados los filtros agrego al array
-            self.arrRemunerations.push({
-              remunerationCant: self.objRemuneration.remunerationCant,
-              dateBegin: new Date(self.objRemuneration.dateBegin),
-              dateEnd: self.objRemuneration.dateEnd
-            });
+						*/
+
+						console.log(objRemunerationIsValid(self.objRemuneration));
+						console.log(checkObjRemunerationDateConflictInArray());
+
+            if(objRemunerationIsValid(self.objRemuneration) && checkObjRemunerationDateConflictInArray()){           
+
+	            //Pasados los filtros agrego al array
+	            self.arrRemunerations.push({
+	              remunerationCant: self.objRemuneration.remunerationCant,
+	              dateBegin: new Date(self.objRemuneration.dateBegin),
+	              dateEnd: self.objRemuneration.dateEnd
+	            });
 
 
-						//Sort segun las fechas de inicio
-            console.log("before");
-            console.log(self.arrRemunerations);
-            self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
-            console.log("after");
-            console.log(self.arrRemunerations);
+							//Sort segun las fechas de inicio
+	            self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
 
-
-            //actualizacion del tamaño de cada periodo CSS!!
-						updateTimeLineTagsView();            
-            //Reset
-            self.objRemuneration.remunerationCant = null;
-            self.objRemuneration.dateBegin = null;
-            self.objRemuneration.dateEnd = null;
+	            //actualizacion del tamaño de cada periodo CSS!!
+							updateTimeLineTagsView();            
+	            //Reset
+	            self.objRemuneration.remunerationCant = null;
+	            self.objRemuneration.dateBegin = null;
+	            self.objRemuneration.dateEnd = null;
+            }
 					};
 
 					var objRemunerationIsValid = function(objParam){
@@ -114,16 +138,44 @@
 					};
 
 					var checkObjRemunerationDateConflictInArray = function(){
-						self.arrRemunerations.forEach(function(arrayItem){
+
+
+						for (var i = 0; i < self.arrRemunerations.length ; i++) {
+
+							if(moment(new Date(self.objRemuneration.dateBegin)).isBetween(new Date(self.arrRemunerations[i].dateBegin), new Date(self.arrRemunerations[i].dateEnd))||
+								moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(self.arrRemunerations[i].dateBegin), new Date(self.arrRemunerations[i].dateEnd))||
+								moment(new Date(self.arrRemunerations[i].dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))||
+								moment(new Date(self.arrRemunerations[i].dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))) {
+                console.log("conflicto con los periodos existentes");
+								return false;
+							}
+							
+						}
+
+						return true;
+						/*
+						var arrSize = self.arrRemunerations.length;
+						self.arrRemunerations.forEach(function(arrayItem, index){
+
+							console.log(moment(new Date(self.objRemuneration.dateBegin)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd)));
+							console.log(moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd)));
+							console.log(moment(new Date(arrayItem.dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd)));
+							console.log(moment(new Date(arrayItem.dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd)));
+
 							if(moment(new Date(self.objRemuneration.dateBegin)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
 								moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(arrayItem.dateBegin), new Date(arrayItem.dateEnd))||
 								moment(new Date(arrayItem.dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))||
 								moment(new Date(arrayItem.dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))) {
                 console.log("conflicto con los periodos existentes");
 								return false;
+							}
+							if(arrSize - 1 == index){
+								return true
 							}						
 						});
-            return true;
+						*/
+
+
 					};					
 
 					var updateTimeLineTagsView = function(){
@@ -142,6 +194,16 @@
 
 					};
 
+					self.deleteRemu = function(index){
+						if (index > -1) {
+						    self.arrRemunerations.splice(index, 1);
+						    updateTimeLineTagsView();
+						}
+					};
+					self.deleteObjRemunerationDateInArray = function(){
+						self.arrRemunerations = [];						
+					};
+
           /*PENDIENTE*/
           var fixEmptySpacesObjRemunerationDateInArray = function(){
             var tempArray = angular.copy(self.arrRemunerations);
@@ -149,16 +211,26 @@
             });
           };
 
-					self.deleteRemu = function(index){
-						if (index > -1) {
-						    self.arrRemunerations.splice(index, 1);
-						    updateTimeLineTagsView();
-						}
-					};
-
-
 					/******* END type 2 remuneracion intermitente *****/
 					/************************************************************************* END REMUNERATION VARIABLES**********/
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
