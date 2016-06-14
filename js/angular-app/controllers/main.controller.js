@@ -71,26 +71,19 @@
 					};
 
 					self.agregateNewRemuneration = function(){
-						
-						/*
+
 						//Check if objRemuneration is valid
 						console.log("Check if objRemuneration is valid");
-						console.log(!objRemunerationIsValid(self.objRemuneration))
+						console.log(!objRemunerationIsValid(self.objRemuneration));
 						if(!objRemunerationIsValid(self.objRemuneration)){
 							return;
-						}						
+						}
 						//check with other dates conflict
 						console.log("check with other dates conflict");
 						console.log(!checkObjRemunerationDateConflictInArray());
 						if(!checkObjRemunerationDateConflictInArray()) {
               return;
             }
-						*/
-
-						console.log(objRemunerationIsValid(self.objRemuneration));
-						console.log(checkObjRemunerationDateConflictInArray());
-
-            if(objRemunerationIsValid(self.objRemuneration) && checkObjRemunerationDateConflictInArray()){           
 
 	            //Pasados los filtros agrego al array
 	            self.arrRemunerations.push({
@@ -104,12 +97,12 @@
 	            self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
 
 	            //actualizacion del tamaño de cada periodo CSS!!
-							updateTimeLineTagsView();            
+							updateTimeLineTagsView();
 	            //Reset
 	            self.objRemuneration.remunerationCant = null;
 	            self.objRemuneration.dateBegin = null;
 	            self.objRemuneration.dateEnd = null;
-            }
+
 					};
 
 					var objRemunerationIsValid = function(objParam){
@@ -124,14 +117,17 @@
 						}
 						if(moment(new Date(objParam.dateBegin)).isSameOrAfter(moment(new Date(objParam.dateEnd)))){
 							console.log("fecha de inicio debe ser anterior a la de fin");
+							errorMessages("Cuidado","La fecha de inicio debe ser posterior a la de fin");
 							return false;
 						}
 						if(moment(new Date(objParam.dateBegin)).isBefore(moment(new Date(self.dateAtInitWork)))){
 							console.log("fecha de inicio debe ser posterior a la fecha inicio trabajo");
+							errorMessages("Cuidado","La fecha de inicio debe ser posterior a la fecha de inicio de vida laboral");
 							return false;
 						}
 						if(moment(new Date(objParam.dateEnd)).isAfter(moment(new Date($('#remu-end')[0].innerHTML)))){
 							console.log("La fecha de termino debe ser anterior a " +  $('#remu-end')[0].innerHTML);
+							errorMessages("Cuidado","La fecha de fin debe ser anterior al fin de vida laboral");
 							return false;
 						}
 						return true;
@@ -147,9 +143,10 @@
 								moment(new Date(self.arrRemunerations[i].dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))||
 								moment(new Date(self.arrRemunerations[i].dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))) {
                 console.log("conflicto con los periodos existentes");
+								errorMessages("Cuidado","El rango de fechas ingresado presenta conflicto con los que ya selecciono previamente");
 								return false;
 							}
-							
+
 						}
 
 						return true;
@@ -171,15 +168,15 @@
 							}
 							if(arrSize - 1 == index){
 								return true
-							}						
+							}
 						});
 						*/
 
 
-					};					
+					};
 
 					var updateTimeLineTagsView = function(){
-						//var totalWidth = 
+						//var totalWidth =
 						console.log($("#remu-tline").width());
 
 						var totalWidth = parseInt($("#remu-tline").width());
@@ -201,13 +198,22 @@
 						}
 					};
 					self.deleteObjRemunerationDateInArray = function(){
-						self.arrRemunerations = [];						
+						self.arrRemunerations = [];
+					};
+
+					var errorMessages = function(title,message){
+						swal({
+							title: title,
+							text: message,
+							type: "warning",
+							confirmButtonText: "ok"
+						});
 					};
 
           /*PENDIENTE*/
           var fixEmptySpacesObjRemunerationDateInArray = function(){
             var tempArray = angular.copy(self.arrRemunerations);
-            tempArray.forEach(function(arrayItem, index){              
+            tempArray.forEach(function(arrayItem, index){
             });
           };
 
@@ -218,7 +224,7 @@
 
 
 
-					
+
 
 
 

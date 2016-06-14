@@ -163,14 +163,14 @@
                             <div ng-show="typeRemuneration == 2" class="ui grid">
                               <div class="six wide column">
                                     <label>Inicio de vida laboral</label>
-                                    <ng-datepicker ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">                                    
+                                    <ng-datepicker ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">
                                 </div>
                             </div>
 
                             <div ng-show="typeRemuneration == 2" class="ui grid">
 
                                 <div class="four wide column">
-                                    <label>Remuneracion{{objRemuneration.remunerationCant}}</label>
+                                    <label>Remuneracion</label>
                                     <input ng-model="objRemuneration.remunerationCant" type="text">
                                 </div>
                                 <div class="four wide column">
@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="four wide column">
                                   <div class="field">
-                                      <label>Hasta:{{objRemuneration.dateEnd}}</label>
+                                      <label>Hasta:</label>
                                       <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objRemuneration.dateEnd" locale="es">
                                   </div>
                                 </div>
@@ -198,7 +198,7 @@
 
                                 <ng-repeat ng-repeat="remu in arrRemunerations">
                                     <div ng-style="remusTags" class="time-line-divider">
-                                        {{remu.remunerationCant}} {{$index}}<span ng-click="deleteRemu($index)" class="close-time-divider">x</span>
+                                        {{remu.remunerationCant}}<span ng-click="deleteRemu($index)" class="close-time-divider">x</span>
                                     </div>
                                 </ng-repeat>
 
@@ -373,7 +373,7 @@
 
 
       <script type="text/javascript" src="semantic/dist/semantic.min.js"></script>
-      
+
       <script type="text/javascript" src="third-party/semantic-ui-range-master/range.js"></script>
 
 
@@ -411,7 +411,7 @@
 
             //console.log(document.getElementById('bodyId'));
 
-            
+
 
             //angular.element(document.getElementById('bodyId')).scope().myfunction('test');
 
@@ -424,7 +424,7 @@
                                 if(angular.element('#bodyId').scope()){
                                     angular.element('#bodyId').scope().deleteObjRemunerationDateInArray();
                                     angular.element('#bodyId').scope().$apply();
-                                }                                     
+                                }
                                     $('#display-3').html(value);
                     if(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date"){
 
