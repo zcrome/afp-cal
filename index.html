@@ -216,8 +216,6 @@
                               </div>
                             </div>
 
-
-
                         </div>
                     </div>
                 </div>
@@ -225,15 +223,82 @@
                 <div class="field">
                     <div class="ui grid">
                         <div class="right aligned eight wide column">
-                            <button type="button" class="ui button">Tasas segun AFP</button>
+                            <button ng-click="typeSelectionFondoAfp = 1" type="button" class="ui button">Tasas segun AFP</button>
                         </div>
                         <div class="left aligned eight wide column">
-                            <button type="button" class="ui button">Ingreso Manual</button>
+                            <button ng-click="typeSelectionFondoAfp = 2" type="button" class="ui button">Ingreso Manual</button>
                         </div>
                     </div>
                     <div class="ui hidden divider"></div>
                     <div class="">
-                        <div class="ui segment">
+                        <div ng-show="typeSelectionFondoAfp == 2" class="ui segment">
+                            <div class="ui grid">
+                                <div class="four wide column">
+                                    <label>Tasa por la comision por Saldo (%):
+                                    </label>
+                                    <input ng-model="comisionSaldo" type="text" value="">
+                                </div>
+                                <div class="four wide column">
+                                    <label>Comision por Flujo Inicial (%):</label>
+                                    <input ng-model="comisionFlujoInicial" type="text" value="">
+                                </div>
+                                <div class="four wide column">
+                                    <label>Disminucion de tasa por Flujo anual (%):</label>
+                                    <input ng-model="disminucionFlujoAnual" type="text" value="">
+                                </div>
+                                <div class="four wide column">
+                                    <label>Tasa de Prima de Seguros (%):</label>
+                                    <input ng-model="primaDeSeguro" type="text" value="">
+                                </div>
+                            </div>
+
+                            <div class="ui grid">
+                                <div class="four wide column">
+                                    <label>Rentabilidad (%)</label>
+                                    <input ng-model="tasaRentabilidad" type="text" value="">
+                                </div>
+                                <div class="four wide column">
+                                    <div class="field">
+                                        <label>Desde:</label>
+                                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.fechaInicio" locale="es">
+                                    </div>
+                                </div>
+                                <div class="four wide column">
+                                  <div class="field">
+                                      <label>Hasta:</label>
+                                      <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.fechaFin" locale="es">
+                                  </div>
+                                </div>
+                                <div class="four wide column">
+                                  <button class="fluid ui button">
+                                    <i class="plus icon"></i>
+                                  </button>
+                                </div>
+                            </div>
+                            <div class="ui grid">
+                                <div class="sixteen wide column">
+                                  <div class="time-line-divider">
+                                    Fondo 1 <span class="close-time-divider">x</span>
+                                  </div>
+                                  <div class="time-line-divider">
+                                    Fondo 2
+                                  </div>
+                                  <div class="time-line-divider">
+                                    Fondo 3
+                                  </div>
+                                  <hr class="time-line">
+                                  <i class="time-line-mark end-time-line">|</i>
+                                  <i class="time-line-mark begin-time-line">|</i>
+                                </div>
+                            </div>
+                            <div class="ui grid">
+                              <div class="sixteen wide column">
+                                <div class="begin-time-label">19/07/1992</div>
+                                <div class="end-time-label">19/02/1992</div>
+                              </div>
+                            </div>
+                        </div>
+                        <div ng-show="typeSelectionFondoAfp == 1" class="ui segment">
                             <div class="ui grid">
                                 <div class="four wide column">
                                     <label>AFP
@@ -328,19 +393,6 @@
                                 <div class="end-time-label">19/02/1992</div>
                               </div>
                             </div>
-
-                            <!--
-                            <div class="ui grid">
-                              <div class="four wide column"><label>Fondo 3</label></div>
-                              <div class="four wide column">
-                                <div class="field">
-                                  <label>Desde:</label>
-                                  <input id="myDatePicker-2" data-lang="es" data-years="1995-2013" data-sundayfirst="false" placeholder="Requerido"/>
-                              </div></div>
-                              <div class="four wide column"> </div>
-                              <div class="four wide column"> </div>
-                            </div>
-                          -->
                         </div>
                     </div>
                 </div>

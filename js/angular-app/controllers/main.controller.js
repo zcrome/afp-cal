@@ -222,17 +222,28 @@
 
 
 
+					/*************************************************************FONDO AFP VARIABLES**********/
+					self.typeSelectionFondoAfp = 1;
+					/******* type 1 Tasas de ingreso manual ***************************/
+					self.comisionSaldo = 99.1;
+					self.comisionFlujoInicial = 99.1;
+					self.disminucionFlujoAnual = 99.1;
+					self.primaDeSeguro = 99.1;
+					self.tasaRentabilidad = 10.0;
+
+					self.objFondoPersonalizado = {
+						fechaInicio: new Date(),
+						fechaFin: new Date(),
+						rentabilidad: null,
+						comisionSaldo: null,
+						comisionFlujoInicial: null,
+						primaSeguros: null,
+						tasaRentabilidad: null
+					};
+					/******* END Tasas de ingreso manual *******************************/
 
 
-
-
-
-
-
-
-
-
-
+					/*************************************************************END FONDO AFP VARIABLES**********/
 
 
 
