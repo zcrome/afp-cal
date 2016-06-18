@@ -68,6 +68,7 @@
 						self.deleteObjRemunerationDateInArray();
 						self.dateViewDisplayInitWork = moment(self.dateAtInitWork).format('Do MMMM YYYY');
 						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
+						$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 					};
 
 					self.agregateNewRemuneration = function(){
@@ -230,16 +231,52 @@
 					self.disminucionFlujoAnual = 99.1;
 					self.primaDeSeguro = 99.1;
 					self.tasaRentabilidad = 10.0;
-
 					self.objFondoPersonalizado = {
-						fechaInicio: new Date(),
-						fechaFin: new Date(),
+						dateBegin: new Date(),
+						dateEnd: new Date(),
 						rentabilidad: null,
 						comisionSaldo: null,
 						comisionFlujoInicial: null,
 						primaSeguros: null,
 						tasaRentabilidad: null
 					};
+					self.arrObjFondosPersonalizados = [{
+						dateBegin: new Date(),
+						dateEnd: new Date(),
+						rentabilidad: null,
+						comisionSaldo: null,
+						comisionFlujoInicial: null,
+						primaSeguros: null,
+						tasaRentabilidad: 23
+					},{
+						dateBegin: new Date(),
+						dateEnd: new Date(),
+						rentabilidad: null,
+						comisionSaldo: null,
+						comisionFlujoInicial: null,
+						primaSeguros: null,
+						tasaRentabilidad: 24
+					}];
+					self.fmanTags = {
+					    "width" : "50%"
+					};
+					self.deleteFondoMan = function(index){
+						if (index > -1) {
+						    self.arrObjFondosPersonalizados.splice(index, 1);
+						    //updateTimeLineTagsView();
+						}
+					};
+					self.addFondoPersonalizado = function(){
+
+						if(!objRemunerationIsValid(self.objFondoPersonalizado)){
+							return;
+						}
+
+
+
+
+					};
+
 					/******* END Tasas de ingreso manual *******************************/
 
 
