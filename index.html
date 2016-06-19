@@ -289,7 +289,7 @@
                                   <i class="time-line-mark begin-time-line">|</i>
                                 </div>
                             </div>
-                            <div ng-show="typeRemuneration == 2" class="ui grid">
+                            <div  class="ui grid">
                               <div class="sixteen wide column">
                                 <div id="" class="begin-time-label">{{dateViewDisplayInitWork}}</div>
                                 <div ng-hide="true" id="" class="begin-time-label">{{dateAtInitWork}}</div>
@@ -368,28 +368,35 @@
                                   </button>
                                 </div>
                             </div>
+
+
+
+
                             <div class="ui grid">
-                                <div class="sixteen wide column">
-                                  <div class="time-line-divider">
-                                    Fondo 1 <span class="close-time-divider">x</span>
-                                  </div>
-                                  <div class="time-line-divider">
-                                    Fondo 2
-                                  </div>
-                                  <div class="time-line-divider">
-                                    Fondo 3
-                                  </div>
+                                <div id="remu-tline3" class="sixteen wide column">
+                                <ng-repeat ng-repeat="fondos in arrFondosDeAfpAutomaticos">
+                                    <div ng-style="fmanTags" class="time-line-divider">
+                                        <span ng-click="deleteFondoAutomatico($index)"  class="close-time-divider">x</span>
+                                    </div>
+                                </ng-repeat>
                                   <hr class="time-line">
                                   <i class="time-line-mark end-time-line">|</i>
                                   <i class="time-line-mark begin-time-line">|</i>
                                 </div>
                             </div>
-                            <div class="ui grid">
+                            <div  class="ui grid">
                               <div class="sixteen wide column">
-                                <div class="begin-time-label">19/07/1992</div>
-                                <div class="end-time-label">19/02/1992</div>
+                                <div id="" class="begin-time-label">{{dateViewDisplayInitWork}}</div>
+                                <div ng-hide="true" id="" class="begin-time-label">{{dateAtInitWork}}</div>
+                                <div id="FA-end" class="end-time-label"></div>
                               </div>
                             </div>
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -481,6 +488,7 @@
                   if(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date"){
                     $('#remu-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
                     $('#FM-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
+                    $('#FA-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
                   }
                 }
             });

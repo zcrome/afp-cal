@@ -69,6 +69,7 @@
 						self.dateViewDisplayInitWork = moment(self.dateAtInitWork).format('Do MMMM YYYY');
 						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 						$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
+						$('#FA-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 					};
 
 					self.agregateNewRemuneration = function(){
@@ -423,6 +424,20 @@
 						self.objFondoAutomatico.tasaRentabilidad = objFondo.tasaRentabilidad;
 
 					};
+
+
+					self.arrFondosDeAfpAutomaticos = [];
+
+
+					self.deleteFondoAutomatico = function(index){
+						if (index > -1) {
+						    self.arrFondosDeAfpAutomaticos.splice(index, 1);
+						    //updateTimeLineTagsView();
+						}
+					};
+
+
+
 					/******* END Ingreso de tasas Automaticas ****************************/
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
