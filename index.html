@@ -363,7 +363,7 @@
                                   </div>
                                 </div>
                                 <div class="four wide column">
-                                  <button class="ui button">
+                                  <button ng-click="addNewFondoAfpToArray()" class="ui button">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
@@ -375,8 +375,8 @@
                             <div class="ui grid">
                                 <div id="remu-tline3" class="sixteen wide column">
                                 <ng-repeat ng-repeat="fondos in arrFondosDeAfpAutomaticos">
-                                    <div ng-style="fmanTags" class="time-line-divider">
-                                        <span ng-click="deleteFondoAutomatico($index)"  class="close-time-divider">x</span>
+                                    <div ng-style="fautoTags" class="time-line-divider">
+                                        {{fondos.nombreFondo+"-Rentabilidad al "+fondos.tasaRentabilidad+"%"}}<span ng-click="deleteFondoAutomatico($index)"  class="close-time-divider">x</span>
                                     </div>
                                 </ng-repeat>
                                   <hr class="time-line">

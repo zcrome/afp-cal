@@ -400,7 +400,7 @@
 						primaDeSeguro: 50.1,
 						tasaRentabilidad: 50.1
 					}];
-
+					self.arrFondosDeAfpAutomaticos = [];
 					self.objFondoAutomatico = {
 						dateBegin: new Date(),
 						dateEnd: new Date(),
@@ -412,9 +412,14 @@
 						primaDeSeguro: null,
 						tasaRentabilidad: null
 					};
+					self.fautoTags = {
+					    "width" : "50%"
+					};
 
-					self.setFondoDeAfp = function(objFondo){
-						
+
+					
+
+					self.setFondoDeAfp = function(objFondo){						
 						self.objFondoAutomatico.nombreFondo = objFondo.nombreFondo;
 						self.objFondoAutomatico.nombreAfp = objFondo.nombreAfp;
 						self.objFondoAutomatico.tasaFlujoInicial = objFondo.tasaFlujoInicial;
@@ -422,12 +427,7 @@
 						self.objFondoAutomatico.disminucionFlujoAnual = objFondo.disminucionFlujoAnual;
 						self.objFondoAutomatico.primaDeSeguro = objFondo.primaDeSeguro;
 						self.objFondoAutomatico.tasaRentabilidad = objFondo.tasaRentabilidad;
-
 					};
-
-
-					self.arrFondosDeAfpAutomaticos = [];
-
 
 					self.deleteFondoAutomatico = function(index){
 						if (index > -1) {
@@ -436,6 +436,81 @@
 						}
 					};
 
+
+					self.addNewFondoAfpToArray = function(){
+
+						if(!objFondoPersonalizadoCheck(self.objFondoAutomatico)){
+							return;
+						}
+
+						console.log(!checkObjFondosAutomaticosConflictInArray());
+						if(!checkObjFondosAutomaticosConflictInArray()){
+							return;							
+						}
+
+						//Pasados los filtros agrego al array
+				      self.arrFondosDeAfpAutomaticos.push({
+				      		nombreFondo: self.objFondoAutomatico.nombreFondo,
+									nombreAfp: self.objFondoAutomatico.nombreAfp,
+				         	dateBegin: self.objFondoAutomatico.dateBegin,
+									dateEnd: self.objFondoAutomatico.dateEnd,
+									tasaFlujoInicial: self.objFondoAutomatico.tasaFlujoInicial,
+									comisionSaldo: self.objFondoAutomatico.comisionSaldo,
+									comisionFlujoInicial: self.objFondoAutomatico.comisionFlujoInicial,
+									primaSeguros: self.objFondoAutomatico.primaSeguros,
+									tasaRentabilidad: self.objFondoAutomatico.tasaRentabilidad
+				      });
+							
+							//Sort segun las fechas de inicio
+				      self.arrFondosDeAfpAutomaticos = _.sortBy(self.arrFondosDeAfpAutomaticos, 'dateBegin');
+				      
+				      //actualizacion del tamaño de cada periodo CSS!!
+							updateTimeLineTagsViewFondosAutomaticos();
+				      
+				      //Reset
+				      self.objFondoAutomatico.dateBegin = null;
+							self.objFondoAutomatico.dateEnd = null;
+							self.objFondoAutomatico.tasaFlujoInicial = null;
+							self.objFondoAutomatico.comisionSaldo = null;
+							self.objFondoAutomatico.disminucionFlujoAnual = null;
+							self.objFondoAutomatico.primaDeSeguro = null;
+							self.objFondoAutomatico.tasaRentabilidad = null;
+							self.objFondoAutomatico.nombreFondo = null;
+							self.objFondoAutomatico.nombreAfp = null;
+
+					};
+
+
+					var checkObjFondosAutomaticosConflictInArray = function(){
+						for (var i = 0; i < self.arrFondosDeAfpAutomaticos.length ; i++) {
+							if(moment(new Date(self.objFondoAutomatico.dateBegin)).isBetween(new Date(self.arrFondosDeAfpAutomaticos[i].dateBegin), new Date(self.arrFondosDeAfpAutomaticos[i].dateEnd))||
+								moment(new Date(self.objFondoAutomatico.dateEnd)).isBetween(new Date(self.arrFondosDeAfpAutomaticos[i].dateBegin), new Date(self.arrFondosDeAfpAutomaticos[i].dateEnd))||
+								moment(new Date(self.arrFondosDeAfpAutomaticos[i].dateBegin)).isBetween(new Date(self.objFondoAutomatico.dateBegin), new Date(self.objFondoAutomatico.dateEnd))||
+								moment(new Date(self.arrFondosDeAfpAutomaticos[i].dateEnd)).isBetween( new Date(self.objFondoAutomatico.dateBegin), new Date(self.objFondoAutomatico.dateEnd))) {
+                console.log("conflicto con los periodos existentes");
+								errorMessages("Cuidado","El rango de fechas ingresado presenta conflicto con los que ya selecciono previamente");
+								return false;
+							}
+						}
+						return true;
+					}
+
+
+					var updateTimeLineTagsViewFondosAutomaticos = function(){
+						//var totalWidth =
+						console.log($("#remu-tline3").width());
+
+						var totalWidth = parseInt($("#remu-tline3").width());
+						var cantTags = self.arrFondosDeAfpAutomaticos.length;
+						var tagWidth = (100*(totalWidth/cantTags))/(totalWidth) - 2;
+
+						//$("#remus").width(String(tagWidth)+"%");
+
+						self.fautoTags = {
+						    "width" : String(tagWidth)+"%"
+						};
+
+					};
 
 
 					/******* END Ingreso de tasas Automaticas ****************************/
