@@ -83,26 +83,23 @@
 						console.log("check with other dates conflict");
 						console.log(!checkObjRemunerationDateConflictInArray());
 						if(!checkObjRemunerationDateConflictInArray()) {
-              return;
-            }
+			              return;
+			            }
 
-	            //Pasados los filtros agrego al array
-	            self.arrRemunerations.push({
-	              remunerationCant: self.objRemuneration.remunerationCant,
-	              dateBegin: new Date(self.objRemuneration.dateBegin),
-	              dateEnd: self.objRemuneration.dateEnd
-	            });
-
-
+				         //Pasados los filtros agrego al array
+				         self.arrRemunerations.push({
+				           remunerationCant: self.objRemuneration.remunerationCant,
+				           dateBegin: new Date(self.objRemuneration.dateBegin),
+				           dateEnd: self.objRemuneration.dateEnd
+				         });
 							//Sort segun las fechas de inicio
-	            self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
-
-	            //actualizacion del tamaño de cada periodo CSS!!
-							updateTimeLineTagsView();
-	            //Reset
-	            self.objRemuneration.remunerationCant = null;
-	            self.objRemuneration.dateBegin = null;
-	            self.objRemuneration.dateEnd = null;
+				         self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
+				         //actualizacion del tamaño de cada periodo CSS!!
+						updateTimeLineTagsView();
+				         //Reset
+				         self.objRemuneration.remunerationCant = null;
+				         self.objRemuneration.dateBegin = null;
+				         self.objRemuneration.dateEnd = null;
 
 					};
 
@@ -118,7 +115,7 @@
 						}
 						if(moment(new Date(objParam.dateBegin)).isSameOrAfter(moment(new Date(objParam.dateEnd)))){
 							console.log("fecha de inicio debe ser anterior a la de fin");
-							errorMessages("Cuidado","La fecha de inicio debe ser posterior a la de fin");
+							errorMessages("Cuidado","La fecha de inicio debe ser anterior a la de fin");
 							return false;
 						}
 						if(moment(new Date(objParam.dateBegin)).isBefore(moment(new Date(self.dateAtInitWork)))){
@@ -143,7 +140,7 @@
 								moment(new Date(self.objRemuneration.dateEnd)).isBetween(new Date(self.arrRemunerations[i].dateBegin), new Date(self.arrRemunerations[i].dateEnd))||
 								moment(new Date(self.arrRemunerations[i].dateBegin)).isBetween(new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))||
 								moment(new Date(self.arrRemunerations[i].dateEnd)).isBetween( new Date(self.objRemuneration.dateBegin), new Date(self.objRemuneration.dateEnd))) {
-                console.log("conflicto con los periodos existentes");
+                				console.log("conflicto con los periodos existentes");
 								errorMessages("Cuidado","El rango de fechas ingresado presenta conflicto con los que ya selecciono previamente");
 								return false;
 							}
@@ -211,12 +208,12 @@
 						});
 					};
 
-          /*PENDIENTE*/
-          var fixEmptySpacesObjRemunerationDateInArray = function(){
-            var tempArray = angular.copy(self.arrRemunerations);
-            tempArray.forEach(function(arrayItem, index){
-            });
-          };
+			          /*PENDIENTE*/
+			          var fixEmptySpacesObjRemunerationDateInArray = function(){
+			            var tempArray = angular.copy(self.arrRemunerations);
+			            tempArray.forEach(function(arrayItem, index){
+			            });
+			          };
 
 					/******* END type 2 remuneracion intermitente *****/
 					/************************************************************************* END REMUNERATION VARIABLES**********/
@@ -224,26 +221,25 @@
 
 
 					/*************************************************************FONDO AFP VARIABLES**********/
-					self.typeSelectionFondoAfp = 1;
+					self.typeSelectionFondoAfp = 2;
 					/******* type 1 Tasas de ingreso manual ***************************/
-					self.comisionSaldo = 99.1;
-					self.comisionFlujoInicial = 99.1;
-					self.disminucionFlujoAnual = 99.1;
-					self.primaDeSeguro = 99.1;
-					self.tasaRentabilidad = 10.0;
+
 					self.objFondoPersonalizado = {
 						dateBegin: new Date(),
 						dateEnd: new Date(),
-						rentabilidad: null,
-						comisionSaldo: null,
-						comisionFlujoInicial: null,
-						primaSeguros: null,
-						tasaRentabilidad: null
+						tasaFlujoInicial: 99.1,
+						comisionSaldo: 99.1,
+						disminucionFlujoAnual: 99.1,
+						primaDeSeguro: 99.1,
+						tasaRentabilidad: 10.1
 					};
+
+					self.arrObjFondosPersonalizados = [];
+					/*
 					self.arrObjFondosPersonalizados = [{
-						dateBegin: new Date(),
-						dateEnd: new Date(),
-						rentabilidad: null,
+						dateBegin: new Date(2016,05,10),
+						dateEnd: new Date(2016,05,20),
+						tasaFlujoInicial: 99.1,
 						comisionSaldo: null,
 						comisionFlujoInicial: null,
 						primaSeguros: null,
@@ -251,12 +247,12 @@
 					},{
 						dateBegin: new Date(),
 						dateEnd: new Date(),
-						rentabilidad: null,
+						tasaFlujoInicial: 99.1,
 						comisionSaldo: null,
 						comisionFlujoInicial: null,
 						primaSeguros: null,
 						tasaRentabilidad: 24
-					}];
+					}];*/
 					self.fmanTags = {
 					    "width" : "50%"
 					};
@@ -267,19 +263,110 @@
 						}
 					};
 					self.addFondoPersonalizado = function(){
-
-						if(!objRemunerationIsValid(self.objFondoPersonalizado)){
+						if(!objFondoPersonalizadoCheck(self.objFondoPersonalizado)){
 							return;
 						}
 
+						console.log(!checkObjFondosPersonalizadosConflictInArray());
+						if(!checkObjFondosPersonalizadosConflictInArray()){
+							return;							
+						}
 
+						//Pasados los filtros agrego al array
+				      self.arrObjFondosPersonalizados.push({
+				         	dateBegin: self.objFondoPersonalizado.dateBegin,
+									dateEnd: self.objFondoPersonalizado.dateEnd,
+									tasaFlujoInicial: self.objFondoPersonalizado.tasaFlujoInicial,
+									comisionSaldo: self.objFondoPersonalizado.comisionSaldo,
+									comisionFlujoInicial: self.objFondoPersonalizado.comisionFlujoInicial,
+									primaSeguros: self.objFondoPersonalizado.primaSeguros,
+									tasaRentabilidad: self.objFondoPersonalizado.tasaRentabilidad
+				      });
+							
+							//Sort segun las fechas de inicio
+				      self.arrObjFondosPersonalizados = _.sortBy(self.arrObjFondosPersonalizados, 'dateBegin');
+				      
+				      //actualizacion del tamaño de cada periodo CSS!!
+							updateTimeLineTagsViewFondosManuales();
+				      
+				      //Reset
+				      self.objFondoPersonalizado.dateBegin = null;
+							self.objFondoPersonalizado.dateEnd = null;
+							self.objFondoPersonalizado.tasaFlujoInicial = null;
+							self.objFondoPersonalizado.comisionSaldo = null;
+							self.objFondoPersonalizado.disminucionFlujoAnual = null;
+							self.objFondoPersonalizado.primaDeSeguro = null;
+							self.objFondoPersonalizado.tasaRentabilidad = null;
 
 
 					};
 
+					var objFondoPersonalizadoCheck = function(objParam){
+						if(!objParam){
+							return false;
+						}
+						if(!objParam.dateBegin ||
+						!objParam.dateEnd ||
+						!objParam.comisionSaldo ||
+						!objParam.disminucionFlujoAnual ||
+						!objParam.primaDeSeguro ||
+						!objParam.tasaRentabilidad ||
+						!objParam.tasaFlujoInicial){
+							console.log("invalid params!");
+							return false;
+						}
+						if(moment(new Date(objParam.dateBegin)).isSameOrAfter(moment(new Date(objParam.dateEnd)))){
+							console.log("fecha de inicio debe ser anterior a la de fin");
+							errorMessages("Cuidado","La fecha de inicio debe ser anterior a la de fin");
+							return false;
+						}
+						if(moment(new Date(objParam.dateBegin)).isBefore(moment(new Date(self.dateAtInitWork)))){
+							console.log("fecha de inicio debe ser posterior a la fecha inicio trabajo");
+							errorMessages("Cuidado","La fecha de inicio debe ser posterior a la fecha de inicio de vida laboral");
+							return false;
+						}
+						if(moment(new Date(objParam.dateEnd)).isAfter(moment(new Date($('#remu-end')[0].innerHTML)))){
+							console.log("La fecha de termino debe ser anterior a " +  $('#remu-end')[0].innerHTML);
+							errorMessages("Cuidado","La fecha de fin debe ser anterior al fin de vida laboral");
+							return false;
+						}
+						return true;
+					};
+
+
+					var checkObjFondosPersonalizadosConflictInArray = function(){
+						for (var i = 0; i < self.arrObjFondosPersonalizados.length ; i++) {
+							if(moment(new Date(self.objFondoPersonalizado.dateBegin)).isBetween(new Date(self.arrObjFondosPersonalizados[i].dateBegin), new Date(self.arrObjFondosPersonalizados[i].dateEnd))||
+								moment(new Date(self.objFondoPersonalizado.dateEnd)).isBetween(new Date(self.arrObjFondosPersonalizados[i].dateBegin), new Date(self.arrObjFondosPersonalizados[i].dateEnd))||
+								moment(new Date(self.arrObjFondosPersonalizados[i].dateBegin)).isBetween(new Date(self.objFondoPersonalizado.dateBegin), new Date(self.objFondoPersonalizado.dateEnd))||
+								moment(new Date(self.arrObjFondosPersonalizados[i].dateEnd)).isBetween( new Date(self.objFondoPersonalizado.dateBegin), new Date(self.objFondoPersonalizado.dateEnd))) {
+                console.log("conflicto con los periodos existentes");
+								errorMessages("Cuidado","El rango de fechas ingresado presenta conflicto con los que ya selecciono previamente");
+								return false;
+							}
+						}
+						return true;
+					}
+
+					var updateTimeLineTagsViewFondosManuales = function(){
+						//var totalWidth =
+						console.log($("#remu-tline2").width());
+
+						var totalWidth = parseInt($("#remu-tline2").width());
+						var cantTags = self.arrObjFondosPersonalizados.length;
+						var tagWidth = (100*(totalWidth/cantTags))/(totalWidth) - 2;
+
+						//$("#remus").width(String(tagWidth)+"%");
+
+						self.fmanTags = {
+						    "width" : String(tagWidth)+"%"
+						};
+
+					};
+
 					/******* END Tasas de ingreso manual *******************************/
-
-
+					/******* Ingreso de tasas Automaticas *******************************/
+					/******* END Ingreso de tasas Automaticas ****************************/
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
 

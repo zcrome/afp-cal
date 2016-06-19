@@ -139,7 +139,12 @@
                               </div>
                             </div>
 
-
+                            <div  class="ui grid">
+                              <div class="six wide column">
+                                    <label>Inicio de vida laboral</label>
+                                    <ng-datepicker ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">
+                                </div>
+                            </div>
 
 
                             <div ng-show="typeRemuneration == 1" class="two fields">
@@ -157,12 +162,7 @@
                                 </div>
                             </div>
 
-                            <div ng-show="typeRemuneration == 2" class="ui grid">
-                              <div class="six wide column">
-                                    <label>Inicio de vida laboral</label>
-                                    <ng-datepicker ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">
-                                </div>
-                            </div>
+                            
 
                             <div ng-show="typeRemuneration == 2" class="ui grid">
 
@@ -233,26 +233,26 @@
                                 <div class="four wide column">
                                     <label>Tasa por la comision por Saldo (%):
                                     </label>
-                                    <input ng-model="comisionSaldo" type="text" value="">
+                                    <input ng-model="objFondoPersonalizado.comisionSaldo" type="text" value="">
                                 </div>
                                 <div class="four wide column">
                                     <label>Comision por Flujo Inicial (%):</label>
-                                    <input ng-model="comisionFlujoInicial" type="text" value="">
+                                    <input ng-model="objFondoPersonalizado.tasaFlujoInicial" type="text" value="">
                                 </div>
                                 <div class="four wide column">
                                     <label>Disminucion de tasa por Flujo anual (%):</label>
-                                    <input ng-model="disminucionFlujoAnual" type="text" value="">
+                                    <input ng-model="objFondoPersonalizado.disminucionFlujoAnual" type="text" value="">
                                 </div>
                                 <div class="four wide column">
                                     <label>Tasa de Prima de Seguros (%):</label>
-                                    <input ng-model="primaDeSeguro" type="text" value="">
+                                    <input ng-model="objFondoPersonalizado.primaDeSeguro" type="text" value="">
                                 </div>
                             </div>
 
                             <div class="ui grid">
                                 <div class="four wide column">
                                     <label>Rentabilidad (%)</label>
-                                    <input ng-model="tasaRentabilidad" type="text" value="">
+                                    <input ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
                                 </div>
                                 <div class="four wide column">
                                     <div class="field">
@@ -267,14 +267,14 @@
                                   </div>
                                 </div>
                                 <div class="four wide column">
-                                  <button class="fluid ui button">
+                                  <button ng-click="addFondoPersonalizado()" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
                             </div>
 
                             <div class="ui grid">
-                                <div id="remu-tline" class="sixteen wide column">
+                                <div id="remu-tline2" class="sixteen wide column">
 
 
                                 <ng-repeat ng-repeat="fondos in arrObjFondosPersonalizados">
