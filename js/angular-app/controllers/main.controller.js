@@ -71,7 +71,7 @@
 							});
 							self.dateAtInitWork = null;
 						}
-						self.deleteObjRemunerationDateInArray();
+						self.deleteAllArraysInvolved();
 						self.dateViewDisplayInitWork = moment(self.dateAtInitWork).format('Do MMMM YYYY');
 						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 						$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
@@ -213,8 +213,10 @@
 						    updateTimeLineTagsView();
 						}
 					};
-					self.deleteObjRemunerationDateInArray = function(){
+					self.deleteAllArraysInvolved = function(){
 						self.arrRemunerations = [];
+						self.arrObjFondosPersonalizados = [];
+						self.arrFondosDeAfpAutomaticos = [];
 					};
 
 					var errorMessages = function(title,message){
@@ -274,6 +276,17 @@
 					self.fmanTags = {
 					    "width" : "50%"
 					};
+					self.requiredAfpManualInputColors = {
+						tasaFlujoInicial: false,
+						comisionSaldo: false,
+						disminucionFlujoAnual: false,
+						primaDeSeguro: false,
+						tasaRentabilidad: false
+					};
+
+
+
+
 					self.deleteFondoMan = function(index){
 						if (index > -1) {
 						    self.arrObjFondosPersonalizados.splice(index, 1);
@@ -281,6 +294,9 @@
 						}
 					};
 					self.addFondoPersonalizado = function(){
+
+						console.log(!objFondoPersonalizadoCheck(self.objFondoPersonalizado));
+
 						if(!objFondoPersonalizadoCheck(self.objFondoPersonalizado)){
 							return;
 						}
@@ -323,6 +339,17 @@
 						if(!objParam){
 							return false;
 						}
+
+						if(!('nombreFondo' in objParam)){
+								(!self.objFondoPersonalizado.tasaFlujoInicial ? 			self.requiredAfpManualInputColors.tasaFlujoInicial = true :  			self.requiredAfpManualInputColors.tasaFlujoInicial = false);
+								(!self.objFondoPersonalizado.comisionSaldo ? 					self.requiredAfpManualInputColors.comisionSaldo = true :  				self.requiredAfpManualInputColors.comisionSaldo = false);
+								(!self.objFondoPersonalizado.disminucionFlujoAnual ? 	self.requiredAfpManualInputColors.disminucionFlujoAnual = true :  self.requiredAfpManualInputColors.disminucionFlujoAnual = false);
+								(!self.objFondoPersonalizado.primaDeSeguro ? 					self.requiredAfpManualInputColors.primaDeSeguro = true :  				self.requiredAfpManualInputColors.primaDeSeguro = false);
+								(!self.objFondoPersonalizado.tasaRentabilidad ? 			self.requiredAfpManualInputColors.tasaRentabilidad = true :  			self.requiredAfpManualInputColors.tasaRentabilidad = false);
+						}
+
+
+
 						if(!objParam.dateBegin ||
 						!objParam.dateEnd ||
 						!objParam.comisionSaldo ||
@@ -331,8 +358,15 @@
 						!objParam.tasaRentabilidad ||
 						!objParam.tasaFlujoInicial){
 							console.log("invalid params!");
+							if('nombreFondo' in objParam){
+								errorMessages("Cuidado","Debes seleccionar un fondo de AFP");	
+							}else{
+								errorMessages("Cuidado","Debes ingresar todos los campos");
+							}							
 							return false;
 						}
+
+
 						if(moment(new Date(objParam.dateBegin)).isSameOrAfter(moment(new Date(objParam.dateEnd)))){
 							console.log("fecha de inicio debe ser anterior a la de fin");
 							errorMessages("Cuidado","La fecha de inicio debe ser anterior a la de fin");
@@ -421,7 +455,7 @@
 					self.objFondoAutomatico = {
 						dateBegin: new Date(),
 						dateEnd: new Date(),
-						nombreFondo: "",
+						nombreFondo: null,
 						nombreAfp: "",
 						tasaFlujoInicial: null,
 						comisionSaldo: null,
@@ -455,6 +489,13 @@
 
 
 					self.addNewFondoAfpToArray = function(){
+
+						(!self.dateAtInitWork ? self.requiredRemuInterInputColors.dateAtInitWork = true :  self.requiredRemuInterInputColors.dateAtInitWork = false);
+
+						if(!self.dateAtInitWork){
+							errorMessages("Cuidado","Debes establecer una fecha de inicio de vida laboral");
+							return;
+						}
 
 						if(!objFondoPersonalizadoCheck(self.objFondoAutomatico)){
 							return;

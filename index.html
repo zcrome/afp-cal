@@ -101,11 +101,11 @@
                 <h4 class="ui dividing header">Datos Personales</h4>
                 <div class="three fields">
                     <div class="field">
-                        <label>Nombre {{userName}}</label>
+                        <label>Nombre</label>
                         <input ng-model="userName" type="text" placeholder="opcional">
                     </div>
                     <div class="field">
-                        <label>Email {{userEmail}}</label>
+                        <label>Email</label>
                         <input ng-model="userEmail" type="text" placeholder="opcional">
                     </div>
                     <div class="field">
@@ -238,28 +238,37 @@
                         <div ng-show="typeSelectionFondoAfp == 2" class="ui segment">
                             <div class="ui grid">
                                 <div class="four wide column">
-                                    <label>Tasa por la comision por Saldo (%):
-                                    </label>
-                                    <input ng-model="objFondoPersonalizado.comisionSaldo" type="text" value="">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.comisionSaldo}">
+                                        <label>Tasa por la comision por Saldo (%):<i ng-show="requiredAfpManualInputColors.comisionSaldo" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.comisionSaldo" type="text" value="">
+                                    </div>                                    
                                 </div>
                                 <div class="four wide column">
-                                    <label>Comision por Flujo Inicial (%):</label>
-                                    <input ng-model="objFondoPersonalizado.tasaFlujoInicial" type="text" value="">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaFlujoInicial}">
+                                        <label>Comision por Flujo Inicial (%):<i ng-show="requiredAfpManualInputColors.tasaFlujoInicial" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.tasaFlujoInicial" type="text" value="">
+                                    </div>                                    
                                 </div>
                                 <div class="four wide column">
-                                    <label>Disminucion de tasa por Flujo anual (%):</label>
-                                    <input ng-model="objFondoPersonalizado.disminucionFlujoAnual" type="text" value="">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.disminucionFlujoAnual}">
+                                        <label>Disminucion de tasa por Flujo anual (%):<i ng-show="requiredAfpManualInputColors.disminucionFlujoAnual" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.disminucionFlujoAnual" type="text" value="">
+                                    </div>                                    
                                 </div>
                                 <div class="four wide column">
-                                    <label>Tasa de Prima de Seguros (%):</label>
-                                    <input ng-model="objFondoPersonalizado.primaDeSeguro" type="text" value="">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.primaDeSeguro}">
+                                        <label>Tasa de Prima de Seguros (%):<i ng-show="requiredAfpManualInputColors.primaDeSeguro" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.primaDeSeguro" type="text" value="">
+                                    </div>                                    
                                 </div>
                             </div>
 
                             <div class="ui grid">
                                 <div class="four wide column">
-                                    <label>Rentabilidad (%)</label>
-                                    <input ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaRentabilidad}">
+                                        <label>Rentabilidad (%):<i ng-show="requiredAfpManualInputColors.tasaRentabilidad" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
+                                    </div>                                     
                                 </div>
                                 <div class="four wide column">
                                     <div class="field">
@@ -273,7 +282,7 @@
                                       <ng-datepicker onkeydown="return false" onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateEnd" locale="es">
                                   </div>
                                 </div>
-                                <div class="four wide column">
+                                <div class="four wide column bottom aligned content">
                                   <button ng-click="addFondoPersonalizado()" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>
@@ -318,44 +327,34 @@
                                         <option value="AK">14</option>
                                     </select>
                                 </div>
-                                <div class="twelve wide column">
+                                <div class="twelve wide column bottom aligned content">
                                     <ng-repeat ng-repeat="fondo in arrayAfpsFromDb">
                                         <button ng-click="setFondoDeAfp(fondo)" type="button" class="ui button">{{fondo.nombreFondo}}</button>
                                     <ng-repeat>
                                 </div>
                             </div>
                             <div class="ui grid">
-                                <div class="five wide column">
-                                    <label>Comision por Saldo:
-                                    </label>
-                                    <label>{{objFondoAutomatico.comisionSaldo}}</label>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.comisionSaldo != null">{{"Tasa de Comision por Saldo:  "+objFondoAutomatico.comisionSaldo+"%"}}</label>
                                 </div>
-                                <div class="five wide column">
-                                    <label>Comision por Flujo Inicial:
-                                    </label>
-                                    <label>{{objFondoAutomatico.tasaFlujoInicial}}</label>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.tasaFlujoInicial != null">{{"Comision por Flujo Inicial:  "+objFondoAutomatico.tasaFlujoInicial+"%"}}</label>
                                 </div>
-                                <div class="five wide column">
-                                    <label>Disminucion de tasa anual:
-                                    </label>
-                                    <label>{{objFondoAutomatico.disminucionFlujoAnual}}</label>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.disminucionFlujoAnual != null">{{"Disminucion de tasa anual:  "+objFondoAutomatico.disminucionFlujoAnual+"%"}}</label>
                                 </div>
-                                <div class="five wide column">
-                                    <label>Prima de Seguros:
-                                    </label>
-                                    <label>{{objFondoAutomatico.primaDeSeguro}}</label>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.primaDeSeguro != null">{{"Prima de Seguros:  "+objFondoAutomatico.primaDeSeguro+"%"}}</label>
                                 </div>
-                                <div class="five wide column">
-                                    <label>Rentabilidad:
-                                    </label>
-                                    <label>{{objFondoAutomatico.tasaRentabilidad}}</label>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.tasaRentabilidad != null">{{"Rentabilidad:  "+objFondoAutomatico.tasaRentabilidad+"%"}}</label>
                                 </div>
                             </div>
 
                             <div class="ui grid">
                                 <div class="two wide column"></div>
-                                <div class="two wide column">
-                                    <label>{{objFondoAutomatico.nombreFondo}}</label>
+                                <div class="two wide column middle aligned content">
+                                    <label>{{objFondoAutomatico.nombreFondo || "Seleccione Fondo"}}</label>
                                 </div>
                                 <div class="four wide column">
                                     <div class="field">
@@ -369,16 +368,12 @@
                                       <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateEnd" locale="es">
                                   </div>
                                 </div>
-                                <div class="four wide column">
-                                  <button ng-click="addNewFondoAfpToArray()" class="ui button">
+                                <div class="four wide column bottom aligned content">
+                                  <button ng-click="addNewFondoAfpToArray()" class="ui button fluid">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
                             </div>
-
-
-
-
                             <div class="ui grid">
                                 <div id="remu-tline3" class="sixteen wide column">
                                 <ng-repeat ng-repeat="fondos in arrFondosDeAfpAutomaticos">
@@ -398,12 +393,6 @@
                                 <div id="FA-end" class="end-time-label"></div>
                               </div>
                             </div>
-
-
-
-
-
-
                         </div>
                     </div>
                 </div>
@@ -487,7 +476,7 @@
 
                   if(angular.element('#bodyId').scope()){
                     /*Borra remuneraciones agregadas si se cambia la fecha de jubilacion*/
-                      angular.element('#bodyId').scope().deleteObjRemunerationDateInArray();
+                      angular.element('#bodyId').scope().deleteAllArraysInvolved();
                       angular.element('#bodyId').scope().$apply();
                   }
                   $('#display-3').html(value);
