@@ -110,7 +110,7 @@
                     </div>
                     <div class="field">
                         <label>Fecha de Nacimiento</label>
-                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="userBornDate" locale="es">
+                        <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="userBornDate" locale="es">
         </ng-datepicker>
                     </div>
                 </div>
@@ -141,8 +141,11 @@
 
                             <div  class="ui grid">
                               <div class="six wide column">
-                                    <label>Inicio de vida laboral</label>
-                                    <ng-datepicker ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">
+                                    <div ng-class="{field:true, error:requiredRemuInterInputColors.dateAtInitWork}">
+                                        <label>Inicio de vida laboral<i ng-show="requiredRemuInterInputColors.dateAtInitWork" class="warning circle icon"></i></label>
+                                        <ng-datepicker onkeydown="return false" ng-change="validDateInitWork()" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="dateAtInitWork" locale="es">
+                                        </ng-datepicker>
+                                    </div>                                    
                                 </div>
                             </div>
 
@@ -150,7 +153,7 @@
                             <div ng-show="typeRemuneration == 1" class="two fields">
                                 <div class="field">
                                     <label>Sueldo Mensual</label>
-                                    <input ng-model="mothEarnIt" type="number">
+                                    <input ng-model="mothEarnIt" type="number" pattern= "[0-9]{4}">
                                 </div>
                                 <div class="field">
                                     <label>Sueldos al año</label>
@@ -167,23 +170,27 @@
                             <div ng-show="typeRemuneration == 2" class="ui grid">
 
                                 <div class="four wide column">
-                                    <label>Remuneracion</label>
-                                    <input ng-model="objRemuneration.remunerationCant" type="text">
-                                </div>
-                                <div class="four wide column">
-                                    <div class="field">
-                                        <label>Desde:{{objRemuneration.dateBegin}}</label>
-                                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objRemuneration.dateBegin" locale="es">
+                                    <div ng-class="{field:true, error:requiredRemuInterInputColors.remunerationCant}">
+                                        <label>Remuneracion<i ng-show="requiredRemuInterInputColors.remunerationCant" class="warning circle icon"></i></label>
+                                        <input ng-model="objRemuneration.remunerationCant" type="text">
                                     </div>
                                 </div>
                                 <div class="four wide column">
-                                  <div class="field">
-                                      <label>Hasta:</label>
-                                      <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objRemuneration.dateEnd" locale="es">
-                                  </div>
+                                    <div ng-class="{field:true, error:requiredRemuInterInputColors.dateBegin}">
+                                        <label>Desde:<i ng-show="requiredRemuInterInputColors.dateBegin" class="warning circle icon"></i></label>
+                                        <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objRemuneration.dateBegin" locale="es">
+                                        </ng-datepicker>
+                                    </div>
                                 </div>
                                 <div class="four wide column">
-                                  <button ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
+                                  <div ng-class="{field:true, error:requiredRemuInterInputColors.dateEnd}">
+                                      <label>Hasta:<i ng-show="requiredRemuInterInputColors.dateEnd" class="warning circle icon"></i></label>
+                                      <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objRemuneration.dateEnd" locale="es">
+                                      </ng-datepicker>
+                                  </div>
+                                </div>
+                                <div class="four wide column bottom aligned content">
+                                  <button id="btn-plus-Inter" ng-click="agregateNewRemuneration()" type="button" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>
                                 </div>
@@ -257,13 +264,13 @@
                                 <div class="four wide column">
                                     <div class="field">
                                         <label>Desde:</label>
-                                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateBegin" locale="es">
+                                        <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateBegin" locale="es">
                                     </div>
                                 </div>
                                 <div class="four wide column">
                                   <div class="field">
                                       <label>Hasta:</label>
-                                      <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateEnd" locale="es">
+                                      <ng-datepicker onkeydown="return false" onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateEnd" locale="es">
                                   </div>
                                 </div>
                                 <div class="four wide column">
@@ -353,13 +360,13 @@
                                 <div class="four wide column">
                                     <div class="field">
                                         <label>Desde:</label>
-                                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateBegin" locale="es">
+                                        <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateBegin" locale="es">
                                     </div>
                                 </div>
                                 <div class="four wide column">
                                   <div class="field">
                                       <label>Hasta:</label>
-                                      <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateEnd" locale="es">
+                                      <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateEnd" locale="es">
                                   </div>
                                 </div>
                                 <div class="four wide column">

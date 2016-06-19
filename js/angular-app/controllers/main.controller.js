@@ -36,8 +36,14 @@
 					};
 					self.objRemuneration = {
 						remunerationCant: null,
-						dateBegin: null,
-						dateEnd: null
+						dateBegin: new Date(),
+						dateEnd: new Date()
+					};
+					self.requiredRemuInterInputColors = {
+						dateAtInitWork: false,
+						remunerationCant: false,
+						dateBegin: false,
+						dateEnd: false
 					};
 
 
@@ -99,8 +105,8 @@
 						updateTimeLineTagsView();
 				         //Reset
 				         self.objRemuneration.remunerationCant = null;
-				         self.objRemuneration.dateBegin = null;
-				         self.objRemuneration.dateEnd = null;
+				         self.objRemuneration.dateBegin = new Date();
+				         self.objRemuneration.dateEnd = new Date();
 
 					};
 
@@ -108,7 +114,17 @@
 						if(!objParam){
 							return false;
 						}
-						if(!objParam.remunerationCant ||
+
+						//Show errors!
+						(!self.dateAtInitWork ? self.requiredRemuInterInputColors.dateAtInitWork = true :  self.requiredRemuInterInputColors.dateAtInitWork = false);
+						(!objParam.remunerationCant ? self.requiredRemuInterInputColors.remunerationCant = true :  self.requiredRemuInterInputColors.remunerationCant = false);
+						(!objParam.dateBegin ? self.requiredRemuInterInputColors.dateBegin = true :  self.requiredRemuInterInputColors.dateBegin = false);
+						(!objParam.dateEnd ? self.requiredRemuInterInputColors.dateEnd = true :  self.requiredRemuInterInputColors.dateEnd = false);
+						
+
+
+						if(!self.dateAtInitWork ||
+							!objParam.remunerationCant ||
 						!objParam.dateBegin ||
 						!objParam.dateEnd){
 							console.log("invalid params!");
@@ -129,6 +145,7 @@
 							errorMessages("Cuidado","La fecha de fin debe ser anterior al fin de vida laboral");
 							return false;
 						}
+
 						return true;
 					};
 
@@ -291,8 +308,8 @@
 							updateTimeLineTagsViewFondosManuales();
 				      
 				      //Reset
-				      self.objFondoPersonalizado.dateBegin = null;
-							self.objFondoPersonalizado.dateEnd = null;
+				      self.objFondoPersonalizado.dateBegin = new Date();
+							self.objFondoPersonalizado.dateEnd = new Date();
 							self.objFondoPersonalizado.tasaFlujoInicial = null;
 							self.objFondoPersonalizado.comisionSaldo = null;
 							self.objFondoPersonalizado.disminucionFlujoAnual = null;
@@ -417,7 +434,7 @@
 					};
 
 
-					
+
 
 					self.setFondoDeAfp = function(objFondo){						
 						self.objFondoAutomatico.nombreFondo = objFondo.nombreFondo;
@@ -468,8 +485,8 @@
 							updateTimeLineTagsViewFondosAutomaticos();
 				      
 				      //Reset
-				      self.objFondoAutomatico.dateBegin = null;
-							self.objFondoAutomatico.dateEnd = null;
+				      self.objFondoAutomatico.dateBegin = new Date();
+							self.objFondoAutomatico.dateEnd = new Date();
 							self.objFondoAutomatico.tasaFlujoInicial = null;
 							self.objFondoAutomatico.comisionSaldo = null;
 							self.objFondoAutomatico.disminucionFlujoAnual = null;
