@@ -312,59 +312,54 @@
                                     </select>
                                 </div>
                                 <div class="twelve wide column">
-                                    <label for="">Fondos</label>
-                                    <button type="button" class="ui button">
-                                        Fondo 1
-                                    </button>
-                                    <button type="button" class="ui button" tabindex="0">
-                                        Fondo2
-                                    </button>
-                                    <button type="button" class="ui button" tabindex="1">
-                                        Fondo3
-                                    </button>
-                                    <button type="button" class="ui button" tabindex="2">
-                                        Fondo4
-                                    </button>
+                                    <ng-repeat ng-repeat="fondo in arrayAfpsFromDb">
+                                        <button ng-click="setFondoDeAfp(fondo)" type="button" class="ui button">{{fondo.nombreFondo}}</button>
+                                    <ng-repeat>
                                 </div>
                             </div>
                             <div class="ui grid">
-                                <div class="four wide column">
+                                <div class="five wide column">
                                     <label>Comision por Saldo:
                                     </label>
-                                    <label>x%</label>
+                                    <label>{{objFondoAutomatico.comisionSaldo}}</label>
                                 </div>
-                                <div class="four wide column">
+                                <div class="five wide column">
                                     <label>Comision por Flujo Inicial:
                                     </label>
-                                    <label>x%</label>
+                                    <label>{{objFondoAutomatico.tasaFlujoInicial}}</label>
                                 </div>
-                                <div class="four wide column">
+                                <div class="five wide column">
                                     <label>Disminucion de tasa anual:
                                     </label>
-                                    <label>x%</label>
+                                    <label>{{objFondoAutomatico.disminucionFlujoAnual}}</label>
                                 </div>
-                                <div class="four wide column">
+                                <div class="five wide column">
                                     <label>Prima de Seguros:
                                     </label>
-                                    <label>x%</label>
+                                    <label>{{objFondoAutomatico.primaDeSeguro}}</label>
+                                </div>
+                                <div class="five wide column">
+                                    <label>Rentabilidad:
+                                    </label>
+                                    <label>{{objFondoAutomatico.tasaRentabilidad}}</label>
                                 </div>
                             </div>
 
                             <div class="ui grid">
                                 <div class="two wide column"></div>
                                 <div class="two wide column">
-                                    <label>Fondo 3</label>
+                                    <label>{{objFondoAutomatico.nombreFondo}}</label>
                                 </div>
                                 <div class="four wide column">
                                     <div class="field">
                                         <label>Desde:</label>
-                                        <!-- <input id="myDatePicker-2" data-lang="es" data-years="1995-2013" data-sundayfirst="false" placeholder=""/> -->
+                                        <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateBegin" locale="es">
                                     </div>
                                 </div>
                                 <div class="four wide column">
                                   <div class="field">
                                       <label>Hasta:</label>
-                                      <!-- <input id="myDatePicker-3" data-lang="es" data-years="1995-2013" data-sundayfirst="false" placeholder=""/> -->
+                                      <ng-datepicker format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoAutomatico.dateEnd" locale="es">
                                   </div>
                                 </div>
                                 <div class="four wide column">

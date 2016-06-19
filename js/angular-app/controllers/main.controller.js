@@ -221,7 +221,7 @@
 
 
 					/*************************************************************FONDO AFP VARIABLES**********/
-					self.typeSelectionFondoAfp = 2;
+					self.typeSelectionFondoAfp = 1;
 					/******* type 1 Tasas de ingreso manual ***************************/
 
 					self.objFondoPersonalizado = {
@@ -366,6 +366,63 @@
 
 					/******* END Tasas de ingreso manual *******************************/
 					/******* Ingreso de tasas Automaticas *******************************/
+					self.arrayAfpsFromDb = [{
+						nombreFondo: "Fondo 1",
+						nombreAfp: "Integra",
+						tasaFlujoInicial: 12.5,
+						comisionSaldo: 12.5,
+						disminucionFlujoAnual: 12.5,
+						primaDeSeguro: 12.5,
+						tasaRentabilidad: 12.5
+					},{
+						nombreFondo: "Fondo 2",
+						nombreAfp: "Integra",
+						tasaFlujoInicial: 15.5,
+						comisionSaldo: 15.5,
+						disminucionFlujoAnual: 15.5,
+						primaDeSeguro: 15.5,
+						tasaRentabilidad: 15.5
+					},{
+						nombreFondo: "Fondo 3",
+						nombreAfp: "Integra",
+						tasaFlujoInicial: 20.4,
+						comisionSaldo: 20.4,
+						disminucionFlujoAnual: 20.4,
+						primaDeSeguro: 20.4,
+						tasaRentabilidad: 20.4
+					},{
+						nombreFondo: "Fondo 4",
+						nombreAfp: "Integra",
+						tasaFlujoInicial: 50.1,
+						comisionSaldo: 50.1,
+						disminucionFlujoAnual: 50.1,
+						primaDeSeguro: 50.1,
+						tasaRentabilidad: 50.1
+					}];
+
+					self.objFondoAutomatico = {
+						dateBegin: new Date(),
+						dateEnd: new Date(),
+						nombreFondo: "",
+						nombreAfp: "",
+						tasaFlujoInicial: null,
+						comisionSaldo: null,
+						disminucionFlujoAnual: null,
+						primaDeSeguro: null,
+						tasaRentabilidad: null
+					};
+
+					self.setFondoDeAfp = function(objFondo){
+						
+						self.objFondoAutomatico.nombreFondo = objFondo.nombreFondo;
+						self.objFondoAutomatico.nombreAfp = objFondo.nombreAfp;
+						self.objFondoAutomatico.tasaFlujoInicial = objFondo.tasaFlujoInicial;
+						self.objFondoAutomatico.comisionSaldo = objFondo.comisionSaldo;
+						self.objFondoAutomatico.disminucionFlujoAnual = objFondo.disminucionFlujoAnual;
+						self.objFondoAutomatico.primaDeSeguro = objFondo.primaDeSeguro;
+						self.objFondoAutomatico.tasaRentabilidad = objFondo.tasaRentabilidad;
+
+					};
 					/******* END Ingreso de tasas Automaticas ****************************/
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
