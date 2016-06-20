@@ -395,18 +395,42 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="ui segment">
-                    <div class="field">
-                        <div class="ui toggle checkbox">
-                            <input type="checkbox" name="gift" tabindex="0" class="hidden">
-                            <label>Do not include a receipt in the package</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui button" tabindex="0">Submit Order</div>
+                </div>                
+                <div class="ui button" tabindex="0">Descargar en Excel</div>
+                <div ng-click="generateCalculation()" class="ui button" tabindex="0">Calcular</div>
             </form>
         </div>
+        <!--RESULTADOS DE CALCULOS!!!-->
+
+        
+
+        <table class="ui celled table">
+              <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Remuneracion Anual</th>
+                  <th>Aporte a la AFP</th>
+                  <th>Rentabilidad</th>
+                  <th>Valor de Rentabilidad</th>
+                  <th>Fondo Acumulado</th>
+                  <th>Comision de AFP</th>
+                </tr>
+              </thead>
+              <!-- <td class="positive">2016</td><td class="negative">None</td> -->
+              
+                <ng-repeat ng-repeat="data in arrTableView track by $index">
+                    <tr>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                      <td> dwdwdwdwd </td>
+                    </tr>
+                </ng-repeat>             
+              
+            </table>
         <!-- END BODY -->
 
         <!-- FOOTER -->

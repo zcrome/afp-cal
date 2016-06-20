@@ -574,6 +574,20 @@
 					/******* END Ingreso de tasas Automaticas ****************************/
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
+					/*************************************************************END CALCULO DE DATOS**********/
+					self.arrTableView = [];
+					
+
+
+					self.generateCalculation = function(){
+						self.arrTableView.push("wdwdw");
+						console.log(self.arrTableView.length);
+					};
+
+
+
+					/*************************************************************END CALCULO DE DATOS**********/
+
 
 
 
