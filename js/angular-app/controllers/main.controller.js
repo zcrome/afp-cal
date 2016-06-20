@@ -575,13 +575,36 @@
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
 					/*************************************************************END CALCULO DE DATOS**********/
-					self.arrTableView = [];
+					self.arrTableView = [{
+						year:"122",
+						remuneration: "122",
+						paidToAfp: "12322",
+						rateProfitability: "222",
+						profitability: "122",
+						accumulatedFund: "2222",
+						commission: "1222"
+					},{
+						year:"122",
+						remuneration: "122",
+						paidToAfp: "12322",
+						rateProfitability: "222",
+						profitability: "122",
+						accumulatedFund: "2222",
+						commission: "1222"
+					},{
+						year:"122",
+						remuneration: "122",
+						paidToAfp: "12322",
+						rateProfitability: "222",
+						profitability: "122",
+						accumulatedFund: "2222",
+						commission: "1222"
+					}];
 					
 
 
 					self.generateCalculation = function(){
-						self.arrTableView.push("wdwdw");
-						console.log(self.arrTableView.length);
+						
 					};
 
 

@@ -400,10 +400,10 @@
                 <div ng-click="generateCalculation()" class="ui button" tabindex="0">Calcular</div>
             </form>
         </div>
-        <!--RESULTADOS DE CALCULOS!!!-->
+        <!--RESULTADOS DE CALCULOS -->
 
         
-
+        <!--
         <table class="ui celled table">
               <thead>
                 <tr>
@@ -416,8 +416,6 @@
                   <th>Comision de AFP</th>
                 </tr>
               </thead>
-              <!-- <td class="positive">2016</td><td class="negative">None</td> -->
-              
                 <ng-repeat ng-repeat="data in arrTableView track by $index">
                     <tr>
                       <td> dwdwdwdwd </td>
@@ -428,9 +426,37 @@
                       <td> dwdwdwdwd </td>
                       <td> dwdwdwdwd </td>
                     </tr>
-                </ng-repeat>             
-              
+                </ng-repeat>
             </table>
+            -->
+
+            <table  class="ui celled table">
+                <thead>
+                <tr>
+                  <th>Año</th>
+                  <th>Remuneracion Anual</th>
+                  <th>Aporte a la AFP</th>
+                  <th>Rentabilidad</th>
+                  <th>Valor de Rentabilidad</th>
+                  <th>Fondo Acumulado</th>
+                  <th>Comision de AFP</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="x in arrTableView">
+                <td>{{ x.year }}</td>
+                <td>{{ x.remuneration }}</td>
+                <td>{{ x.paidToAfp }}</td>
+                <td>{{ x.rateProfitability }}</td>
+                <td>{{ x.profitability }}</td>
+                <td>{{ x.accumulatedFund }}</td>
+                <td>{{ x.commission }}</td>
+              </tr>
+              </tbody>
+            </table>
+
+
+
         <!-- END BODY -->
 
         <!-- FOOTER -->
