@@ -237,11 +237,14 @@
                     <div class="">
                         <div ng-show="typeSelectionFondoAfp == 2" class="ui segment">
                             <div class="ui grid">
+                                
+
+                                <!--
                                 <div class="four wide column">
-                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.comisionSaldo}">
-                                        <label>Tasa por la comision por Saldo (%):<i ng-show="requiredAfpManualInputColors.comisionSaldo" class="warning circle icon"></i></label>
-                                        <input ng-model="objFondoPersonalizado.comisionSaldo" type="text" value="">
-                                    </div>                                    
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.disminucionFlujoAnual}">
+                                        <label>Disminucion de tasa por Flujo anual (%):<i ng-show="requiredAfpManualInputColors.disminucionFlujoAnual" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.disminucionFlujoAnual" type="text" value="">
+                                    </div>                                  
                                 </div>
                                 <div class="four wide column">
                                     <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaFlujoInicial}">
@@ -249,40 +252,44 @@
                                         <input ng-model="objFondoPersonalizado.tasaFlujoInicial" type="text" value="">
                                     </div>                                    
                                 </div>
-                                <div class="four wide column">
-                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.disminucionFlujoAnual}">
-                                        <label>Disminucion de tasa por Flujo anual (%):<i ng-show="requiredAfpManualInputColors.disminucionFlujoAnual" class="warning circle icon"></i></label>
-                                        <input ng-model="objFondoPersonalizado.disminucionFlujoAnual" type="text" value="">
-                                    </div>                                    
+                                -->
+
+                                <div class="five wide column">
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaRentabilidad}">
+                                        <label>Rentabilidad de AFP(%):<i ng-show="requiredAfpManualInputColors.tasaRentabilidad" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
+                                    </div>                                   
                                 </div>
-                                <div class="four wide column">
+
+                                <div class="five wide column">                                    
+                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.comisionSaldo}">
+                                        <label>Comision por Saldo(%):<i ng-show="requiredAfpManualInputColors.comisionSaldo" class="warning circle icon"></i></label>
+                                        <input ng-model="objFondoPersonalizado.comisionSaldo" type="text" value="">
+                                    </div>
+                                </div>
+                                <div class="five wide column">
                                     <div ng-class="{field:true, error:requiredAfpManualInputColors.primaDeSeguro}">
-                                        <label>Tasa de Prima de Seguros (%):<i ng-show="requiredAfpManualInputColors.primaDeSeguro" class="warning circle icon"></i></label>
+                                        <label>Prima de Seguros(%):<i ng-show="requiredAfpManualInputColors.primaDeSeguro" class="warning circle icon"></i></label>
                                         <input ng-model="objFondoPersonalizado.primaDeSeguro" type="text" value="">
                                     </div>                                    
                                 </div>
                             </div>
 
                             <div class="ui grid">
-                                <div class="four wide column">
-                                    <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaRentabilidad}">
-                                        <label>Rentabilidad (%):<i ng-show="requiredAfpManualInputColors.tasaRentabilidad" class="warning circle icon"></i></label>
-                                        <input ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
-                                    </div>                                     
-                                </div>
-                                <div class="four wide column">
+                                
+                                <div class="five wide column">
                                     <div class="field">
                                         <label>Desde:</label>
                                         <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateBegin" locale="es">
                                     </div>
                                 </div>
-                                <div class="four wide column">
+                                <div class="five wide column">
                                   <div class="field">
                                       <label>Hasta:</label>
                                       <ng-datepicker onkeydown="return false" onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="objFondoPersonalizado.dateEnd" locale="es">
                                   </div>
                                 </div>
-                                <div class="four wide column bottom aligned content">
+                                <div class="five wide column bottom aligned content">
                                   <button ng-click="addFondoPersonalizado()" class="fluid ui button">
                                     <i class="plus icon"></i>
                                   </button>

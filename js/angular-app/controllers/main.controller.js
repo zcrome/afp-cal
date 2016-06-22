@@ -340,6 +340,12 @@
 							return false;
 						}
 
+						if(!self.dateAtInitWork){
+							errorMessages("Cuidado","Debes establecer la fecha de inicio de vida laboral");
+							return false;
+						}
+
+
 						if(!('nombreFondo' in objParam)){
 								(!self.objFondoPersonalizado.tasaFlujoInicial ? 			self.requiredAfpManualInputColors.tasaFlujoInicial = true :  			self.requiredAfpManualInputColors.tasaFlujoInicial = false);
 								(!self.objFondoPersonalizado.comisionSaldo ? 					self.requiredAfpManualInputColors.comisionSaldo = true :  				self.requiredAfpManualInputColors.comisionSaldo = false);
@@ -353,10 +359,8 @@
 						if(!objParam.dateBegin ||
 						!objParam.dateEnd ||
 						!objParam.comisionSaldo ||
-						!objParam.disminucionFlujoAnual ||
 						!objParam.primaDeSeguro ||
-						!objParam.tasaRentabilidad ||
-						!objParam.tasaFlujoInicial){
+						!objParam.tasaRentabilidad){
 							console.log("invalid params!");
 							if('nombreFondo' in objParam){
 								errorMessages("Cuidado","Debes seleccionar un fondo de AFP");	
