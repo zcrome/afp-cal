@@ -247,9 +247,9 @@
 					self.objFondoPersonalizado = {
 						dateBegin: new Date(),
 						dateEnd: new Date(),
-						tasaFlujoInicial: 99.1,
+						//tasaFlujoInicial: 99.1,
 						comisionSaldo: 99.1,
-						disminucionFlujoAnual: 99.1,
+						//disminucionFlujoAnual: 99.1,
 						primaDeSeguro: 99.1,
 						tasaRentabilidad: 10.1
 					};
@@ -277,9 +277,9 @@
 					    "width" : "50%"
 					};
 					self.requiredAfpManualInputColors = {
-						tasaFlujoInicial: false,
+						//tasaFlujoInicial: false,
 						comisionSaldo: false,
-						disminucionFlujoAnual: false,
+						//disminucionFlujoAnual: false,
 						primaDeSeguro: false,
 						tasaRentabilidad: false
 					};
@@ -310,9 +310,9 @@
 				      self.arrObjFondosPersonalizados.push({
 				         	dateBegin: self.objFondoPersonalizado.dateBegin,
 									dateEnd: self.objFondoPersonalizado.dateEnd,
-									tasaFlujoInicial: self.objFondoPersonalizado.tasaFlujoInicial,
+									//tasaFlujoInicial: self.objFondoPersonalizado.tasaFlujoInicial,
 									comisionSaldo: self.objFondoPersonalizado.comisionSaldo,
-									comisionFlujoInicial: self.objFondoPersonalizado.comisionFlujoInicial,
+									//comisionFlujoInicial: self.objFondoPersonalizado.comisionFlujoInicial,
 									primaSeguros: self.objFondoPersonalizado.primaSeguros,
 									tasaRentabilidad: self.objFondoPersonalizado.tasaRentabilidad
 				      });
@@ -326,9 +326,9 @@
 				      //Reset
 				      self.objFondoPersonalizado.dateBegin = new Date();
 							self.objFondoPersonalizado.dateEnd = new Date();
-							self.objFondoPersonalizado.tasaFlujoInicial = null;
+							//self.objFondoPersonalizado.tasaFlujoInicial = null;
 							self.objFondoPersonalizado.comisionSaldo = null;
-							self.objFondoPersonalizado.disminucionFlujoAnual = null;
+							//self.objFondoPersonalizado.disminucionFlujoAnual = null;
 							self.objFondoPersonalizado.primaDeSeguro = null;
 							self.objFondoPersonalizado.tasaRentabilidad = null;
 
@@ -347,9 +347,9 @@
 
 
 						if(!('nombreFondo' in objParam)){
-								(!self.objFondoPersonalizado.tasaFlujoInicial ? 			self.requiredAfpManualInputColors.tasaFlujoInicial = true :  			self.requiredAfpManualInputColors.tasaFlujoInicial = false);
+								//(!self.objFondoPersonalizado.tasaFlujoInicial ? 			self.requiredAfpManualInputColors.tasaFlujoInicial = true :  			self.requiredAfpManualInputColors.tasaFlujoInicial = false);
 								(!self.objFondoPersonalizado.comisionSaldo ? 					self.requiredAfpManualInputColors.comisionSaldo = true :  				self.requiredAfpManualInputColors.comisionSaldo = false);
-								(!self.objFondoPersonalizado.disminucionFlujoAnual ? 	self.requiredAfpManualInputColors.disminucionFlujoAnual = true :  self.requiredAfpManualInputColors.disminucionFlujoAnual = false);
+								//(!self.objFondoPersonalizado.disminucionFlujoAnual ? 	self.requiredAfpManualInputColors.disminucionFlujoAnual = true :  self.requiredAfpManualInputColors.disminucionFlujoAnual = false);
 								(!self.objFondoPersonalizado.primaDeSeguro ? 					self.requiredAfpManualInputColors.primaDeSeguro = true :  				self.requiredAfpManualInputColors.primaDeSeguro = false);
 								(!self.objFondoPersonalizado.tasaRentabilidad ? 			self.requiredAfpManualInputColors.tasaRentabilidad = true :  			self.requiredAfpManualInputColors.tasaRentabilidad = false);
 						}
