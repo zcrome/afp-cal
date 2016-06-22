@@ -20,7 +20,7 @@
 
 					/*************************************************************REMUNERATION VARIABLES**********/
 					//self.dateRetirement = null;
-					self.typeRemuneration = 2;
+					self.typeRemuneration = 1;
 					/********type 1 Remuneracion constante*****/
 					self.mothEarnIt = 0;
 					self.cantPaymentPerYear = null;
@@ -241,7 +241,7 @@
 
 
 					/*************************************************************FONDO AFP VARIABLES**********/
-					self.typeSelectionFondoAfp = 1;
+					self.typeSelectionFondoAfp = 2;
 					/******* type 1 Tasas de ingreso manual ***************************/
 
 					self.objFondoPersonalizado = {
