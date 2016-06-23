@@ -22,12 +22,12 @@
 					//self.dateRetirement = null;
 					self.typeRemuneration = 1;
 					/********type 1 Remuneracion constante*****/
-					self.mothEarnIt = 0;
+					self.mothEarnIt = 1000;
 					self.cantPaymentPerYear = null;
 					/******** END type 1 Remuneracion constante*****/
 
 					/******* type 2 remuneracion intermitente *****/
-					self.dateAtInitWork;
+					self.dateAtInitWork = new Date();
 					self.dateViewDisplayInitWork = null;
 					self.dateAtFinishtWork = null; //--not in use!!
 					self.arrRemunerations = [];
@@ -246,12 +246,12 @@
 
 					self.objFondoPersonalizado = {
 						dateBegin: new Date(),
-						dateEnd: new Date(),
+						dateEnd: new Date(2081,00,01),
 						//tasaFlujoInicial: 99.1,
-						comisionSaldo: 99.1,
+						comisionSaldo: 1.20,
 						//disminucionFlujoAnual: 99.1,
-						primaDeSeguro: 99.1,
-						tasaRentabilidad: 10.1
+						primaDeSeguro: 0.10,
+						tasaRentabilidad: 4.50
 					};
 
 					self.arrObjFondosPersonalizados = [];
@@ -313,7 +313,7 @@
 									//tasaFlujoInicial: self.objFondoPersonalizado.tasaFlujoInicial,
 									comisionSaldo: self.objFondoPersonalizado.comisionSaldo,
 									//comisionFlujoInicial: self.objFondoPersonalizado.comisionFlujoInicial,
-									primaSeguros: self.objFondoPersonalizado.primaSeguros,
+									primaDeSeguro: self.objFondoPersonalizado.primaDeSeguro,
 									tasaRentabilidad: self.objFondoPersonalizado.tasaRentabilidad
 				      });
 							
@@ -579,43 +579,87 @@
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
 					/*************************************************************END CALCULO DE DATOS**********/
-					self.arrTableView = [{
-						year:"122",
-						remuneration: "122",
-						paidToAfp: "12322",
-						rateProfitability: "222",
-						profitability: "122",
-						accumulatedFund: "2222",
-						commission: "1222"
-					},{
-						year:"122",
-						remuneration: "122",
-						paidToAfp: "12322",
-						rateProfitability: "222",
-						profitability: "122",
-						accumulatedFund: "2222",
-						commission: "1222"
-					},{
-						year:"122",
-						remuneration: "122",
-						paidToAfp: "12322",
-						rateProfitability: "222",
-						profitability: "122",
-						accumulatedFund: "2222",
-						commission: "1222"
-					}];
+					self.arrTableView = [];
 					
 
 
 					self.generateCalculation = function(){
+						/****************Variables**********************/														
+							var edad = Math.floor(moment.duration(moment().diff(moment(self.userBornDate))).asYears());
+							var anio = moment().year();
+							/************************************************************Remuneration*****************/
+							var tipoRemuneracion = +(self.typeRemuneration);
+							//CONSTANTE
+							var edadJubilacion = +($('#display-3').html());
+							var remuneracion = +(self.mothEarnIt);
+							var cantSueldosAnuales = +(self.cantPaymentPerYear);
+							//INTERMITENTE
+							var arrRemuneracionesInter = self.arrRemunerations;
+							/************************************************************END Remuneration*****************/
+							/************************************************************Tasas AFP*****************/
+							var tipoSeleccionFondoAfp = +(self.typeSelectionFondoAfp);
+							var arrFondosManuales = self.arrObjFondosPersonalizados;
+							/************************************************************END AFP*****************/
+							/**********LOCAL***************/
+							var aporteAfpMensual = remuneracion * 0.1;
+							var fondoPensiones = 0;
+							var sumatoria = 0;
+							var fondoInicial = 0;
+							var comisionAFP = 0;
+							var TEM = +(arrFondosManuales[0].tasaRentabilidad)/100;
+							var primaSeguros = +(arrFondosManuales[0].primaDeSeguro)/100;
+							var comisionSaldo = +(arrFondosManuales[0].comisionSaldo)/100;
+							var rentabilidad = 0;
+							var valorRentabilidad = 0;							
+							/****************END Variables**********************/	
+
+							console.log("anio inicio " + anio);
+
+
+							for (var contador = 0; contador <= edadJubilacion - edad; contador++) {												
+								fondoInicial =  fondoPensiones;
+								anio++;
+
+								for (var contador2 = 0; contador2 < 12; contador2++) {									
+									fondoPensiones = (fondoPensiones + aporteAfpMensual) * (1 + TEM);
+									fondoPensiones = fondoPensiones - fondoPensiones * primaSeguros;									
+								}
+
+								comisionAFP = comisionSaldo * fondoPensiones;
+								fondoPensiones = fondoPensiones - comisionAFP;
+								//varX = fondoPensiones - fondoInicial QUE ES VARX????
+								//sumatoria = sumatoria + (varX)/[(1 + x%)^contador + 1] sumatoria de quE???
+								console.log(fondoPensiones);
+								console.log(fondoInicial);
+								console.log(fondoInicial);
+								rentabilidad = (fondoPensiones - fondoInicial) / fondoInicial;
+								valorRentabilidad = fondoPensiones - fondoInicial;
+
+
+								
+
+								self.arrTableView.push({
+									year: '' + anio,
+									remuneration: '' + remuneracion,
+									paidToAfp: parseFloat(comisionAFP).toFixed(2),
+									rateProfitability: '' + TEM,
+									profitability: parseFloat(rentabilidad).toFixed(2),
+									accumulatedFund: parseFloat(fondoPensiones).toFixed(2),
+									commission: '' + 0
+								});
+
+							}
+
 						
+						$('html, body').animate({
+				        scrollTop: $("#results").offset().top
+				    }, 2000);
+
 					};
 
 
 
 					/*************************************************************END CALCULO DE DATOS**********/
-
-
 
 
 
