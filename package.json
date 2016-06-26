@@ -7,12 +7,22 @@
     "pretest": "jshint ."
   },
   "dependencies": {
+    "async": "^2.0.0-rc.2",
+    "body-parser": "^1.14.2",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
+    "delete": "^0.3.0",
+    "file-exists": "^1.0.0",
+    "jade": "^1.11.0",
+    "lodash": "^4.11.1",
     "loopback": "^2.22.0",
     "loopback-boot": "^2.6.5",
     "loopback-component-explorer": "^2.1.0",
-    "loopback-datasource-juggler": "^2.39.0",
+    "loopback-connector-mongodb": "1.8.0",
+    "loopback-datasource-juggler": "2.26.4",
+    "loopback-sdk-angular-cli": "^2.0.1",
+    "moment": "^2.12.0",
+    "multer": "^1.1.0",
     "serve-favicon": "^2.0.1"
   },
   "devDependencies": {

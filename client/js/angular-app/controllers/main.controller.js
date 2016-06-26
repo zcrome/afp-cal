@@ -22,12 +22,12 @@
 					//self.dateRetirement = null;
 					self.typeRemuneration = 1;
 					/********type 1 Remuneracion constante*****/
-					self.mothEarnIt = 1000;
+					self.mothEarnIt;
 					self.cantPaymentPerYear = null;
 					/******** END type 1 Remuneracion constante*****/
 
 					/******* type 2 remuneracion intermitente *****/
-					self.dateAtInitWork = new Date();
+					self.dateAtInitWork;
 					self.dateViewDisplayInitWork = null;
 					self.dateAtFinishtWork = null; //--not in use!!
 					self.arrRemunerations = [];
@@ -120,7 +120,7 @@
 						(!objParam.remunerationCant ? self.requiredRemuInterInputColors.remunerationCant = true :  self.requiredRemuInterInputColors.remunerationCant = false);
 						(!objParam.dateBegin ? self.requiredRemuInterInputColors.dateBegin = true :  self.requiredRemuInterInputColors.dateBegin = false);
 						(!objParam.dateEnd ? self.requiredRemuInterInputColors.dateEnd = true :  self.requiredRemuInterInputColors.dateEnd = false);
-						
+
 
 
 						if(!self.dateAtInitWork ||
@@ -303,7 +303,7 @@
 
 						console.log(!checkObjFondosPersonalizadosConflictInArray());
 						if(!checkObjFondosPersonalizadosConflictInArray()){
-							return;							
+							return;
 						}
 
 						//Pasados los filtros agrego al array
@@ -316,13 +316,13 @@
 									primaDeSeguro: self.objFondoPersonalizado.primaDeSeguro,
 									tasaRentabilidad: self.objFondoPersonalizado.tasaRentabilidad
 				      });
-							
+
 							//Sort segun las fechas de inicio
 				      self.arrObjFondosPersonalizados = _.sortBy(self.arrObjFondosPersonalizados, 'dateBegin');
-				      
+
 				      //actualizacion del tamaño de cada periodo CSS!!
 							updateTimeLineTagsViewFondosManuales();
-				      
+
 				      //Reset
 				      self.objFondoPersonalizado.dateBegin = new Date();
 							self.objFondoPersonalizado.dateEnd = new Date();
@@ -363,10 +363,10 @@
 						!objParam.tasaRentabilidad){
 							console.log("invalid params!");
 							if('nombreFondo' in objParam){
-								errorMessages("Cuidado","Debes seleccionar un fondo de AFP");	
+								errorMessages("Cuidado","Debes seleccionar un fondo de AFP");
 							}else{
 								errorMessages("Cuidado","Debes ingresar todos los campos");
-							}							
+							}
 							return false;
 						}
 
@@ -474,7 +474,7 @@
 
 
 
-					self.setFondoDeAfp = function(objFondo){						
+					self.setFondoDeAfp = function(objFondo){
 						self.objFondoAutomatico.nombreFondo = objFondo.nombreFondo;
 						self.objFondoAutomatico.nombreAfp = objFondo.nombreAfp;
 						self.objFondoAutomatico.tasaFlujoInicial = objFondo.tasaFlujoInicial;
@@ -507,7 +507,7 @@
 
 						console.log(!checkObjFondosAutomaticosConflictInArray());
 						if(!checkObjFondosAutomaticosConflictInArray()){
-							return;							
+							return;
 						}
 
 						//Pasados los filtros agrego al array
@@ -522,13 +522,13 @@
 									primaSeguros: self.objFondoAutomatico.primaSeguros,
 									tasaRentabilidad: self.objFondoAutomatico.tasaRentabilidad
 				      });
-							
+
 							//Sort segun las fechas de inicio
 				      self.arrFondosDeAfpAutomaticos = _.sortBy(self.arrFondosDeAfpAutomaticos, 'dateBegin');
-				      
+
 				      //actualizacion del tamaño de cada periodo CSS!!
 							updateTimeLineTagsViewFondosAutomaticos();
-				      
+
 				      //Reset
 				      self.objFondoAutomatico.dateBegin = new Date();
 							self.objFondoAutomatico.dateEnd = new Date();
@@ -578,82 +578,138 @@
 					/******* END Ingreso de tasas Automaticas ****************************/
 					/*************************************************************END FONDO AFP VARIABLES**********/
 
-					/*************************************************************END CALCULO DE DATOS**********/
+					/************************************************************* CALCULO DE DATOS**********/
 					self.arrTableView = [];
-					
+					self.aditionalData = {
+						trea: '',
+						van: ''
+					};
+
 
 
 					self.generateCalculation = function(){
-						/****************Variables**********************/														
-							var edad = Math.floor(moment.duration(moment().diff(moment(self.userBornDate))).asYears());
-							var anio = moment().year();
+						/****************Variables**********************/
+							//var edad = Math.floor(moment.duration(moment().diff(moment(self.userBornDate))).asYears());
+							//var anio = moment().year();
 							/************************************************************Remuneration*****************/
-							var tipoRemuneracion = +(self.typeRemuneration);
+							//var tipoRemuneracion = +(self.typeRemuneration);
 							//CONSTANTE
-							var edadJubilacion = +($('#display-3').html());
-							var remuneracion = +(self.mothEarnIt);
-							var cantSueldosAnuales = +(self.cantPaymentPerYear);
+							//var edadJubilacion = +($('#display-3').html());
+							//var remuneracion = +(self.mothEarnIt);
+							//var cantSueldosAnuales = +(self.cantPaymentPerYear);
 							//INTERMITENTE
-							var arrRemuneracionesInter = self.arrRemunerations;
+							//var arrRemuneracionesInter = self.arrRemunerations;
 							/************************************************************END Remuneration*****************/
 							/************************************************************Tasas AFP*****************/
-							var tipoSeleccionFondoAfp = +(self.typeSelectionFondoAfp);
-							var arrFondosManuales = self.arrObjFondosPersonalizados;
+							//var tipoSeleccionFondoAfp = +(self.typeSelectionFondoAfp);
+							//var arrFondosManuales = self.arrObjFondosPersonalizados;
 							/************************************************************END AFP*****************/
+
+
+
 							/**********LOCAL***************/
-							var aporteAfpMensual = remuneracion * 0.1;
-							var fondoPensiones = 0;
-							var sumatoria = 0;
-							var fondoInicial = 0;
-							var comisionAFP = 0;
-							var TEM = +(arrFondosManuales[0].tasaRentabilidad)/100;
-							var primaSeguros = +(arrFondosManuales[0].primaDeSeguro)/100;
-							var comisionSaldo = +(arrFondosManuales[0].comisionSaldo)/100;
-							var rentabilidad = 0;
-							var valorRentabilidad = 0;							
-							/****************END Variables**********************/	
-
-							console.log("anio inicio " + anio);
+							//var cantidadAniosDeTrbajo = Math.floor(moment.duration(moment(self.userBornDate).add(65, 'y').diff(moment(self.dateAtInitWork))).asYears()); // Anio(fecha de jubilacion) - Anio(fecha inicio vida laboral)
+							//var aporteAfpMensual = remuneracion * 0.1;
+							//var fondoPensiones = 0;
+							//var fondoInicial = 0;
+							//var TEM = +(arrFondosManuales[0].tasaRentabilidad)/100;
+							//var primaSeguros = +(arrFondosManuales[0].primaDeSeguro)/100;
+							//var comisionSaldo = +(arrFondosManuales[0].comisionSaldo)/100;
+							//var valorRentabilidad = 0;
 
 
-							for (var contador = 0; contador <= edadJubilacion - edad; contador++) {												
-								fondoInicial =  fondoPensiones;
-								anio++;
-
-								for (var contador2 = 0; contador2 < 12; contador2++) {									
-									fondoPensiones = (fondoPensiones + aporteAfpMensual) * (1 + TEM);
-									fondoPensiones = fondoPensiones - fondoPensiones * primaSeguros;									
-								}
-
-								comisionAFP = comisionSaldo * fondoPensiones;
-								fondoPensiones = fondoPensiones - comisionAFP;
-								//varX = fondoPensiones - fondoInicial QUE ES VARX????
-								//sumatoria = sumatoria + (varX)/[(1 + x%)^contador + 1] sumatoria de quE???
-								console.log(fondoPensiones);
-								console.log(fondoInicial);
-								console.log(fondoInicial);
-								rentabilidad = (fondoPensiones - fondoInicial) / fondoInicial;
-								valorRentabilidad = fondoPensiones - fondoInicial;
-
-
-								
-
-								self.arrTableView.push({
-									year: '' + anio,
-									remuneration: '' + remuneracion,
-									paidToAfp: parseFloat(comisionAFP).toFixed(2),
-									rateProfitability: '' + TEM,
-									profitability: parseFloat(rentabilidad).toFixed(2),
-									accumulatedFund: parseFloat(fondoPensiones).toFixed(2),
-									commission: '' + 0
-								});
-
+							if(self.arrObjFondosPersonalizados.length <= 0){
+								errorMessages("Cuidado","Primero debe rellenar los datos laborales y agregar un fondo");
+								return;
 							}
 
-						
+							self.arrTableView = [];
+							//variables
+							var remuneracion = +(self.mothEarnIt);
+					    var TEM = +(self.arrObjFondosPersonalizados[0].tasaRentabilidad)/100;
+					    var primaSeguros = +(self.arrObjFondosPersonalizados[0].primaDeSeguro)/100;
+					    var comisionSaldo = +(self.arrObjFondosPersonalizados[0].comisionSaldo)/100;
+							var edadJubilacion = +($('#display-3').html());
+							var cantidadAniosDeTrbajo = Math.floor(moment.duration(moment(self.userBornDate).add(edadJubilacion, 'y').diff(moment(self.dateAtInitWork))).asYears()); // Anio(fecha de jubilacion) - Anio(fecha inicio vida laboral)
+
+					    //constante
+					    var PaporteAFP = 0.1;//porcentaje del salario q se agregara al fondo (calculado luego)
+					    var inversion = 200;//para nuestro fondo de pensiones le cobraremos un monto por abrir su fondo que sera fijo y bueno, seria una inversion.
+					    var fondo = 800;//valor inicial del fondo el cual pusimos solo para simular que no hayan errores. Apenas se abre una cuenta debe tener ya 800 soles...como si se le pusiera un deposito le explicamos al profe
+
+
+					    //auxiliares
+							var anio = moment(self.dateAtInitWork).year();
+					    var comisionAFP;//variable de almancenamiento usada para calculos cada anio
+					    var fondo_i = 0;//varialble tecnicamente auxiliar
+					    var sumatoria = 0;//usado para el calculo del van
+					    var rentabilidad = 0;//variable comun
+					    var COK = 0.09;
+					    var valor_renta = 0;//variable comun
+					    var aporte = remuneracion * PaporteAFP;//lo q cada mes aporta a su fondo
+					    var TREA = 0;///varianble comun
+					    var contador3 = 1;
+					    fondo = fondo - inversion;
+
+							/****************END Variables**********************/
+
+							console.log(self.mothEarnIt);
+							console.log("remuneracion:"+remuneracion);
+							console.log("cantidadAniosDeTrbajo:"+cantidadAniosDeTrbajo);
+							console.log("TEM:"+TEM);
+							console.log("primaSeguros:"+primaSeguros);
+							console.log("comisionSaldo:"+comisionSaldo);
+
+
+
+							for (var i = 0; i < cantidadAniosDeTrbajo; i++){
+					        fondo_i = fondo;//utilizamos la variable fondo_i para ver luego del anio cuanto a crecido el fondo...cada anio el fondo inicial cambia obviamente
+					        anio++;//no se que mierda es esto, lo puso johan pero creo q ni se usa jaja salu2
+					        for (var j = 0; j < 12; j++){
+
+					            var fondo_ii = fondo;//solo hago esto para guardar el valor del fondo al inicio del mes
+					            fondo = (fondo + aporte)*(1 + TEM);//cada mes se agrega un porcentaje y un dinero por su salario
+					            fondo = fondo - (fondo*primaSeguros);//se le descuenta la priam q es un valor que se supone el usuario ingresara
+					            //cout << "MES " << j + 1 << " Anio " << i + 1 << " = " << fondo << " Remuneracion : "<<remuneracion<<" Aporte : " << aporte<<endl;
+					            sumatoria += (fondo - fondo_ii) / Math.pow((1 + COK), contador3);//calculo de un termino de la sumatoria del VAN
+					            contador3++;
+					        }
+									console.log(anio);
+					        comisionAFP = comisionSaldo*fondo;//comision afp se cobra todos los anios y sera fijo ingresado por el usuario
+					        fondo = fondo - comisionAFP;//al fondo se le quita la comision q le cobran anualmente
+					        rentabilidad = (fondo - fondo_i) / fondo_i;//pura formula
+					        valor_renta = fondo - fondo_i;//puraformula
+					        sumatoria -= (comisionAFP) / Math.pow((1 + COK), contador3);//calculo de un termino mas de la sumatoria del VAN
+
+					        //cout << "Rentabilidad " << rentabilidad << " Valor renta: " << valor_renta << " Comision: " << comisionAFP << endl;
+
+									self.arrTableView.push({
+										year: '' + anio,
+										remuneration: '' + remuneracion,
+										paidToAfp: parseFloat(comisionAFP).toFixed(2),
+										rateProfitability: '' + parseFloat(valor_renta).toFixed(2),
+										profitability: parseFloat(rentabilidad).toFixed(2),
+										accumulatedFund: parseFloat(fondo).toFixed(2),
+										commission: '' + parseFloat(comisionAFP).toFixed(2)
+									});
+
+					    }
+
+							var valor3 = cantidadAniosDeTrbajo * 360.00;
+					    var valor = 360.00 / valor3;
+					    var valor2 = fondo/ 800.00;
+					    TREA = (Math.pow(fondo / 800, valor) - 1) * 100; //esto es pura formula, desglozamos la formula del doc word pq habian errores de casteo >_<
+
+							self.aditionalData.trea = parseFloat(TREA).toFixed(2);
+							self.aditionalData.van =  parseFloat(-inversion + sumatoria).toFixed(2);
+
+
+							//Reset
+							self.arrObjFondosPersonalizados = [];
+
 						$('html, body').animate({
 				        scrollTop: $("#results").offset().top
-				    }, 2000);
+				    }, 500);
 
 					};
 
