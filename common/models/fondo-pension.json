@@ -1,0 +1,26 @@
+{
+  "name": "fondoPension",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fechaJubilacion": {
+      "type": "date"
+    },
+    "tipoRemuneracion": {
+      "type": "number"
+    },
+    "tipoAfp": {
+      "type": "number"
+    },
+    "cantSueldosAnio": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

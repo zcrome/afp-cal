@@ -1,0 +1,20 @@
+{
+  "name": "FondoAfpPensionUsuario",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fechaInicioFondo": {
+      "type": "date"
+    },
+    "fechaFinFondo": {
+      "type": "date"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

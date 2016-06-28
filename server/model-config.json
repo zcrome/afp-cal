@@ -31,5 +31,37 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Usuario": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Remuneracion": {
+    "dataSource": "db",
+    "public": true
+  },
+  "fondoPension": {
+    "dataSource": "db",
+    "public": true
+  },
+  "fondoAfpPensionUsuario": {
+    "dataSource": "db",
+    "public": true
+  },
+  "FondoAfpPensionUsuario": {
+    "dataSource": "db",
+    "public": true
+  },
+  "FondoAfp": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Afp": {
+    "dataSource": "db",
+    "public": true
+  },
+  "TasaAfp": {
+    "dataSource": "db",
+    "public": true
   }
 }

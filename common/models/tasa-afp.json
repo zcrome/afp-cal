@@ -1,0 +1,20 @@
+{
+  "name": "TasaAfp",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "comisionSaldo": {
+      "type": "number"
+    },
+    "primaSeguro": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
