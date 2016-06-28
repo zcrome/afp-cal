@@ -1,5 +1,5 @@
 {
-  "name": "fondoPension",
+  "name": "FondoPension",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -20,7 +20,28 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "fondoAfpPensionUsuarios": {
+      "type": "hasMany",
+      "model": "FondoAfpPensionUsuario",
+      "foreignKey": ""
+    },
+    "remuneracions": {
+      "type": "hasMany",
+      "model": "Remuneracion",
+      "foreignKey": ""
+    },
+    "fondoAfpUsuarios": {
+      "type": "hasMany",
+      "model": "FondoAfpUsuario",
+      "foreignKey": ""
+    },
+    "usuario": {
+      "type": "belongsTo",
+      "model": "Usuario",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

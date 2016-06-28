@@ -63,5 +63,9 @@
   "TasaAfp": {
     "dataSource": "db",
     "public": true
+  },
+  "FondoAfpUsuario": {
+    "dataSource": "db",
+    "public": true
   }
 }

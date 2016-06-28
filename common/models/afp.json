@@ -11,7 +11,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "tasaAfps": {
+      "type": "hasMany",
+      "model": "TasaAfp",
+      "foreignKey": ""
+    },
+    "fondoAfps": {
+      "type": "hasMany",
+      "model": "FondoAfp",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

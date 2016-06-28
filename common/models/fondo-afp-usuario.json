@@ -1,5 +1,5 @@
 {
-  "name": "FondoAfpPensionUsuario",
+  "name": "FondoAfpUsuario",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -11,15 +11,19 @@
     },
     "fechaFinFondo": {
       "type": "date"
+    },
+    "comisionSaldo": {
+      "type": "number"
+    },
+    "primaSeguro": {
+      "type": "number"
+    },
+    "rentabilidad": {
+      "type": "number"
     }
   },
   "validations": [],
   "relations": {
-    "fondoAfp": {
-      "type": "belongsTo",
-      "model": "FondoAfp",
-      "foreignKey": ""
-    },
     "fondoPension": {
       "type": "belongsTo",
       "model": "FondoPension",
