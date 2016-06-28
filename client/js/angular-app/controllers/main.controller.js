@@ -732,10 +732,18 @@
 				    }, 500);
 
 					};
-
-
-
 					/*************************************************************END CALCULO DE DATOS**********/
+					/*************************************************************Login de Usuarios**********/
+
+
+					self.userAuthenticated = false;
+					self.userActionState = 1; //login = 1.....register=2....userAlredyLoggged=3
+
+
+
+
+
+					/*************************************************************END Login de Usuarios**********/
 
 
 

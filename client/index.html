@@ -89,10 +89,53 @@
                 <a href="#" class="header item">
                     <img class="logo" src="semantic/examples/assets/images/logo.png">
                 </a>
-                <a href="#" class="item">Simulaciones Guardadas</a>
+                <a href="#" ng-hide="userActionState == 3" ng-click="userActionState = 1" class="item">Ingresa</a>
+                <a href="#" ng-hide="userActionState == 3" ng-click="userActionState = 2" class="item">Regístrate</a>
             </div>
+
         </div>
         <!-- END HEADER -->
+
+
+        <div ng-hide="userActionState == 3" class="ui inverted segment">
+          <div ng-show="userActionState == 2 " class="ui  inverted form">
+            <h3>Registro</h3>
+            <div class="three fields">
+              <div class="field">
+                <label>Email</label>
+                <input placeholder="Email" type="text">
+              </div>
+              <div class="field">
+                <label>Nombres</label>
+                <input placeholder="Nombres" type="text">
+              </div>
+              <div class="field">
+                <label>Apellidos</label>
+                <input placeholder="Apellidos" type="text">
+              </div>
+            </div>
+            <div class="ui submit button">Registrame</div>
+          </div>
+          <div ng-show="userActionState == 1 " class="ui  inverted form">
+            <h3>Login</h3>
+            <div class="two fields">
+              <div class="field">
+                <label>Email</label>
+                <input placeholder="Email" type="text">
+              </div>
+              <div class="field">
+                <label>Password</label>
+                <input placeholder="*******" type="password">
+              </div>
+            </div>
+            <div class="ui submit button">Ingresar</div>
+          </div>
+        </div>
+
+
+
+
+
 
         <!-- BODY -->
         <div class="ui main text container">
