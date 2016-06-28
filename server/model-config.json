@@ -40,11 +40,7 @@
     "dataSource": "db",
     "public": true
   },
-  "fondoPension": {
-    "dataSource": "db",
-    "public": true
-  },
-  "fondoAfpPensionUsuario": {
+  "FondoPension": {
     "dataSource": "db",
     "public": true
   },
