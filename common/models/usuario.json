@@ -14,7 +14,15 @@
     },
     "fechaNacimiento": {
       "type": "date"
-    }
+    },
+    "username": false,
+    "challenges": false,
+    "realm": false,
+    "credentials": false,
+    "emailVerified": false,
+    "verificationToken": false,
+    "created": false,
+    "lastUpdated": false
   },
   "validations": [],
   "relations": {

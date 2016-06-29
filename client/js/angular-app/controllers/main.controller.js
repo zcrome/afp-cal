@@ -5,7 +5,11 @@
 			.controller(
         'MainController',
         ['$scope',
-         function($scope){
+				'Usuario',
+				'$cookies',
+         function($scope,
+				 Usuario,
+			 	 $cookies){
           /*******local variables!!*******/
           var self = $scope;
 
@@ -733,17 +737,225 @@
 
 					};
 					/*************************************************************END CALCULO DE DATOS**********/
-					/*************************************************************Login de Usuarios**********/
+					/*************************************************************Login y Registro**********/
 
-
+					//General users status
 					self.userAuthenticated = false;
-					self.userActionState = 1; //login = 1.....register=2....userAlredyLoggged=3
+					self.userActionState = 2; //login = 1.....register=2....userAlredyLoggged=3
+					//Register variables
+					self.emailRegister = "";
+					self.passwordRegister = "";
+					self.namesRegister = "";
+					self.lastNameRegister = "";
+					//warningMessages
+					self.showEmailRegisterWarning = false;
+					self.showNameRegisterWarning = false;
+					self.showLastNameRegisterWarning = false;
+					self.showPasswordRegisterWarning = false;
+					//InputPatterns
+					self.textPatten = "^[a-zA-Z ]*$";
+					self.emailPatten = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+
+					self.checkEmailRegisterInput = function(){
+							self.showEmailRegisterWarning = checkRegexInput(self.emailRegister,self.showEmailRegisterWarning,self.emailPatten);
+					};
+
+					self.checkNameRegisterInput = function(){
+							self.showNameRegisterWarning = checkRegexInput(self.namesRegister,self.showNameRegisterWarning,self.textPatten);
+							if(self.namesRegister == ""){
+								self.showNameRegisterWarning = true;
+							}
+					};
+
+					self.checkLastNameRegisterInput = function(){
+							self.showLastNameRegisterWarning = checkRegexInput(self.lastNameRegister,self.showLastNameRegisterWarning,self.textPatten);
+							if(self.lastNameRegister == ""){
+								self.showLastNameRegisterWarning = true;
+							}
+					};
+
+					self.checkPasswordRegisterInput = function(){
+						self.showPasswordRegisterWarning = checkRegexInput(self.passwordRegister,self.showPasswordRegisterWarning,self.textPatten);
+						console.log(self.showPasswordRegisterWarning);
+						if(self.passwordRegister == ""){
+							self.showPasswordRegisterWarning = true;
+						}
+					};
 
 
 
+					var checkRegexInput = function(pString,pStringWarning,pType){
+						var regex = new RegExp(pType);
+						if(!regex.test(pString)){
+							return true;
+						}else{
+							return false;
+						}
+					};
+
+					self.registeringRequest = function(){
+						self.checkEmailRegisterInput();
+						self.checkNameRegisterInput();
+						self.checkLastNameRegisterInput();
+						self.checkPasswordRegisterInput();
+
+						//checking fields
+						if(!self.showEmailRegisterWarning &&
+							 !self.showNameRegisterWarning &&
+							 !self.showLastNameRegisterWarning &&
+							 !self.showPasswordRegisterWarning){
+
+								 self.emailRegister
+								 self.passwordRegister
+								 self.namesRegister
+								 self.lastNameRegister
 
 
-					/*************************************************************END Login de Usuarios**********/
+							Usuario
+							.create({
+							  nombre: self.namesRegister,
+							  apellido: self.lastNameRegister,
+							  email: self.emailRegister,
+								password: self.passwordRegister
+							})
+							.$promise
+							.then(function(response){
+								console.log(response);
+								if(response.token){
+									$cookies.remove('user');
+									$cookies.putObject('user',{
+										token: response.token,
+										id: response.id
+									});
+
+									swal({
+									 title: "Felicitaciones.",
+									 type: 'success',
+									 showConfirmButton: true
+									});
+
+								}
+							})
+							.catch(function(err){
+								console.log(err);
+								if(err.data.error.status == 422){
+										swal({
+										 title: "El email ya se encuentra registrado",
+										 type: 'error',
+										 timer: 2000,
+										 showConfirmButton: false
+										});
+									}else {
+										swal({
+										 title: "Ocurrio un Problema interno",
+										 type: 'error',
+										 timer: 2000,
+										 showConfirmButton: false
+										});
+									}
+							});
+
+						}
+					};
+
+					self.registerRequest = function (user){
+
+
+          //{
+          //  "password": "eduardo",
+          //  "passwordConfirm": "eduardo",
+          //  "aceptation": true,
+          //  "email": "jos@gmail.com"
+          //}
+
+            console.log(user);
+
+            if(user
+              && "email" in user
+              && "aceptation" in user
+              && "password" in user
+              && "passwordConfirm" in user){
+
+
+              Privilege
+              .find({})
+              .$promise
+              .then(function(privileRes){
+
+                console.log(privileRes);
+                var r = $.grep(privileRes, function(e){ return e.name == "mobile-viewer"; });
+								console.log("privilege!!!")
+								console.log(r);
+
+                console.log("about to send");
+                UserBase
+                .create({
+                  email:user.email,
+                  password:user.password,
+                  privilegeId: r[0].id
+                })
+                .$promise
+                .then(function(response){
+									console.log(response);
+                  if(response.token){
+										$cookies.remove('user');
+										$cookies.putObject('user',{
+                      to: response.token,
+                      id: response.id,
+                      pr: r[0].id
+                    });
+
+                    swal({
+                     title: "Te acabamos de enviar un correo de verificación",
+                     type: 'success',
+                     showConfirmButton: true
+                    });
+                    //$cookies.put('user',response.token);
+
+                    console.log(response);
+
+
+                    $location.path('/ce-step1');
+                  }
+                })
+                .catch(function(err){
+									console.log("error al registrar");
+                  if(err.data.error.status == 409){
+                      swal({
+                       title: "El email ya se encuentra registrado",
+                       type: 'error',
+                       timer: 2000,
+                       showConfirmButton: false
+                      });
+                    }else {
+                      swal({
+                       title: "Ocurrio un Problema interno",
+                       type: 'error',
+                       timer: 2000,
+                       showConfirmButton: false
+                      });
+                    }
+                });
+
+              })
+              .catch(function(err){
+
+                console.log(err);
+              });
+
+            }else{
+              //swal({
+              // title: "Todos los campos son requeridos",
+              // type: 'error',
+              // timer: 2000,
+              // showConfirmButton: false
+              //});
+            }
+          };
+
+
+
+					/*************************************************************END Login y Registro**********/
 
 
 
