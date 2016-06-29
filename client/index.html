@@ -261,7 +261,7 @@
                                 </div>
                                 <div class="field">
                                     <label>Sueldos al año</label>
-                                    <select ng-disabled="true" ng-model="cantPaymentPerYear" class="ui fluid dropdown">
+                                    <select  ng-model="cantPaymentPerYear" class="ui fluid dropdown">
                                         <option selected value="">Seleccionar</option>
                                         <option value="12">12</option>
                                         <option value="14">14</option>
@@ -432,11 +432,20 @@
                                 <div class="four wide column">
                                     <label>AFP
                                     </label>
-                                    <select class="ui fluid dropdown">
-                                        <option value="">Seleccionar</option>
-                                        <option value="AL">12</option>
-                                        <option value="AK">14</option>
+                                    <!--
+                                    <select ng-model="afpSelected" class="ui fluid dropdown">
+                                      <option value="">Seleccionar</option>
+                                      <ng-repeat ng-repeat="afp in arrAfpNamesFromDb">
+                                        <option value="afp.id">{{afp.nombre}}</option>
+                                      <ng-repeat>
+                                    </select>-->
+
+                                    <select ng-change="selectFondosFromAfp()" ng-model="afpSelected" class="ui fluid dropdown">
+                                        <option selected value="">Seleccionar</option>
+                                        <option ng-repeat="afp in arrAfpNamesFromDb" value="{{afp.id}}">{{afp.nombre}}</option>
                                     </select>
+
+
                                 </div>
                                 <div class="twelve wide column bottom aligned content">
                                     <ng-repeat ng-repeat="fondo in arrayAfpsFromDb">
@@ -446,13 +455,9 @@
                             </div>
                             <div class="ui grid">
                                 <div class="four wide column">
+                                </div>
+                                <div class="four wide column">
                                     <label ng-show="objFondoAutomatico.comisionSaldo != null">{{"Tasa de Comision por Saldo:  "+objFondoAutomatico.comisionSaldo+"%"}}</label>
-                                </div>
-                                <div class="four wide column">
-                                    <label ng-show="objFondoAutomatico.tasaFlujoInicial != null">{{"Comision por Flujo Inicial:  "+objFondoAutomatico.tasaFlujoInicial+"%"}}</label>
-                                </div>
-                                <div class="four wide column">
-                                    <label ng-show="objFondoAutomatico.disminucionFlujoAnual != null">{{"Disminucion de tasa anual:  "+objFondoAutomatico.disminucionFlujoAnual+"%"}}</label>
                                 </div>
                                 <div class="four wide column">
                                     <label ng-show="objFondoAutomatico.primaDeSeguro != null">{{"Prima de Seguros:  "+objFondoAutomatico.primaDeSeguro+"%"}}</label>
@@ -460,6 +465,15 @@
                                 <div class="four wide column">
                                     <label ng-show="objFondoAutomatico.tasaRentabilidad != null">{{"Rentabilidad:  "+objFondoAutomatico.tasaRentabilidad+"%"}}</label>
                                 </div>
+
+                                <!--
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.tasaFlujoInicial != null">{{"Comision por Flujo Inicial:  "+objFondoAutomatico.tasaFlujoInicial+"%"}}</label>
+                                </div>
+                                <div class="four wide column">
+                                    <label ng-show="objFondoAutomatico.disminucionFlujoAnual != null">{{"Disminucion de tasa anual:  "+objFondoAutomatico.disminucionFlujoAnual+"%"}}</label>
+                                </div>
+                              -->
                             </div>
 
                             <div class="ui grid">

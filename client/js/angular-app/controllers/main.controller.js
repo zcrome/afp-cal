@@ -9,9 +9,13 @@
 				'$cookies',
 				'Excel',
 				'$timeout',
+				'Afp',
          function($scope,
 				 Usuario,
-			 	 $cookies,Excel,$timeout){
+			 	 $cookies,
+				 Excel,
+				 $timeout,
+			 	 Afp){
           /*******local variables!!*******/
           var self = $scope;
 
@@ -250,7 +254,7 @@
 
 
 					/*************************************************************FONDO AFP VARIABLES**********/
-					self.typeSelectionFondoAfp = 2;
+					self.typeSelectionFondoAfp = 1;
 					/******* type 1 Tasas de ingreso manual ***************************/
 
 					self.objFondoPersonalizado = {
@@ -431,39 +435,9 @@
 
 					/******* END Tasas de ingreso manual *******************************/
 					/******* Ingreso de tasas Automaticas *******************************/
-					self.arrayAfpsFromDb = [{
-						nombreFondo: "Fondo 1",
-						nombreAfp: "Integra",
-						tasaFlujoInicial: 12.5,
-						comisionSaldo: 12.5,
-						disminucionFlujoAnual: 12.5,
-						primaDeSeguro: 12.5,
-						tasaRentabilidad: 12.5
-					},{
-						nombreFondo: "Fondo 2",
-						nombreAfp: "Integra",
-						tasaFlujoInicial: 15.5,
-						comisionSaldo: 15.5,
-						disminucionFlujoAnual: 15.5,
-						primaDeSeguro: 15.5,
-						tasaRentabilidad: 15.5
-					},{
-						nombreFondo: "Fondo 3",
-						nombreAfp: "Integra",
-						tasaFlujoInicial: 20.4,
-						comisionSaldo: 20.4,
-						disminucionFlujoAnual: 20.4,
-						primaDeSeguro: 20.4,
-						tasaRentabilidad: 20.4
-					},{
-						nombreFondo: "Fondo 4",
-						nombreAfp: "Integra",
-						tasaFlujoInicial: 50.1,
-						comisionSaldo: 50.1,
-						disminucionFlujoAnual: 50.1,
-						primaDeSeguro: 50.1,
-						tasaRentabilidad: 50.1
-					}];
+					self.arrAfpNamesFromDb = []
+					self.afpSelected = '';
+					self.arrayAfpsFromDb = [];
 					self.arrFondosDeAfpAutomaticos = [];
 					self.objFondoAutomatico = {
 						dateBegin: new Date(),
@@ -1036,7 +1010,7 @@
 					//Show dates on time line
 					self.validDateInitWork();
 
-					//export to excel
+					/*************************************************************EXPORT TO EXCEL**********/
 					self.exportToExcel=function(tableId){
 
 						if(self.canIDownloadTableInExcel){
@@ -1052,7 +1026,63 @@
 							errorMessages("Cuidado","Primero debes realizar los calculos");
 						}
         	}
+					/*************************************************************END EXPORT TO EXCEL**********/
 
+					/*************************************************************CARGAR AFPS**********/
+
+					var loadAfps = function(){
+						Afp.find({})
+						.$promise
+						.then(function(response){
+							console.log(response);
+							self.arrAfpNamesFromDb = response;
+						})
+						.catch(function(err){
+							console.log(err);
+						});
+					};
+					loadAfps();
+
+					self.selectFondosFromAfp = function(){
+
+						//reset data
+						self.arrayAfpsFromDb = [];
+						self.objFondoAutomatico.comisionSaldo = null;
+						self.objFondoAutomatico.primaDeSeguro = null;
+						self.objFondoAutomatico.tasaRentabilidad = null;
+
+						self.arrAfpNamesFromDb.forEach(function(afp){
+							if(afp.id == self.afpSelected){
+								Afp.fondoAfps({
+									id: self.afpSelected
+								})
+								.$promise
+								.then(function(response){
+									response.forEach(function(item){
+										self.arrayAfpsFromDb.push({
+											nombreFondo: item.nombre,
+											nombreAfp: afp.nameAfp,
+											tasaFlujoInicial: 0.0,
+											comisionSaldo: afp.comisionSaldo,
+											disminucionFlujoAnual: 0.0,
+											primaDeSeguro: afp.primaSeguro,
+											tasaRentabilidad: item.rentabilidad
+										});
+									});
+								})
+								.catch(function(err){
+									console.log(err);
+								});
+							}
+						});
+					};
+
+
+
+
+
+
+					/*************************************************************END CARGAR AFPS**********/
 
 
 
