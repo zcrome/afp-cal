@@ -7,9 +7,11 @@
         ['$scope',
 				'Usuario',
 				'$cookies',
+				'Excel',
+				'$timeout',
          function($scope,
 				 Usuario,
-			 	 $cookies){
+			 	 $cookies,Excel,$timeout){
           /*******local variables!!*******/
           var self = $scope;
 
@@ -631,6 +633,7 @@
 							}
 
 							self.arrTableView = [];
+							self.canIDownloadTableInExcel = false;
 							//variables
 							var remuneracion = +(self.mothEarnIt);
 					    var TEM = +(self.arrObjFondosPersonalizados[0].tasaRentabilidad)/100;
@@ -733,6 +736,8 @@
 
 							//Reset
 							self.arrObjFondosPersonalizados = [];
+							//You can download table on excel
+							self.canIDownloadTableInExcel = true;
 
 						$('html, body').animate({
 				        scrollTop: $("#results").offset().top
@@ -1026,16 +1031,30 @@
 						}
 					};
 
+					/*************************************************************END Login y Registro**********/
 
-
-
-
+					//Show dates on time line
 					self.validDateInitWork();
 
+					//export to excel
+					self.exportToExcel=function(tableId){
+
+						if(self.canIDownloadTableInExcel){
+							var exportHref=Excel.tableToExcel(tableId,'sheet name');
+							console.log(exportHref);
+							$timeout(function() {
+								var link = document.createElement('a');
+								link.download = "CalculosAFP.xls";
+								link.href = exportHref;
+								link.click();
+							}, 1000);
+						}else{
+							errorMessages("Cuidado","Primero debes realizar los calculos");
+						}
+        	}
 
 
 
-					/*************************************************************END Login y Registro**********/
 
 
 
@@ -1043,45 +1062,3 @@
 
 			}]);
 })(window.angular);
-
-
-
-
-
-
-/*
-
-							for (var i = 0; i < cantidadAniosDeTrbajo; i++){
-					        fondo_i = fondo;//utilizamos la variable fondo_i para ver luego del anio cuanto a crecido el fondo...cada anio el fondo inicial cambia obviamente
-					        anio++;//no se que mierda es esto, lo puso johan pero creo q ni se usa jaja salu2
-					        for (var j = 0; j < 12; j++){
-
-					            var fondo_ii = fondo;//solo hago esto para guardar el valor del fondo al inicio del mes
-					            fondo = (fondo + aporte)*(1 + TEM);//cada mes se agrega un porcentaje y un dinero por su salario
-					            fondo = fondo - (fondo*prima);//se le descuenta la priam q es un valor que se supone el usuario ingresara
-					            //cout << "MES " << j + 1 << " Anio " << i + 1 << " = " << fondo << " Remuneracion : "<<remuneracion<<" Aporte : " << aporte<<endl;
-					            sumatoria += (fondo - fondo_ii) / Math.pow((1 + COK), contador3);//calculo de un termino de la sumatoria del VAN
-					            contador3++;
-					        }
-									console.log(anio);
-					        comisionAFP = comisionAFP*fondo;//comision afp se cobra todos los anios y sera fijo ingresado por el usuario
-					        fondo = fondo - comisionAFP;//al fondo se le quita la comision q le cobran anualmente
-					        rentabilidad = (fondo - fondo_i) / fondo_i;//pura formula
-					        valor_renta = fondo - fondo_i;//puraformula
-					        sumatoria -= (comisionAFP) / Math.pow((1 + COK), contador3);//calculo de un termino mas de la sumatoria del VAN
-
-					        //cout << "Rentabilidad " << rentabilidad << " Valor renta: " << valor_renta << " Comision: " << comisionAFP << endl;
-
-									self.arrTableView.push({
-										year: '' + anio,
-										remuneration: '' + remuneracion,
-										paidToAfp: parseFloat(comisionAFP).toFixed(2),
-										rateProfitability: '' + parseFloat(valor_renta).toFixed(2),
-										profitability: parseFloat(rentabilidad).toFixed(2),
-										accumulatedFund: parseFloat(fondo).toFixed(2),
-										commission: '' + parseFloat(comisionAFP).toFixed(2)
-									});
-
-					    }
-
-*/

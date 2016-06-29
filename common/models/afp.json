@@ -8,6 +8,12 @@
   "properties": {
     "nombre": {
       "type": "string"
+    },
+    "comisionSaldo": {
+      "type": "number"
+    },
+    "primaSeguro": {
+      "type": "number"
     }
   },
   "validations": [],

@@ -507,7 +507,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui button" tabindex="0">Descargar en Excel</div>
+                <div ng-show="userActionState == 3" ng-click="exportToExcel('#table1')" class="ui button" tabindex="0">Descargar en Excel</div>
                 <div ng-click="generateCalculation()" class="ui button" tabindex="0">Calcular</div>
             </form>
 
@@ -555,7 +555,7 @@
               </div>
             </div>
 
-            <table class="ui celled table">
+            <table id="table1" class="ui celled table">
                 <thead>
                 <tr>
                   <th>Año</th>
