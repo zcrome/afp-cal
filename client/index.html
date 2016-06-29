@@ -92,6 +92,7 @@
                 </a>
                 <a href="#" ng-hide="userActionState == 3" ng-click="userActionState = 1" class="item">Ingresa</a>
                 <a href="#" ng-hide="userActionState == 3" ng-click="userActionState = 2" class="item">Regístrate</a>
+                <a href="#" ng-show="userActionState == 3" ng-click="logOutRequest()" class="item">Salir</a>
             </div>
         </div>
         <!-- END HEADER -->

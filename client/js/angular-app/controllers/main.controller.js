@@ -740,7 +740,6 @@
 					/*************************************************************Login y Registro**********/
 
 					//General users status
-					self.userAuthenticated = false;
 					self.userActionState = 2; //login = 1.....register=2....userAlredyLoggged=3
 					//Register variables
 					self.emailRegister = "";
@@ -761,6 +760,47 @@
 					//InputPatterns
 					self.textPatten = "^[a-zA-Z ]*$";
 					self.emailPatten = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+
+
+					var changeSettingAfterUserLoggedIn = function(){
+						self.userActionState = 3;
+					};
+					var changeSettingAfterUserLoggedOut = function(){
+						self.userActionState = 1;
+					};
+
+
+					self.logOutRequest = function(){
+						$cookies.remove('user');
+						changeSettingAfterUserLoggedOut();
+
+						/*
+	            if(!$cookies.getObject('user')){
+	              return;
+	            }
+							console.log($cookies.getObject('user').token);
+							console.log(Usuario);
+	            Usuario
+	              .logout({
+									'id': $cookies.getObject('user').token
+								})
+	              .$promise
+	              .then(function(results) {
+	                console.log(results);
+
+	              })
+	              .catch(function(err){
+	                console.log(err);
+	                swal({
+	                 title: "Ops",
+	                 type: 'error',
+	                 timer: 2000,
+	                 showConfirmButton: false
+	                });
+	              });
+						*/
+					};
+
 
 					//ONCHANGE Login
 					self.checkEmailLoginInput = function(){
@@ -819,7 +859,6 @@
 						//checking fields
 						if(!self.showEmailLoginWarning &&
 							 !self.showPasswordLoginWarning){
-								 ///////////////////////
 
 								 Usuario
                  .login({
@@ -841,6 +880,7 @@
                        token: response.id
                      });
 										 console.log($cookies.getObject('user'));
+										 changeSettingAfterUserLoggedIn();
                    }else{
  										if(response.statusCode == 403){
  	                    swal({
@@ -943,6 +983,8 @@
 									 type: 'success',
 									 showConfirmButton: true
 									});
+
+									changeSettingAfterUserLoggedIn();
 
 								}
 							})

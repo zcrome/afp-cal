@@ -22,7 +22,8 @@
     "emailVerified": false,
     "verificationToken": false,
     "created": false,
-    "lastUpdated": false
+    "lastUpdated": false,
+    "status": false
   },
   "validations": [],
   "relations": {
