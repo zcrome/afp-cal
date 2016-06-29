@@ -51,6 +51,7 @@
 					};
 
 
+
 					self.validDateInitWork = function(){
 						//Se activa al cambiar "Inicio de vida laboral"
 						//Verifica que la fecha de inicio de vida laboral sea mayor a la de nacimiento
@@ -81,6 +82,8 @@
 						$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 						$('#FA-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 					};
+
+
 
 					self.agregateNewRemuneration = function(){
 
@@ -769,6 +772,19 @@
 						self.userActionState = 1;
 					};
 
+					//Check si hay sesion?
+					(function(){
+
+						console.log($cookies.getObject('user'));
+
+						if($cookies.getObject('user')){
+							changeSettingAfterUserLoggedIn();
+						}else{
+							changeSettingAfterUserLoggedOut();
+						}
+
+					})();
+
 
 					self.logOutRequest = function(){
 						$cookies.remove('user');
@@ -1014,7 +1030,7 @@
 
 
 
-
+					self.validDateInitWork();
 
 
 
