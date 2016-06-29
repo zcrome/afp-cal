@@ -747,7 +747,13 @@
 					self.passwordRegister = "";
 					self.namesRegister = "";
 					self.lastNameRegister = "";
-					//warningMessages
+					//Login Variables
+					self.emailLogin = "";
+					self.passwordLogin = "";
+					//warningMessages LOGIN!
+					self.showEmailLoginWarning = false;
+					self.showPasswordLoginWarning = false;
+					//warningMessages REGISTER
 					self.showEmailRegisterWarning = false;
 					self.showNameRegisterWarning = false;
 					self.showLastNameRegisterWarning = false;
@@ -756,6 +762,19 @@
 					self.textPatten = "^[a-zA-Z ]*$";
 					self.emailPatten = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
+					//ONCHANGE Login
+					self.checkEmailLoginInput = function(){
+						self.showEmailLoginWarning = checkRegexInput(self.emailLogin,self.showEmailLoginWarning,self.emailPatten);
+					};
+
+					self.checkPasswordLoginInput = function(){
+						self.showPasswordLoginWarning = checkRegexInput(self.passwordLogin,self.showPasswordLoginWarning,self.textPatten);
+						if(self.passwordLogin == ""){
+							self.showPasswordLoginWarning = true;
+						}
+					};
+
+					//ONCHANGE REgister
 					self.checkEmailRegisterInput = function(){
 							self.showEmailRegisterWarning = checkRegexInput(self.emailRegister,self.showEmailRegisterWarning,self.emailPatten);
 					};
@@ -776,13 +795,10 @@
 
 					self.checkPasswordRegisterInput = function(){
 						self.showPasswordRegisterWarning = checkRegexInput(self.passwordRegister,self.showPasswordRegisterWarning,self.textPatten);
-						console.log(self.showPasswordRegisterWarning);
 						if(self.passwordRegister == ""){
 							self.showPasswordRegisterWarning = true;
 						}
 					};
-
-
 
 					var checkRegexInput = function(pString,pStringWarning,pType){
 						var regex = new RegExp(pType);
@@ -792,7 +808,102 @@
 							return false;
 						}
 					};
+					//LOGIN REQUEST
+					self.loginRequest = function(){
+						self.checkEmailLoginInput();
+						self.checkPasswordLoginInput();
 
+						console.log(self.showEmailLoginWarning);
+						console.log(self.showPasswordLoginWarning);
+
+						//checking fields
+						if(!self.showEmailLoginWarning &&
+							 !self.showPasswordLoginWarning){
+								 ///////////////////////
+
+								 Usuario
+                 .login({
+                   email: self.emailLogin,
+                   password: self.passwordLogin
+                 })
+                 .$promise
+                 .then(function(response){
+ 									console.log(response);
+                   if(response.id){
+                     swal({
+                      title: "Bienvenido!",
+                      type: 'success',
+                      timer: 1500,
+                      showConfirmButton: false
+                     });
+ 										 $cookies.remove('user');
+                     $cookies.putObject('user',{
+                       token: response.id
+                     });
+										 console.log($cookies.getObject('user'));
+                   }else{
+ 										if(response.statusCode == 403){
+ 	                    swal({
+ 	                     title: "Contraseña incorrecta",
+ 	                     type: 'error',
+ 	                     timer: 2000,
+ 	                     showConfirmButton: false
+ 	                    });
+ 	                  }else if(response.statusCode == 404){
+ 	                    swal({
+ 	                     title: "El email no se encuentra registrado",
+ 	                     type: 'error',
+ 	                     timer: 2000,
+ 	                     showConfirmButton: false
+ 	                    });
+ 	                  }else {
+ 	                    swal({
+ 	                     title: "Ocurrio un Problema interno",
+ 	                     type: 'error',
+ 	                     timer: 2000,
+ 	                     showConfirmButton: false
+ 	                    });
+ 	                  }
+ 									}
+                 })
+                 .catch(function(err){
+                   //err.data.error.status: 401
+                   //err.data.error.message: "WRONG_PASSWORD"
+                   //err.data.error.status: 404
+                   //err.data.error.message: "EMAIL_DONT_EXIST"
+ 									console.log("err al login");
+                   console.log(err);
+                   if(err.data.error.statusCode == 401){
+                     swal({
+                      title: "Contraseña incorrecta",
+                      type: 'error',
+                      timer: 2000,
+                      showConfirmButton: false
+                     });
+                   }else if(err.data.error.statusCode == 404){
+                     swal({
+                      title: "El email no se encuentra registrado",
+                      type: 'error',
+                      timer: 2000,
+                      showConfirmButton: false
+                     });
+                   }else {
+                     swal({
+                      title: "Ocurrio un Problema interno",
+                      type: 'error',
+                      timer: 2000,
+                      showConfirmButton: false
+                     });
+                   }
+                 });
+
+
+
+
+								 //////////////////////////
+							}
+					};
+					//REGISTER!!!! REQUEST
 					self.registeringRequest = function(){
 						self.checkEmailRegisterInput();
 						self.checkNameRegisterInput();
@@ -824,8 +935,7 @@
 								if(response.token){
 									$cookies.remove('user');
 									$cookies.putObject('user',{
-										token: response.token,
-										id: response.id
+										token: response.token
 									});
 
 									swal({
@@ -858,100 +968,12 @@
 						}
 					};
 
-					self.registerRequest = function (user){
 
 
-          //{
-          //  "password": "eduardo",
-          //  "passwordConfirm": "eduardo",
-          //  "aceptation": true,
-          //  "email": "jos@gmail.com"
-          //}
-
-            console.log(user);
-
-            if(user
-              && "email" in user
-              && "aceptation" in user
-              && "password" in user
-              && "passwordConfirm" in user){
 
 
-              Privilege
-              .find({})
-              .$promise
-              .then(function(privileRes){
-
-                console.log(privileRes);
-                var r = $.grep(privileRes, function(e){ return e.name == "mobile-viewer"; });
-								console.log("privilege!!!")
-								console.log(r);
-
-                console.log("about to send");
-                UserBase
-                .create({
-                  email:user.email,
-                  password:user.password,
-                  privilegeId: r[0].id
-                })
-                .$promise
-                .then(function(response){
-									console.log(response);
-                  if(response.token){
-										$cookies.remove('user');
-										$cookies.putObject('user',{
-                      to: response.token,
-                      id: response.id,
-                      pr: r[0].id
-                    });
-
-                    swal({
-                     title: "Te acabamos de enviar un correo de verificación",
-                     type: 'success',
-                     showConfirmButton: true
-                    });
-                    //$cookies.put('user',response.token);
-
-                    console.log(response);
 
 
-                    $location.path('/ce-step1');
-                  }
-                })
-                .catch(function(err){
-									console.log("error al registrar");
-                  if(err.data.error.status == 409){
-                      swal({
-                       title: "El email ya se encuentra registrado",
-                       type: 'error',
-                       timer: 2000,
-                       showConfirmButton: false
-                      });
-                    }else {
-                      swal({
-                       title: "Ocurrio un Problema interno",
-                       type: 'error',
-                       timer: 2000,
-                       showConfirmButton: false
-                      });
-                    }
-                });
-
-              })
-              .catch(function(err){
-
-                console.log(err);
-              });
-
-            }else{
-              //swal({
-              // title: "Todos los campos son requeridos",
-              // type: 'error',
-              // timer: 2000,
-              // showConfirmButton: false
-              //});
-            }
-          };
 
 
 

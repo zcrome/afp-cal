@@ -163,14 +163,32 @@
             <div class="two fields">
               <div class="field">
                 <label>Email</label>
-                <input placeholder="Email" type="text">
+                <input ng-change="checkEmailLoginInput()" ng-model="emailLogin" placeholder="Email" type="text">
+                <div ng-show="showEmailLoginWarning" class="ui right aligned grid">
+                  <div class="center aligned one column row">
+                    <div class="column">
+                      <div class="ui pointing red basic label">
+                        Debe ser un email valido
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="field">
                 <label>Password</label>
-                <input placeholder="*******" type="password">
+                <input ng-change="checkPasswordLoginInput()" ng-model="passwordLogin" placeholder="*******" type="password">
+                <div ng-show="showPasswordLoginWarning" class="ui right aligned grid">
+                  <div class="center aligned one column row">
+                    <div class="column">
+                      <div class="ui pointing red basic label">
+                        Ingrese una contraseña válida
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="ui submit button">Ingresar</div>
+            <div ng-click="loginRequest()" class="ui submit button">Ingresar</div>
           </div>
         </div>
 
