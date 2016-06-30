@@ -53,9 +53,10 @@
 					self.checkConstanteRemunerationInput = function(){
 						if(self.mothEarnIt){
 								if(checkRegexInput(self.mothEarnIt,"",self.numberTwoDecimalPattern)){
-									errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
-									return;
+									errorMessages("Cuidado","El sueldo mensual debe contener numeros con un máximo de dos decimales");
+									return true;
 								}
+								return false
 						}
 					};
 
@@ -522,9 +523,9 @@
 						dateEnd: new Date(),
 						nombreFondo: null,
 						nombreAfp: "",
-						tasaFlujoInicial: null,
+						//tasaFlujoInicial: null,
+						//disminucionFlujoAnual: null,
 						comisionSaldo: null,
-						disminucionFlujoAnual: null,
 						primaDeSeguro: null,
 						tasaRentabilidad: null
 					};
@@ -538,9 +539,9 @@
 					self.setFondoDeAfp = function(objFondo){
 						self.objFondoAutomatico.nombreFondo = objFondo.nombreFondo;
 						self.objFondoAutomatico.nombreAfp = objFondo.nombreAfp;
-						self.objFondoAutomatico.tasaFlujoInicial = objFondo.tasaFlujoInicial;
+						//self.objFondoAutomatico.tasaFlujoInicial = objFondo.tasaFlujoInicial;
 						self.objFondoAutomatico.comisionSaldo = objFondo.comisionSaldo;
-						self.objFondoAutomatico.disminucionFlujoAnual = objFondo.disminucionFlujoAnual;
+						//self.objFondoAutomatico.disminucionFlujoAnual = objFondo.disminucionFlujoAnual;
 						self.objFondoAutomatico.primaDeSeguro = objFondo.primaDeSeguro;
 						self.objFondoAutomatico.tasaRentabilidad = objFondo.tasaRentabilidad;
 					};
@@ -577,10 +578,10 @@
 									nombreAfp: self.objFondoAutomatico.nombreAfp,
 				         	dateBegin: self.objFondoAutomatico.dateBegin,
 									dateEnd: self.objFondoAutomatico.dateEnd,
-									tasaFlujoInicial: self.objFondoAutomatico.tasaFlujoInicial,
+									//tasaFlujoInicial: self.objFondoAutomatico.tasaFlujoInicial,
 									comisionSaldo: self.objFondoAutomatico.comisionSaldo,
-									comisionFlujoInicial: self.objFondoAutomatico.comisionFlujoInicial,
-									primaSeguro: self.objFondoAutomatico.primaSeguro,
+									//comisionFlujoInicial: self.objFondoAutomatico.comisionFlujoInicial,
+									primaDeSeguro: self.objFondoAutomatico.primaDeSeguro,
 									tasaRentabilidad: self.objFondoAutomatico.tasaRentabilidad
 				      });
 
@@ -593,11 +594,11 @@
 				      //Reset
 				      self.objFondoAutomatico.dateBegin = new Date();
 							self.objFondoAutomatico.dateEnd = new Date();
-							self.objFondoAutomatico.tasaFlujoInicial = null;
-							self.objFondoAutomatico.comisionSaldo = null;
-							self.objFondoAutomatico.disminucionFlujoAnual = null;
-							self.objFondoAutomatico.primaDeSeguro = null;
-							self.objFondoAutomatico.tasaRentabilidad = null;
+							//self.objFondoAutomatico.tasaFlujoInicial = null;
+							//self.objFondoAutomatico.comisionSaldo = null;
+							//self.objFondoAutomatico.disminucionFlujoAnual = null;
+							//self.objFondoAutomatico.primaDeSeguro = null;
+							//self.objFondoAutomatico.tasaRentabilidad = null;
 							self.objFondoAutomatico.nombreFondo = null;
 							self.objFondoAutomatico.nombreAfp = null;
 
@@ -679,10 +680,29 @@
 							//var valorRentabilidad = 0;
 
 
-							if(self.arrObjFondosPersonalizados.length <= 0){
-								errorMessages("Cuidado","Primero debe rellenar los datos laborales y agregar un fondo");
+							if(self.typeSelectionFondoAfp == 2 && self.arrObjFondosPersonalizados.length <= 0){
+								errorMessages("Cuidado","Debe ingresar todas las tasas para el Fondo Afp");
 								return;
 							}
+
+							if(self.typeSelectionFondoAfp == 1 && self.arrFondosDeAfpAutomaticos.length <= 0){
+								errorMessages("Cuidado","Debe seleccionar un Fondo Afp");
+								return;
+							}
+
+							if(self.typeRemuneration == 1){
+
+								if(!self.cantPaymentPerYear){
+									errorMessages("Cuidado","Seleccione cantidad de sueldos al Año");
+									return;
+								}
+
+								if(self.checkConstanteRemunerationInput()){
+									return;
+								}
+
+							}
+
 
 							self.arrTableView = [];
 							self.canIDownloadTableInExcel = false;
@@ -699,7 +719,9 @@
 
 							//Si es automatico
 							if(self.typeSelectionFondoAfp == 1){
-
+								TEM = Math.pow((1 + (+(self.arrFondosDeAfpAutomaticos[0].tasaRentabilidad)/100)), 0.0833333) - 1;
+								PcomisionAFP = +(self.arrFondosDeAfpAutomaticos[0].comisionSaldo)/100;
+								tasaPrima = +(self.arrFondosDeAfpAutomaticos[0].primaDeSeguro)/100;
 							}
 							//Si es manual
 							if(self.typeSelectionFondoAfp == 2){
