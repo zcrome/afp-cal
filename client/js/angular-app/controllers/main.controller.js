@@ -546,7 +546,7 @@
 					self.arrFondosDeAfpAutomaticos = [];
 					self.objFondoAutomatico = {
 						dateBegin: new Date(),
-						dateEnd: new Date(),
+						dateEnd: new Date(2055,0,1),
 						nombreFondo: null,
 						nombreAfp: "",
 						//tasaFlujoInicial: null,
