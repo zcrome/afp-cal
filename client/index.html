@@ -216,8 +216,8 @@
                     </div>
                     <div class="field">
                         <label>Fecha de Nacimiento</label>
-                        <ng-datepicker onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="userBornDate" locale="es">
-        </ng-datepicker>
+                        <ng-datepicker ng-change="setDateBorn()" onkeydown="return false" format="YYYY-MM-DD" view-format="Do MMMM YYYY" ng-model="userBornDate" locale="es">
+                        </ng-datepicker>
                     </div>
                 </div>
                 <h4 class="ui dividing header">Datos Laborales</h4>
@@ -324,7 +324,9 @@
                             <div ng-show="typeRemuneration == 2" class="ui grid">
                               <div class="sixteen wide column">
                                 <div id="" class="begin-time-label">{{dateViewDisplayInitWork}}</div>
-                                <div ng-hide="true" id="remu-beg" class="begin-time-label">{{dateAtInitWork}}</div>
+                                <div ng-hide="true" id="remu-beg-Y" class="begin-time-label">{{bornYear}}</div>
+                                <div ng-hide="true" id="remu-beg-M" class="begin-time-label">{{bornMonth}}</div>
+                                <div ng-hide="true" id="remu-beg-D" class="begin-time-label">{{bornDay}}</div>
                                 <div id="remu-end" class="end-time-label"></div>
                               </div>
                             </div>
@@ -643,13 +645,29 @@
                   }
                   $('#display-3').html(value);
 
-                  console.log(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date");
+                  //console.log(typeof(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY')) );
+                  //console.log(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') == 'Invalid date');
 
-                  if(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date"){
-                    $('#remu-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
-                    $('#FM-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
-                    $('#FA-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
-                  }
+
+
+                  var anio = +($('#remu-beg-Y')[0].innerHTML);
+                  var mes =  +($('#remu-beg-M')[0].innerHTML);
+                  var dia =  +($('#remu-beg-D')[0].innerHTML);
+
+
+
+                  $('#remu-end').html(moment(new Date(anio,mes,dia)).add(+value, 'y').format('Do MMMM YYYY'));
+                  $('#FM-end').html(moment(new Date(anio,mes,dia)).add(+value, 'y').format('Do MMMM YYYY'));
+                  $('#FA-end').html(moment(new Date(anio,mes,dia)).add(+value, 'y').format('Do MMMM YYYY'));
+
+
+
+
+                  //if(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != 'Invalid date'){
+                  //  $('#remu-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
+                  //  $('#FM-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
+                  //  $('#FA-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
+                  //}
                 }
             });
         </script>

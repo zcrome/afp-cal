@@ -40,6 +40,30 @@
 					self.userName = null
 					self.userEmail = null;
 					self.userBornDate = new Date(1990,00,01);
+					self.bornYear = ''
+					self.bornMonth = ''
+					self.bornDay = ''
+					self.setDateBorn = function(){
+						console.log(new Date(self.userBornDate));
+						self.bornYear = new Date(self.userBornDate).getFullYear();
+						self.bornMonth = new Date(self.userBornDate).getMonth();
+						self.bornDay = new Date(self.userBornDate).getDay();
+
+						var anio = +(self.bornYear);
+						var mes =  +(self.bornMonth);
+						var dia =  +(self.bornDay);
+
+						console.log("begin")
+						console.log(anio +"/"+ mes +"/"+ dia);
+						console.log(new Date(anio,mes,dia));
+
+
+						$('#remu-end').html(moment(new Date(anio,mes,dia)).add(+($('#display-3').html()), 'y').format('Do MMMM YYYY'));
+						$('#FM-end').html(moment(new Date(anio,mes,dia)).add(+($('#display-3').html()), 'y').format('Do MMMM YYYY'));
+						$('#FA-end').html(moment(new Date(anio,mes,dia)).add(+($('#display-3').html()), 'y').format('Do MMMM YYYY'));
+
+					};
+					self.setDateBorn()
 
 					/***************************************************************END Personal DATA*****/
 
@@ -118,9 +142,11 @@
 						}
 						self.deleteAllArraysInvolved();
 						self.dateViewDisplayInitWork = moment(self.dateAtInitWork).format('Do MMMM YYYY');
-						$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
-						$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
-						$('#FA-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
+
+						self.setDateBorn()
+						//$('#remu-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
+						//$('#FM-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
+						//$('#FA-end').html(moment(new Date(self.dateAtInitWork)).add(+$('#display-3')[0].innerHTML, 'y').format('Do MMMM YYYY'));
 					};
 
 
