@@ -307,25 +307,14 @@
 						primaDeSeguro: 2.00,
 						tasaRentabilidad: 1.20
 					};
-
 					self.arrObjFondosPersonalizados = [];
 					/*
 					self.arrObjFondosPersonalizados = [{
 						dateBegin: new Date(2016,05,10),
 						dateEnd: new Date(2016,05,20),
-						tasaFlujoInicial: 99.1,
 						comisionSaldo: null,
-						comisionFlujoInicial: null,
-						primaSeguros: null,
+						primaSeguro: null,
 						tasaRentabilidad: 23
-					},{
-						dateBegin: new Date(),
-						dateEnd: new Date(),
-						tasaFlujoInicial: 99.1,
-						comisionSaldo: null,
-						comisionFlujoInicial: null,
-						primaSeguros: null,
-						tasaRentabilidad: 24
 					}];*/
 					self.fmanTags = {
 					    "width" : "50%"
@@ -339,6 +328,42 @@
 					};
 
 
+
+
+
+					self.checkManualAfpRentabilidadInput = function(){
+						if(self.objFondoPersonalizado.tasaRentabilidad){
+								if(checkRegexInput(self.objFondoPersonalizado.tasaRentabilidad,"",self.numberTwoDecimalPattern)){
+									errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
+									self.requiredAfpManualInputColors.tasaRentabilidad = true;
+									return false;
+								}
+								self.requiredAfpManualInputColors.tasaRentabilidad = false;
+								return true;
+						}
+					};
+					self.checkManualAfpPrimaSeguroInput = function(){
+						if(self.objFondoPersonalizado.primaDeSeguro){
+								if(checkRegexInput(self.objFondoPersonalizado.primaDeSeguro,"",self.numberTwoDecimalPattern)){
+									errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
+									self.requiredAfpManualInputColors.primaDeSeguro = true;
+									return false;
+								}
+								self.requiredAfpManualInputColors.primaDeSeguro = false;
+								return true;
+						}
+					};
+					self.checkManualAfpComisionSaldoInput = function(){
+						if(self.objFondoPersonalizado.comisionSaldo){
+								if(checkRegexInput(self.objFondoPersonalizado.comisionSaldo,"",self.numberTwoDecimalPattern)){
+									errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
+									self.requiredAfpManualInputColors.comisionSaldo = true;
+									return false;
+								}
+								self.requiredAfpManualInputColors.comisionSaldo = false;
+								return true;
+						}
+					};
 
 
 					self.deleteFondoMan = function(index){
@@ -406,6 +431,16 @@
 								//(!self.objFondoPersonalizado.disminucionFlujoAnual ? 	self.requiredAfpManualInputColors.disminucionFlujoAnual = true :  self.requiredAfpManualInputColors.disminucionFlujoAnual = false);
 								(!self.objFondoPersonalizado.primaDeSeguro ? 					self.requiredAfpManualInputColors.primaDeSeguro = true :  				self.requiredAfpManualInputColors.primaDeSeguro = false);
 								(!self.objFondoPersonalizado.tasaRentabilidad ? 			self.requiredAfpManualInputColors.tasaRentabilidad = true :  			self.requiredAfpManualInputColors.tasaRentabilidad = false);
+						}
+
+						if(!self.checkManualAfpRentabilidadInput()){
+							return;
+						}
+						if(!self.checkManualAfpPrimaSeguroInput()){
+							return;
+						}
+						if(!self.checkManualAfpComisionSaldoInput()){
+							return;
 						}
 
 
@@ -543,7 +578,7 @@
 									tasaFlujoInicial: self.objFondoAutomatico.tasaFlujoInicial,
 									comisionSaldo: self.objFondoAutomatico.comisionSaldo,
 									comisionFlujoInicial: self.objFondoAutomatico.comisionFlujoInicial,
-									primaSeguros: self.objFondoAutomatico.primaSeguros,
+									primaSeguro: self.objFondoAutomatico.primaSeguro,
 									tasaRentabilidad: self.objFondoAutomatico.tasaRentabilidad
 				      });
 
