@@ -73,9 +73,11 @@
         <script src="js/angular-app/modules/app.js"></script>
         <script src="js/angular-app/controllers/main.controller.js"></script>
 
+
+
         <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
-
-
+        <script type="text/javascript" src="semantic/dist/semantic.min.js"></script>
+        <script type="text/javascript" src="third-party/semantic-ui-range-master/range.js"></script>
 
         <!--
         <script src="bower_components/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
@@ -305,10 +307,13 @@
 
 
                                 <ng-repeat ng-repeat="remu in arrRemunerations">
-                                    <div ng-style="remusTags" class="time-line-divider">
-                                        {{remu.remunerationCant}}<span ng-click="deleteRemu($index)" class="close-time-divider">x</span>
-                                    </div>
+                                      {{assignTimeLineRemunerationDates($index);}}
+                                      <div id={{$index}} ng-style="remusTags" class="time-line-divider"  data-content={{remu.dateViewFormat}} data-position="top center">
+                                        {{remu.remunerationViewFormat}}<span ng-click="deleteRemu($index)" class="close-time-divider">x</span>
+                                      </div>
                                 </ng-repeat>
+
+
 
 
                                   <hr class="time-line">
@@ -615,12 +620,15 @@
         <!-- END FOOTER -->
 
 
-      <script type="text/javascript" src="semantic/dist/semantic.min.js"></script>
-      <script type="text/javascript" src="third-party/semantic-ui-range-master/range.js"></script>
+
+
 
 
 
         <script type="text/javascript">
+
+
+
             // Semantic UI Range
   					$('#range-3').range({
                 min: 20,

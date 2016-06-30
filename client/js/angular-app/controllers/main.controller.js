@@ -109,8 +109,10 @@
 				         //Pasados los filtros agrego al array
 				         self.arrRemunerations.push({
 				           remunerationCant: self.objRemuneration.remunerationCant,
-				           dateBegin: new Date(self.objRemuneration.dateBegin),
-				           dateEnd: self.objRemuneration.dateEnd
+				           dateBegin: self.objRemuneration.dateBegin,
+				           dateEnd: self.objRemuneration.dateEnd,
+									 dateViewFormat: String(moment(self.objRemuneration.dateBegin).format("L") +" - "+ moment(self.objRemuneration.dateEnd).format("L")),
+									 remunerationViewFormat: String("Sueldo: "+self.objRemuneration.remunerationCant)
 				         });
 							//Sort segun las fechas de inicio
 				         self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
@@ -1078,13 +1080,17 @@
 					};
 
 
-
-
-
-
 					/*************************************************************END CARGAR AFPS**********/
 
-
+					//Others
+					self.assignTimeLineRemunerationDates = function(pId){
+						//$('#'+pId).popup();
+						$('#'+pId)
+							.popup({
+								transition: 'vertical flip',
+								hoverable: true
+							})
+					};
 
 
 
