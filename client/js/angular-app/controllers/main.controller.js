@@ -899,6 +899,7 @@
 
 							//Reset
 							self.arrObjFondosPersonalizados = [];
+							self.arrFondosDeAfpAutomaticos = [];
 							//You can download table on excel
 							self.canIDownloadTableInExcel = true;
 
