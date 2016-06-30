@@ -670,10 +670,10 @@
 					self.arrTableView = [];
 					self.aditionalData = {
 						trea: '',
-						van: ''
+						van: '',
+						vanTirFunction: '',
+						tirTirFunction: ''
 					};
-
-
 
 					self.generateCalculation = function(){
 						/****************Variables**********************/
@@ -737,7 +737,6 @@
 							var edadJubilacion = +($('#display-3').html());
 							var cantidadAniosDeTrbajo = Math.floor(moment.duration(moment(self.userBornDate).add(edadJubilacion, 'y').diff(moment(self.dateAtInitWork))).asYears()); // Anio(fecha de jubilacion) - Anio(fecha inicio vida laboral)
 							var cantidadSueldosAnio = 12;
-
 							var TEM = 0;
 					    var PcomisionAFP = 0;
 							var tasaPrima = 0
@@ -784,6 +783,77 @@
 							var fondo_ii = 0;
 							/****************END Variables**********************/
 
+							//TIR
+
+							var v = []; //aqui almacenaremos cada termino del flujo del VAN para calcular la TIR
+							var v2 = [];
+
+
+							var newTIR = function(){
+
+								var NDxA = 360.00;
+								var TIR = 0;
+								var VAN = 0;
+								var Fo = 0;
+								var Maximo = 0;
+								var Minimo = 0;
+								var VA = 0;
+
+								for (var i = 0; i < cantidadAniosDeTrbajo * 12; i++)
+								{
+									Fo = Fo + v[i];
+									console.log(Fo);
+								}
+
+								Minimo = - 1;
+								Maximo = 1.1;
+								do
+								{
+									VA = 0;
+									TIR = (Maximo + Minimo) / 2;
+									for (var i = 0; i < cantidadAniosDeTrbajo * 12; i++)
+									{
+										VA = VA - v[i] / Math.pow(1 + TIR, ((i + 1) * 30) / NDxA);
+									}
+									for (var i = 0; i < v2.length; i++)
+									{
+										VA = VA - v2[i] / Math.pow(1 + TIR, ((i + 1) * 30 * 12) / NDxA);
+									}
+									console.log(Fo);
+									if (Math.abs(VA) < Math.abs(Fo))
+									{
+										Maximo = TIR;
+									}
+									else
+									{
+										Minimo = TIR;
+									}
+
+								} while (Math.abs(VA + Fo) > 0.000000001);
+								TIR = Math.abs(TIR);
+								VAN = Fo;
+								console.log(Fo);
+								for (var i = 0; i < cantidadAniosDeTrbajo * 12; i++)
+								{
+									VAN = VAN + v[i] / Math.pow(1 + cok, i + 1);
+								}
+								for (var i = 0; i < v2.length; i++)
+								{
+									VAN = VAN + v2[i] / Math.pow(1 + cok, (i + 1) * 12);
+								}
+
+								return {
+									vanRes: VAN,
+									tirRes: TIR * 100
+								};
+							}
+
+
+
+
+
+
+
 							console.log(self.mothEarnIt);
 							console.log("remuneracion:"+remuneracion);
 							console.log("cantidadAniosDeTrbajo:"+cantidadAniosDeTrbajo);
@@ -802,11 +872,13 @@
 									fondo_ii = fondo;//solo hago esto para guardar el valor del fondo al inicio del mes
 									fondo = fondo + aporte + (TEM*fondo);//cada mes se agrega una pequena ganancia y te cobramos seguro
 									sumatoria += (fondo - fondo_ii) / Math.pow((1 + cok), contador3);//calculo de un termino de la sumatoria del VAN
+									v.push(fondo - fondo_ii);
 									contador3++;
 								}
 								comisionAFP = PcomisionAFP*fondo; //comision afp se cobra todos los anios y sera fijo ingresado por el usuario
 								fondo = fondo - comisionAFP; //al fondo se le quita la comision q le cobran anualmente
 								sumatoria += (comisionAFP*(-1)) / Math.pow((1 + cok), contador3); //calculo de un termino de la sumatoria del VAN
+								v2.push(comisionAFP*(-1));
 
 								rentabilidad = ((fondo - fondo_i) / fondo_i) * 100;//pura formula
 								if(!isFinite(rentabilidad)){
@@ -891,10 +963,15 @@
 
 							//self.aditionalData.trea = parseFloat(TREA).toFixed(2);
 
+							var resultadosTir = newTIR();
 
 							self.aditionalData.trea = "x%";
 							self.aditionalData.van =  parseFloat(sumatoria).toFixed(2);
+							self.aditionalData.vanTirFunction =  parseFloat(resultadosTir.vanRes).toFixed(2);
+							self.aditionalData.tirTirFunction =  parseFloat(resultadosTir.tirRes).toFixed(2);
 
+							console.log(resultadosTir.vanRes);
+							console.log(resultadosTir.tirRes);
 
 
 							//Reset
