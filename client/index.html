@@ -643,6 +643,8 @@
                   }
                   $('#display-3').html(value);
 
+                  console.log(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date");
+
                   if(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY') != "Invalid date"){
                     $('#remu-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));
                     $('#FM-end').html(moment(new Date($('#remu-beg')[0].innerHTML)).add(+value, 'y').format('Do MMMM YYYY'));

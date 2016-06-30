@@ -296,7 +296,9 @@
 
 					/*************************************************************FONDO AFP VARIABLES**********/
 					self.typeSelectionFondoAfp = 1;
-					/******* type 1 Tasas de ingreso manual ***************************/
+					//automatico 1
+					//manual  2
+					/******* type 2 Tasas de ingreso manual ***************************/
 
 					self.objFondoPersonalizado = {
 						dateBegin: new Date(),
@@ -686,15 +688,35 @@
 							self.canIDownloadTableInExcel = false;
 							//variables
 							var remuneracion = +(self.mothEarnIt);
-					    var TEM = +(self.arrObjFondosPersonalizados[0].tasaRentabilidad)/100;
-					    var prima = +(self.arrObjFondosPersonalizados[0].primaDeSeguro)/100;
-					    var PcomisionAFP = +(self.arrObjFondosPersonalizados[0].comisionSaldo)/100;
 							var edadJubilacion = +($('#display-3').html());
 							var cantidadAniosDeTrbajo = Math.floor(moment.duration(moment(self.userBornDate).add(edadJubilacion, 'y').diff(moment(self.dateAtInitWork))).asYears()); // Anio(fecha de jubilacion) - Anio(fecha inicio vida laboral)
+							var cantidadSueldosAnio = 12;
+
+							var TEM = 0;
+					    var PcomisionAFP = 0;
+							var tasaPrima = 0
+
+
+							//Si es automatico
+							if(self.typeSelectionFondoAfp == 1){
+
+							}
+							//Si es manual
+							if(self.typeSelectionFondoAfp == 2){
+								TEM = Math.pow((1 + (+(self.arrObjFondosPersonalizados[0].tasaRentabilidad)/100)), 0.0833333) - 1;
+								PcomisionAFP = +(self.arrObjFondosPersonalizados[0].comisionSaldo)/100;
+								tasaPrima = +(self.arrObjFondosPersonalizados[0].primaDeSeguro)/100;
+							}
+
+							//Si el sueldo es constante
+							if(self.cantPaymentPerYear && self.typeRemuneration == 1){
+								cantidadSueldosAnio = +(self.cantPaymentPerYear);
+							}
+
 
 					    //constante
 					    var PaporteAFP = 0.1;//porcentaje del salario q se agregara al fondo (calculado luego)
-					    var inversion = 200;//para nuestro fondo de pensiones le cobraremos un monto por abrir su fondo que sera fijo y bueno, seria una inversion.
+					    //var inversion = 200;//para nuestro fondo de pensiones le cobraremos un monto por abrir su fondo que sera fijo y bueno, seria una inversion.
 					    var fondo = 0;//valor inicial del fondo el cual pusimos solo para simular que no hayan errores. Apenas se abre una cuenta debe tener ya 800 soles...como si se le pusiera un deposito le explicamos al profe
 
 
@@ -707,9 +729,10 @@
 					    var cok = 0.015309;
 					    var valor_renta = 0;//variable comun
 					    var aporte = remuneracion * PaporteAFP;//lo q cada mes aporta a su fondo
-					    var TREA = 0;///varianble comun
+					    //var TREA = 0;///varianble comun
 					    var contador3 = 1;
-							var varparacomision = 0;
+							var prima = 0;
+							//var varparacomision = 0;
 							var fondo_ii = 0;
 							/****************END Variables**********************/
 
@@ -717,12 +740,50 @@
 							console.log("remuneracion:"+remuneracion);
 							console.log("cantidadAniosDeTrbajo:"+cantidadAniosDeTrbajo);
 							console.log("TEM:"+TEM);
-							console.log("prima:"+prima);
+							console.log("prima:"+tasaPrima);
 							console.log("PcomisionAFP:"+PcomisionAFP);
 							console.log("remuneracion:"+remuneracion);
 
 
+							for (var i = 0; i < cantidadAniosDeTrbajo; i++){
+								fondo_i = fondo;//utilizamos la variable fondo_i para ver luego del anio cuanto a crecido el fondo...cada anio el fondo inicial cambia obviamente
+								prima = 0;
+								anio += 1
+								for (var j = 0; j < cantidadSueldosAnio; j++){
+									prima += tasaPrima*remuneracion;
+									fondo_ii = fondo;//solo hago esto para guardar el valor del fondo al inicio del mes
+									fondo = fondo + aporte + (TEM*fondo);//cada mes se agrega una pequena ganancia y te cobramos seguro
+									sumatoria += (fondo - fondo_ii) / Math.pow((1 + cok), contador3);//calculo de un termino de la sumatoria del VAN
+									contador3++;
+								}
+								comisionAFP = PcomisionAFP*fondo; //comision afp se cobra todos los anios y sera fijo ingresado por el usuario
+								fondo = fondo - comisionAFP; //al fondo se le quita la comision q le cobran anualmente
+								sumatoria += (comisionAFP*(-1)) / Math.pow((1 + cok), contador3); //calculo de un termino de la sumatoria del VAN
 
+								rentabilidad = ((fondo - fondo_i) / fondo_i) * 100;//pura formula
+								if(!isFinite(rentabilidad)){
+									rentabilidad = 0;
+								}
+								valor_renta = fondo - fondo_i;//puraformula
+								//
+								fondo = fondo; //aqui sacas fondo acumulado y comisionAFP en ultima columna y prima
+								prima = prima;
+								//
+
+								self.arrTableView.push({
+									year: '' + anio,
+									remuneration: '' + remuneracion,
+									paidToAfp: '' + parseFloat(aporte).toFixed(2),
+									rateProfitability: '' + parseFloat(valor_renta).toFixed(2),
+									profitability: '' + parseFloat(rentabilidad).toFixed(2) + "%",
+									accumulatedFund: '' + parseFloat(fondo).toFixed(2),
+									commission: '' + parseFloat(comisionAFP).toFixed(2)
+								});
+
+							}
+
+
+							/*
 							for (var i = 0; i < cantidadAniosDeTrbajo; i++){
 								fondo_i = fondo;//utilizamos la variable fondo_i para ver luego del anio cuanto a crecido el fondo...cada anio el fondo inicial cambia obviamente
 								varparacomision = 0;
@@ -773,6 +834,7 @@
 								});
 
 							}
+							*/
 
 							//var valor3 = cantidadAniosDeTrbajo * 360.00;
 					    //var valor = 360.00 / valor3;
@@ -780,8 +842,11 @@
 					    //TREA = (Math.pow(fondo / 800, valor) - 1) * 100; //esto es pura formula, desglozamos la formula del doc word pq habian errores de casteo >_<
 
 							//self.aditionalData.trea = parseFloat(TREA).toFixed(2);
-							self.aditionalData.trea = "TIR%";
+
+
+							self.aditionalData.trea = "x%";
 							self.aditionalData.van =  parseFloat(sumatoria).toFixed(2);
+
 
 
 							//Reset
