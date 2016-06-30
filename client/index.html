@@ -258,8 +258,8 @@
 
                             <div ng-show="typeRemuneration == 1" class="two fields">
                                 <div class="field">
-                                    <label>Sueldo Mensual</label>
-                                    <input ng-model="mothEarnIt" type="number" >
+                                    <label>Sueldo Mensual (Max 2 decimales)</label>
+                                    <input ng-change="checkConstanteRemunerationInput()" ng-model="mothEarnIt" type="number" >
                                 </div>
                                 <div class="field">
                                     <label>Sueldos al año</label>

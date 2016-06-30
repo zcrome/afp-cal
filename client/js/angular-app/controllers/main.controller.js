@@ -19,8 +19,23 @@
           /*******local variables!!*******/
           var self = $scope;
 
-					/*******web variables*******/
+					//AUX THINGS
+					//InputPatterns
+					self.numberTwoDecimalPattern = "^[0-9]+(\\.[0-9]{1,2})?$";
+					self.textPatten = "^[a-zA-Z ]*$";
+					self.emailPatten = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
 
+					var checkRegexInput = function(pString,pStringWarning,pType){
+						var regex = new RegExp(pType);
+						if(!regex.test(pString)){
+							return true;
+						}else{
+							return false;
+						}
+					};
+
+
+					/*******web variables*******/
 					/*****************************************************************Personal DATA*****/
 					self.userName = null
 					self.userEmail = null;
@@ -32,8 +47,20 @@
 					//self.dateRetirement = null;
 					self.typeRemuneration = 1;
 					/********type 1 Remuneracion constante*****/
-					self.mothEarnIt = 800;
+					self.mothEarnIt = '';
 					self.cantPaymentPerYear = null;
+
+					self.checkConstanteRemunerationInput = function(){
+						if(self.mothEarnIt){
+								if(checkRegexInput(self.mothEarnIt,"",self.numberTwoDecimalPattern)){
+									errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
+									return;
+								}
+						}
+					};
+
+
+
 					/******** END type 1 Remuneracion constante*****/
 
 					/******* type 2 remuneracion intermitente *****/
@@ -56,6 +83,12 @@
 						dateEnd: false
 					};
 
+					self.checkInterRemunerationInput = function(){
+						if(self.objRemuneration.remunerationCant){
+								self.requiredRemuInterInputColors.remunerationCant = checkRegexInput(self.objRemuneration.remunerationCant,self.requiredRemuInterInputColors.remunerationCant,self.numberTwoDecimalPattern);
+								return self.requiredRemuInterInputColors.remunerationCant;
+						}
+					};
 
 
 					self.validDateInitWork = function(){
@@ -117,7 +150,7 @@
 							//Sort segun las fechas de inicio
 				         self.arrRemunerations = _.sortBy(self.arrRemunerations, 'dateBegin');
 				         //actualizacion del tamaño de cada periodo CSS!!
-						updateTimeLineTagsView();
+								 updateTimeLineTagsView();
 				         //Reset
 				         self.objRemuneration.remunerationCant = null;
 				         self.objRemuneration.dateBegin = new Date();
@@ -130,11 +163,17 @@
 							return false;
 						}
 
-						//Show errors!
+						//Show errors! This is only if is empty
 						(!self.dateAtInitWork ? self.requiredRemuInterInputColors.dateAtInitWork = true :  self.requiredRemuInterInputColors.dateAtInitWork = false);
 						(!objParam.remunerationCant ? self.requiredRemuInterInputColors.remunerationCant = true :  self.requiredRemuInterInputColors.remunerationCant = false);
 						(!objParam.dateBegin ? self.requiredRemuInterInputColors.dateBegin = true :  self.requiredRemuInterInputColors.dateBegin = false);
 						(!objParam.dateEnd ? self.requiredRemuInterInputColors.dateEnd = true :  self.requiredRemuInterInputColors.dateEnd = false);
+
+						//Checking if is a valid Remuneration entry
+						if(self.checkInterRemunerationInput()){
+							errorMessages("Cuidado","Solo puedes ingresar numeros con un máximo de dos decimales");
+							return false;
+						}
 
 
 
@@ -741,9 +780,7 @@
 					self.showNameRegisterWarning = false;
 					self.showLastNameRegisterWarning = false;
 					self.showPasswordRegisterWarning = false;
-					//InputPatterns
-					self.textPatten = "^[a-zA-Z ]*$";
-					self.emailPatten = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+
 
 
 					var changeSettingAfterUserLoggedIn = function(){
@@ -770,33 +807,9 @@
 					self.logOutRequest = function(){
 						$cookies.remove('user');
 						changeSettingAfterUserLoggedOut();
-
-						/*
-	            if(!$cookies.getObject('user')){
-	              return;
-	            }
-							console.log($cookies.getObject('user').token);
-							console.log(Usuario);
-	            Usuario
-	              .logout({
-									'id': $cookies.getObject('user').token
-								})
-	              .$promise
-	              .then(function(results) {
-	                console.log(results);
-
-	              })
-	              .catch(function(err){
-	                console.log(err);
-	                swal({
-	                 title: "Ops",
-	                 type: 'error',
-	                 timer: 2000,
-	                 showConfirmButton: false
-	                });
-	              });
-						*/
 					};
+
+
 
 
 					//ONCHANGE Login
@@ -837,14 +850,7 @@
 						}
 					};
 
-					var checkRegexInput = function(pString,pStringWarning,pType){
-						var regex = new RegExp(pType);
-						if(!regex.test(pString)){
-							return true;
-						}else{
-							return false;
-						}
-					};
+
 					//LOGIN REQUEST
 					self.loginRequest = function(){
 						self.checkEmailLoginInput();
