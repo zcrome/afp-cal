@@ -125,7 +125,7 @@
                   <div class="center aligned one column row">
                     <div class="column">
                       <div class="ui pointing red basic label">
-                        Ingrese una contraseña válida
+                        Ingrese solo letras
                       </div>
                     </div>
                   </div>
@@ -367,7 +367,7 @@
 
                                 <div class="five wide column">
                                     <div ng-class="{field:true, error:requiredAfpManualInputColors.tasaRentabilidad}">
-                                        <label>Rentabilidad de AFP(%):<i ng-show="requiredAfpManualInputColors.tasaRentabilidad" class="warning circle icon"></i></label>
+                                        <label>Rentabilidad esperada Anual(%):<i ng-show="requiredAfpManualInputColors.tasaRentabilidad" class="warning circle icon"></i></label>
                                         <input ng-change="checkManualAfpRentabilidadInput()" ng-model="objFondoPersonalizado.tasaRentabilidad" type="text" value="">
                                     </div>
                                 </div>
@@ -470,7 +470,7 @@
                                     <label ng-show="objFondoAutomatico.primaDeSeguro != null">{{"Prima de Seguros:  "+objFondoAutomatico.primaDeSeguro+"%"}}</label>
                                 </div>
                                 <div class="four wide column">
-                                    <label ng-show="objFondoAutomatico.tasaRentabilidad != null">{{"Rentabilidad:  "+objFondoAutomatico.tasaRentabilidad+"%"}}</label>
+                                    <label ng-show="objFondoAutomatico.tasaRentabilidad != null">{{"Rentabilidad esperada Anual:  "+objFondoAutomatico.tasaRentabilidad+"%"}}</label>
                                 </div>
 
                                 <!--
@@ -563,7 +563,7 @@
             </table>
             -->
 
-            <div id="results" class="ui grid">
+            <div style="margin-top: 3%;" id="results" class="ui grid">
               <div class="sixteen wide column">
                 <div class="ui label">
                   TREA
@@ -591,7 +591,7 @@
                   <th>Remuneracion Mensual</th>
                   <th>Aporte a la AFP</th>
                   <th>Valor de Rentabilidad</th>
-                  <th>Rentabilidad</th>
+                  <th>Rentabilidad entre año a año</th>
                   <th>Fondo Acumulado</th>
                   <th>Comision de AFP</th>
                 </tr>
