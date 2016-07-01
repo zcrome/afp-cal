@@ -727,6 +727,11 @@
 									return;
 								}
 
+								if(isNaN(+(self.mothEarnIt))){
+									errorMessages("Cuidado","El sueldo mensual debe ser un número");
+									return;
+								}
+
 							}
 
 
